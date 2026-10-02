@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy &middot; BCE Comics Pod Uploader</title>
+<style>
+  :root{
+    --paper:#f5f4f2; --card:#ffffff; --ink:#1a1817; --body:#39353a;
+    --muted:#6d6763; --rule:#dcd8d3; --red:#cc2028;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141312; --card:#1c1a19; --ink:#efedea; --body:#cbc5c0;
+      --muted:#8d8680; --rule:#333029; --red:#f4535b;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141312; --card:#1c1a19; --ink:#efedea; --body:#cbc5c0;
+    --muted:#8d8680; --rule:#333029; --red:#f4535b;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--body);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:40px 20px 80px}
+  header{border-bottom:3px solid var(--red); padding-bottom:16px; margin-bottom:28px}
+  .kicker{
+    font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--red); font-weight:700; margin:0 0 8px;
+  }
+  h1{font-size:clamp(26px,5vw,34px); line-height:1.15; color:var(--ink); margin:0 0 8px}
+  .stamp{font-size:13px; color:var(--muted); margin:0}
+  h2{font-size:19px; color:var(--ink); margin:34px 0 8px; line-height:1.25}
+  p,li{margin:0 0 12px}
+  ul{padding-left:22px}
+  a{color:var(--red)}
+  code{
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:.88em;
+    background:var(--card); border:1px solid var(--rule); border-radius:3px; padding:1px 5px;
+  }
+  .box{
+    background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--red);
+    border-radius:4px; padding:14px 16px; margin:22px 0;
+  }
+  .box p:last-child{margin-bottom:0}
+  footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--rule);
+    font-size:13.5px; color:var(--muted)}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">BCE Comics Pod</p>
+  <h1>Privacy Policy &mdash; BCE Comics Pod Uploader</h1>
+  <p class="stamp">Last updated 2 October 2026</p>
+</header>
+
+<h2>What this application is</h2>
+<p><strong>BCE Comics Pod Uploader</strong> is a private, single-user tool used by the owners of the
+<a href="https://www.youtube.com/@BCEComicsPod">BCE Comics Pod</a> YouTube channel to publish our own
+episodes and clips to that same channel. It is not distributed, not offered to the public, has no
+sign-up, and has no users other than the channel owner.</p>
+
+<h2>Who we are</h2>
+<p>BCE Comics Pod. Contact: <a href="mailto:bcecomicspod@gmail.com">bcecomicspod@gmail.com</a></p>
+
+<h2>What the application accesses</h2>
+<p>When the channel owner signs in with Google, the application requests these scopes, and uses them
+only against that signed-in owner's own YouTube channel:</p>
+<ul>
+  <li><code>youtube.upload</code> &mdash; to upload our own episode and clip files and set their thumbnails.</li>
+  <li><code>youtube.force-ssl</code> &mdash; to attach the caption tracks we generate for our own videos and
+      to add those videos to our own playlists.</li>
+  <li><code>youtube.readonly</code> &mdash; to read our own upload list and our own public view counts, so our
+      internal tracking page knows which episodes are already published.</li>
+</ul>
+
+<h2>What is stored, and where</h2>
+<ul>
+  <li>An OAuth refresh token, stored as a file on the channel owner's own computer. It is not stored on
+      any server, and there is no server.</li>
+  <li>Video titles, descriptions, tags, caption files and thumbnail images that we wrote and produced
+      ourselves, held locally as part of our ordinary production workflow.</li>
+</ul>
+
+<h2>What we do not collect</h2>
+<p>We do not collect, store, process or infer any information about viewers of our channel, or about any
+Google account other than the channel owner's own. The application contains no analytics, no telemetry,
+no tracking, no advertising, no database and no server component.</p>
+
+<h2>Sharing and disclosure</h2>
+<p>No data is sold, shared, transferred or disclosed to any third party. The only network destinations
+the application contacts are Google's own API endpoints.</p>
+
+<div class="box">
+  <h2 style="margin-top:0">Limited Use</h2>
+  <p>This application's use of information received from Google APIs adheres to the
+  <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User
+  Data Policy</a>, including the Limited Use requirements.</p>
+</div>
+
+<h2>YouTube API Services</h2>
+<p>This application uses YouTube API Services. By using it you agree to the
+<a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a>. Google's
+<a href="https://policies.google.com/privacy">Privacy Policy</a> describes how Google handles data.</p>
+
+<h2>Revoking access</h2>
+<p>The channel owner can revoke this application's access at any time at
+<a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Deleting the
+local token file also stops the application immediately.</p>
+
+<h2>Retention and deletion</h2>
+<p>The only piece of personal data the application holds is the local OAuth token described above. It is
+deleted by deleting that file; no copy exists anywhere else. Any other request relating to data can be
+sent to <a href="mailto:bcecomicspod@gmail.com">bcecomicspod@gmail.com</a>.</p>
+
+<h2>Children</h2>
+<p>The application is not directed at children and is not usable by anyone other than the channel owner.</p>
+
+<h2>Changes to this policy</h2>
+<p>Any change will be published on this page with an updated date above.</p>
+
+<footer>
+  <a href="./">BCE Comics Pod Uploader</a> &middot;
+  <a href="terms.html">Terms of Service</a> &middot;
+  <a href="https://www.youtube.com/@BCEComicsPod">YouTube channel</a>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "updated": "2026-10-04",
+  "minLead": 4,
+  "mainStart": "2026-10-01",
+  "patreonStart": "2026-10",
+  "books": [
+    {"id": "xm20", "lane": "main", "title": "X-Men Epic 20: Bishop's Crossing", "short": "X-Men 20", "parts": [{"recorded": "2026-09-13"}, {"recorded": "2026-09-17"}]},
+    {"id": "morb2", "lane": "main", "title": "Morbius Epic 2: The End of a Living Vampire", "short": "Morbius 2", "parts": [{"recorded": "2026-09-24"}, {"recorded": "2026-09-27"}]},
+    {"id": "lostmarvels", "lane": "main", "title": "Lost Marvels: Tower of Shadows", "short": "Lost Marvels", "parts": [{}]},
+    {"id": "xm21", "lane": "main", "title": "X-Men Epic 21 & X-Force Epic 2: The X-Cutioner's Song", "short": "X-Cutioner's Song", "parts": [{}, {}]},
+    {"id": "batditf", "lane": "main", "title": "Batman DC Finest: A Death in the Family", "short": "Batman", "parts": [{}, {}]},
+    {"id": "xm22", "lane": "main", "title": "X-Men Epic 22: Legacies", "short": "X-Men 22", "parts": [{}, {}]},
+    {"id": "thor25", "lane": "main", "title": "Thor Epic 25: The Dark Gods", "short": "Thor 25", "parts": [{}, {}]},
+    {"id": "yir2026", "lane": "main", "title": "2026: A Year in Review (Rerank Show)", "short": "Year in Review", "parts": [{}]},
+    {"id": "na1", "lane": "patreon", "title": "New Avengers Modern Epic 1: Assembled", "short": "New Avengers 1", "parts": [{"recorded": "2026-09-20"}]},
+    {"id": "na2", "lane": "patreon", "title": "New Avengers Modern Epic 2: Civil War", "short": "New Avengers 2", "parts": [{"recorded": "2026-10-04"}]},
+    {"id": "na3", "lane": "patreon", "title": "New Avengers Modern Epic 3: The Initiative", "short": "New Avengers 3", "parts": [{}]},
+    {"id": "na4", "lane": "patreon", "title": "New Avengers Modern Epic 4", "short": "New Avengers 4", "parts": [{}]}
+  ],
+  "off": [
+    {"from": "2026-11-15", "to": "2026-12-12", "label": "Time off (guess)"},
+    {"from": "2026-12-20", "to": "2027-01-02", "label": "Holidays (guess)"}
+  ],
+  "extra": []
+}

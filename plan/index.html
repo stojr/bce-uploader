@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex, nofollow">
+<title>BCE Recording Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+/* Same family as /legacy: charcoal band, red top rule, yellow = we have it, red = a hole.
+   Layout: three facts, a strip of every drop, then one of two views of the same plan (calendar or list). */
+:root{color-scheme:dark;--ground:#141416;--band:#303030;--panel:#1e1e21;--panel-2:#27272b;--ink:#F6F3EA;--ink-2:#C9C5BA;--ink-3:#8F8C84;
+ --line:rgba(246,243,234,.16);--accent:#F0F051;--on-accent:#17170F;--red:#ED1D24;--red-ink:#FF6166;--tight:#FFB04A;
+ --display:Impact,"Anton","Arial Narrow Bold",sans-serif;--label:"Barlow Condensed","Arial Narrow",Arial,sans-serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--label);font-size:18px;line-height:1.3;font-variant-numeric:tabular-nums}
+body.bar-open{padding-bottom:210px}
+h1,h2,p{margin:0}
+button{font:inherit;color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:0 56px;display:flex;flex-direction:column;gap:22px}
+header{background:var(--band);border-top:6px solid var(--red);border-bottom:4px solid var(--accent);margin-inline:-16px;padding:16px 16px 12px}
+.hin{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 32px}
+.chip{font-family:var(--display);font-size:17px;color:#fff;background:var(--red);padding:3px 10px 2px;margin-right:12px}
+.seg{font-weight:700;font-size:16px;letter-spacing:.22em;color:var(--accent)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,56px);line-height:1;text-transform:uppercase;margin-top:8px}
+.upd{color:var(--ink-3);font-size:15px;letter-spacing:.04em}
+.lab{font-weight:700;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.fact{background:var(--panel);border-left:5px solid var(--ink-3);padding:10px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.fact .big{font-family:var(--display);font-size:30px;line-height:1.05;text-transform:uppercase}
+.fact .sub{color:var(--ink-2);font-size:17px}
+.fact.have{border-left-color:var(--accent)} .fact.have .big{color:var(--accent)}
+.fact.need{border-left-color:var(--red-ink)} .fact.need .big{color:var(--red-ink)}
+.fact.clear{border-left-color:var(--accent)}
+
+.run{display:flex;flex-direction:column;gap:8px}
+.run-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;align-items:baseline}
+.run-h .cnt{color:var(--ink-2);font-size:16px}
+.blocks{display:flex;flex-wrap:wrap;gap:5px}
+.blk{appearance:none;width:46px;height:46px;padding:0;border:2px solid var(--ink-2);background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;cursor:pointer;position:relative}
+.blk b{font-size:11px;letter-spacing:.1em;font-weight:700}
+.blk span{font-family:var(--display);font-size:19px}
+.blk em{position:absolute;top:1px;right:3px;font-style:normal;font-size:10px;font-weight:700}
+
+.st-have{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.st-plan{border-color:var(--ink-2);color:var(--ink)}
+.st-tight{border-color:var(--tight);color:var(--tight)}
+.st-miss{border-style:dashed;border-color:var(--red-ink);color:var(--red-ink)}
+.st-out{background:var(--panel-2);color:var(--ink-3);border-color:transparent}
+.st-open{border-style:dashed;border-color:var(--ink-3);color:var(--ink-3)}
+
+.bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.segc{display:inline-flex;border:2px solid var(--ink-3)}
+.segc button{appearance:none;border:0;background:transparent;padding:6px 18px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:16px;cursor:pointer;color:var(--ink-2)}
+.segc button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.btn{appearance:none;border:2px solid var(--ink-3);background:transparent;padding:6px 14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:15px;cursor:pointer;color:var(--ink)}
+.btn:hover{border-color:var(--ink)}
+.btn.on,.btn.solid{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.sm{padding:2px 9px;font-size:14px}
+.btn:disabled{opacity:.3;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.draft{background:var(--panel);border:2px solid var(--accent);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.draft p{font-size:17px}
+.draft .said{color:var(--accent);font-weight:600}
+.draft-row{display:flex;flex-wrap:wrap;gap:8px}
+.draft input{flex:1 1 220px;min-width:0;font:inherit;font-size:17px;padding:6px 9px;background:var(--ground);color:var(--ink);border:2px solid var(--ink-3)}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--ink-2);font-size:15px;align-items:center}
+.legend i{display:inline-block;width:20px;height:12px;border:2px solid;vertical-align:-1px;margin-right:6px}
+.legend .hatch{border-color:var(--ink-3);background:repeating-linear-gradient(135deg,transparent 0 4px,var(--ink-3) 4px 5px)}
+
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.dh{padding:4px 7px;font-weight:700;letter-spacing:.16em;font-size:13px;color:var(--ink-3);background:var(--band);border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-transform:uppercase}
+.dh .s{display:none}
+.day{appearance:none;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel);text-align:left;padding:5px;min-height:96px;min-width:0;display:flex;flex-direction:column;gap:4px;cursor:pointer}
+.day.alt{background:var(--panel-2)}
+.day.past{opacity:.45}
+.day.off{background-image:repeating-linear-gradient(135deg,transparent 0 8px,rgba(246,243,234,.09) 8px 10px)}
+.day.sel{outline:3px solid var(--accent);outline-offset:-3px}
+.dn{font-weight:700;font-size:15px;color:var(--ink-2);display:flex;gap:6px;align-items:baseline;white-space:nowrap}
+.day.today .dn span{background:var(--red);color:#fff;padding:0 6px}
+.dn small{font-size:11px;letter-spacing:.14em;color:var(--ink-3);font-weight:700}
+.ev{border:2px solid;padding:2px 6px;font-size:15px;line-height:1.12;display:flex;flex-direction:column;min-width:0}
+.ev i{font-style:normal;font-weight:700;font-size:10.5px;letter-spacing:.14em;opacity:.85}
+.ev b{font-weight:600;overflow-wrap:anywhere}
+.ev.rec{border-radius:12px}
+.ev.hl{box-shadow:0 0 0 2px var(--ground),0 0 0 4px var(--ink)}
+
+.list{display:flex;flex-direction:column}
+.mh{font-family:var(--display);font-size:24px;text-transform:uppercase;margin:16px 0 6px}
+.mh:first-child{margin-top:0}
+.row,.rowh{display:grid;grid-template-columns:26px minmax(0,1fr) 170px 120px;gap:14px;align-items:center;padding:8px 10px}
+.rowh{padding-block:0 4px}
+.row{background:var(--panel);border-bottom:1px solid var(--line)}
+.mark{width:22px;height:22px;border:2px solid;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;line-height:1}
+.ttl{min-width:0;overflow-wrap:anywhere;font-size:19px;font-weight:600}
+.ttl .pt{color:var(--ink-2);font-weight:500}
+.ttl .tag{font-size:12px;letter-spacing:.14em;font-weight:700;color:var(--accent);margin-left:8px;white-space:nowrap}
+.ttl .mv{display:inline-flex;gap:4px;margin-left:10px;vertical-align:1px}
+.cell small{display:none;color:var(--ink-3);font-size:12px;letter-spacing:.14em;font-weight:700;text-transform:uppercase;margin-right:6px}
+.cell.bad{color:var(--red-ink)} .cell.warn{color:var(--tight)} .cell.dim{color:var(--ink-2)}
+
+.daybar{position:fixed;left:0;right:0;bottom:0;background:var(--band);border-top:4px solid var(--accent);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));z-index:5;max-height:60vh;overflow:auto}
+.daybar-in{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.daybar-h{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.daybar h2{font-family:var(--display);font-weight:400;font-size:24px;text-transform:uppercase}
+.daybar p{font-size:18px}
+.daybar p b{color:var(--ink)}
+.daybar .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:14px;background:var(--ink);color:var(--ground);padding:8px 14px;font-weight:700;z-index:9;max-width:calc(100vw - 32px)}
+footer{color:var(--ink-3);font-size:16px;max-width:75ch}
+[hidden]{display:none !important}
+
+@media (max-width:720px){
+  .cal{grid-template-columns:2.5fr .62fr .62fr .62fr 2.5fr .62fr .62fr}
+  .dh{padding:4px 2px;text-align:center;letter-spacing:.06em}
+  .dh .l{display:none} .dh .s{display:inline}
+  .day{min-height:76px;padding:3px}
+  .dn{font-size:13px;flex-direction:column;gap:0}
+  .ev{font-size:13.5px;padding:2px 4px}
+  .ev i{display:none}
+  .ev.pat i{display:block}
+  .day.nw .ev{padding:1px 0;align-items:center}
+  .day.nw .ev b{display:none}
+  .day.nw .ev i{display:block;font-size:0;letter-spacing:0;opacity:1}
+  .day.nw .ev i::before{content:attr(data-s);font-size:12px}
+  .day.nw .dn{white-space:normal;line-height:1.05}
+  .blk{width:38px;height:40px} .blk span{font-size:17px}
+  .row{grid-template-columns:26px minmax(0,1fr);grid-template-areas:"mk tt" ". rc" ". dr";gap:2px 10px}
+  .rowh{display:none}
+  .mark{grid-area:mk} .ttl{grid-area:tt} .cell.rc{grid-area:rc} .cell.dr{grid-area:dr}
+  .cell small{display:inline}
+  .fact .big{font-size:26px}
+}
+</style></head><body>
+<div class="wrap">
+  <header><div class="hin">
+    <div><span class="chip">BCE COMICS POD</span><span class="seg">RECORD AHEAD</span><h1>Recording Plan</h1></div>
+    <div class="upd" id="upd"></div>
+  </div></header>
+
+  <section class="facts" id="facts">
+    <div class="fact"><span class="lab">What we have</span><span class="big">&ndash;</span><span class="sub">Loading the plan&hellip;</span></div>
+    <div class="fact"><span class="lab">Next recording</span><span class="big">&ndash;</span><span class="sub">&nbsp;</span></div>
+    <div class="fact"><span class="lab">What we still need</span><span class="big">&ndash;</span><span class="sub">&nbsp;</span></div>
+  </section>
+
+  <section class="run">
+    <div class="run-h"><span class="lab" id="runLab">Every drop coming up</span><span class="cnt" id="runCnt"></span></div>
+    <div class="blocks" id="blocks"></div>
+  </section>
+
+  <div class="bar">
+    <div class="segc" role="group" aria-label="View">
+      <button id="vCal" data-act="view" data-v="cal" aria-pressed="true">Calendar</button>
+      <button id="vList" data-act="view" data-v="list" aria-pressed="false">List</button>
+    </div>
+    <button class="btn" id="tryBtn" data-act="try" aria-pressed="false">Try changes</button>
+  </div>
+
+  <section class="draft" id="draft" hidden>
+    <p id="draftMsg"></p>
+    <p class="said" id="draftNote" hidden></p>
+    <div class="draft-row">
+      <input id="note" maxlength="280" placeholder="Add a note for your co-host (optional)" autocomplete="off">
+      <button class="btn solid" data-act="share">Share this version</button>
+      <button class="btn" data-act="reset">Back to the saved plan</button>
+    </div>
+    <input id="lnk" readonly hidden aria-label="Link to this version">
+  </section>
+
+  <div class="legend">
+    <span><i class="st-have"></i>Recorded</span>
+    <span><i class="st-plan"></i>Planned</span>
+    <span><i class="st-miss"></i>No recording date yet</span>
+    <span><i class="hatch"></i>Not recording</span>
+    <span>Rounded = a recording session &middot; square = an episode drop</span>
+  </div>
+
+  <section id="view"><p class="upd">The calendar appears here once the plan loads.</p></section>
+
+  <footer>Main episodes drop every Thursday in the order of the list, and the Patreon episode drops on the 1st. Each recording session takes whatever drops next. Changes you try here stay on your own device until you share the link.</footer>
+</div>
+
+<div class="daybar" id="daybar" hidden><div class="daybar-in">
+  <div class="daybar-h"><h2 id="dbT"></h2><button class="btn sm" data-act="close">Close</button></div>
+  <div id="dbB"></div>
+</div></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+/*PURE-START*/
+var DAY=86400000, MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    MONL=['January','February','March','April','May','June','July','August','September','October','November','December'],
+    DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function pad(n){return String(n).padStart(2,'0')}
+function d2n(s){var p=String(s).split('-').map(Number);return Math.round(Date.UTC(p[0],p[1]-1,p[2])/DAY)}
+function n2d(n){return new Date(n*DAY).toISOString().slice(0,10)}
+function dow(n){return ((((n%7)+7)%7)+4)%7}
+function nextDow(n,w){return n+((w-dow(n)+7)%7)}
+function parts(n){var d=new Date(n*DAY);return{y:d.getUTCFullYear(),m:d.getUTCMonth(),d:d.getUTCDate()}}
+function fmt(n){var p=parts(n);return DOW[dow(n)]+' '+MON[p.m]+' '+p.d}
+function fmtS(n){var p=parts(n);return MON[p.m]+' '+p.d}
+function isDate(s){return /^\d{4}-\d{2}-\d{2}$/.test(s||'')}
+
+/* The saved plan, reduced to the things a person can change on this page. */
+function baseDraft(plan){
+  var off={};
+  (plan.off||[]).forEach(function(o){ if(!isDate(o.from)||!isDate(o.to))return; for(var n=nextDow(d2n(o.from),0);n<=d2n(o.to);n+=7)off[n2d(n)]=1 });
+  return{m:plan.books.filter(function(b){return b.lane!=='patreon'}).map(function(b){return b.id}),
+         p:plan.books.filter(function(b){return b.lane==='patreon'}).map(function(b){return b.id}),
+         off:Object.keys(off).sort(), x:(plan.extra||[]).filter(isDate).sort(), note:''};
+}
+
+function compute(plan,d,today){
+  var minLead=plan.minLead==null?4:Math.max(0,+plan.minLead||0), byId={};
+  plan.books.forEach(function(b){byId[b.id]=b});
+  function lane(ids,isPat){
+    var seen={},out=[];
+    (ids||[]).concat(plan.books.map(function(b){return b.id})).forEach(function(id){
+      var b=byId[id]; if(!b||seen[id]||((b.lane==='patreon')!==isPat))return; seen[id]=1;
+      var ps=(b.parts&&b.parts.length)?b.parts:[{}];
+      ps.forEach(function(p,k){out.push({id:id+'.'+(k+1),book:id,first:k===0,lane:isPat?'patreon':'main',title:b.title,short:b.short||b.title,part:ps.length>1?'Pt '+(k+1):'',recorded:p.recorded||'',pin:p.pin||'',norec:!!b.norecord})});
+    });
+    return out;
+  }
+  var main=lane(d.m,false), pat=lane(d.p,true);
+
+  // Drop dates: main takes Thursdays in order, Patreon the 1st of each month.
+  var pins={}; main.forEach(function(i){if(isDate(i.pin))pins[d2n(i.pin)]=1});
+  var cur=nextDow(isDate(plan.mainStart)?d2n(plan.mainStart):today,4);
+  main.forEach(function(it){if(isDate(it.pin)){it.rel=d2n(it.pin);return}while(pins[cur])cur+=7;it.rel=cur;cur+=7});
+  var ppins={}; pat.forEach(function(i){if(isDate(i.pin))ppins[d2n(i.pin)]=1});
+  var a=/^\d{4}-\d{2}/.test(plan.patreonStart||'')?plan.patreonStart:n2d(today), y=+a.slice(0,4), m=+a.slice(5,7);
+  function first(){return Math.round(Date.UTC(y,m-1,1)/DAY)} function step(){m++;if(m>12){m=1;y++}}
+  pat.forEach(function(it){if(isDate(it.pin)){it.rel=d2n(it.pin);return}while(ppins[first()])step();it.rel=first();step()});
+
+  var all=main.concat(pat);
+  var lastRel=all.reduce(function(mx,i){return Math.max(mx,i.rel)},today);
+  var ws0=today-dow(today), end=Math.max(lastRel+14,today+91); end+=6-dow(end);
+
+  // Sessions: every Sunday that is not marked off, plus the added ones.
+  var offSet={}; (d.off||[]).forEach(function(s){offSet[s]=1});
+  var S=[],n;
+  for(n=nextDow(today,0);n<=end;n+=7)S.push({n:n,kind:'sun',off:!!offSet[n2d(n)],item:null,done:false});
+  (d.x||[]).forEach(function(s){if(!isDate(s))return;var xn=d2n(s);if(xn>=today&&xn<=end)S.push({n:xn,kind:'extra',off:false,item:null,done:false})});
+  function sortS(){S.sort(function(p,q){return p.n-q.n||(p.kind===q.kind?0:p.kind==='sun'?-1:1)})}
+  sortS();
+  all.forEach(function(it){
+    it.recN=isDate(it.recorded)?d2n(it.recorded):null; it.rec=null; it.lead=null;
+    if(it.recN!=null&&it.recN>=ws0){
+      var s=S.find(function(s){return s.n===it.recN&&!s.item&&!s.off});
+      if(s){s.item=it;s.done=true}else S.push({n:it.recN,kind:'done',off:false,item:it,done:true});
+    }
+  });
+  sortS();
+
+  // Each open session records the next thing that has not dropped yet.
+  var need=all.filter(function(i){return !i.norec&&i.recN==null&&i.rel>=today}).sort(function(p,q){return p.rel-q.rel||(p.lane===q.lane?0:p.lane==='main'?-1:1)});
+  S.forEach(function(s){ if(s.off||s.done||s.item)return; var it=need.find(function(i){return i.rec==null&&i.rel>s.n}); if(it){s.item=it;it.rec=s.n} });
+  all.forEach(function(it){
+    if(it.norec){it.state=it.rel<today?'out':'gap';return}
+    if(it.rel<today){it.state='out';return}
+    if(it.recN!=null){it.state='can';it.lead=it.rel-it.recN;return}
+    if(it.rec==null){it.state='miss';return}
+    it.lead=it.rel-it.rec; it.state=it.lead<minLead?'tight':'ok';
+  });
+
+  var rw=null,banked=0,t,it;
+  for(t=nextDow(today,4);t<=end;t+=7){ it=main.find(function(i){return i.rel===t}); if(it&&(it.state==='can'||it.state==='gap')){rw=t;if(it.state==='can')banked++}else break }
+  var prw=null, tp=parts(today), py=tp.y, pm=tp.m+1, f, k, firsts=[];
+  for(k=0;k<30;k++){ f=Math.round(Date.UTC(py,pm-1,1)/DAY); if(f>=today&&f<=end)firsts.push(f); pm++; if(pm>12){pm=1;py++} }
+  for(k=0;k<firsts.length;k++){ it=pat.find(function(i){return i.rel===firsts[k]}); if(it&&(it.state==='can'||it.state==='gap')){prw=firsts[k];if(it.state==='can')banked++}else break }
+
+  var upcoming=all.filter(function(i){return i.rel>=today}).sort(function(p,q){return p.rel-q.rel||(p.lane==='main'?-1:1)});
+  var cnt={have:0,plan:0,miss:0};
+  upcoming.forEach(function(i){ if(i.state==='can')cnt.have++; else if(i.state==='ok'||i.state==='tight')cnt.plan++; else if(i.state==='miss')cnt.miss++ });
+  var nextS=S.find(function(s){return !s.off&&!s.done&&s.item})||null;
+  var firstMiss=need.find(function(i){return i.state==='miss'})||null;
+
+  var days={};
+  function day(n){return days[n]||(days[n]={recs:[],drops:[]})}
+  S.forEach(function(s){day(s.n).recs.push(s)});
+  all.forEach(function(i){ if(i.rel>=ws0&&i.rel<=end)day(i.rel).drops.push({item:i,lane:i.lane}) });
+  for(t=nextDow(today,4);t<=end;t+=7){ if(!main.some(function(i){return i.rel===t}))day(t).drops.push({item:null,lane:'main'}) }
+  firsts.forEach(function(f){ if(!pat.some(function(i){return i.rel===f}))day(f).drops.push({item:null,lane:'patreon'}) });
+
+  function order(L){var o=[];L.forEach(function(i){if(o.indexOf(i.book)<0)o.push(i.book)});return o}
+  return{today:today,ws0:ws0,end:end,minLead:minLead,main:main,pat:pat,all:all,need:need,S:S,days:days,rw:rw,prw:prw,banked:banked,
+         upcoming:upcoming,cnt:cnt,nextS:nextS,firstMiss:firstMiss,lastRel:lastRel,orderM:order(main),orderP:order(pat)};
+}
+/*PURE-END*/
+
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function todayN(){var t=new Date();return d2n(t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate()))}
+function days(n){return n+(n===1?' day':' days')}
+function full(it){return esc(it.title)+(it.part?', '+esc(it.part):'')}
+function brief(it){return esc(it.short)+(it.part?' &middot; '+esc(it.part):'')}
+function cls(st){return st==='can'?'st-have':st==='ok'?'st-plan':st==='tight'?'st-tight':st==='miss'?'st-miss':st==='gap'?'st-open':'st-out'}
+function fifth(n){return dow(n)===4&&parts(n).d>=29}
+var KEY='bcePlanDraft';
+
+var plan=null, base=null, draft=null, P=null, view='cal', trying=false, shared=false, sel=null, toastT=0;
+
+function toast(msg){var t=$('toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true},3600)}
+function core(d){return{m:d.m,p:d.p,off:d.off.slice().sort(),x:d.x.slice().sort()}}
+function changed(){return JSON.stringify(core(draft))!==JSON.stringify(core(base))}
+function clone(d){return{m:d.m.slice(),p:d.p.slice(),off:d.off.slice(),x:d.x.slice(),note:d.note||''}}
+function encode(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function decode(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}
+function clean(o){
+  var arr=function(a,ok){return Array.isArray(a)?a.filter(ok).slice(0,400):[]}, str=function(s){return typeof s==='string'};
+  return{m:arr(o.m,str),p:arr(o.p,str),off:arr(o.off,isDate),x:arr(o.x,isDate),note:str(o.note)?o.note.slice(0,280):''};
+}
+function save(){try{ if(changed()||draft.note)localStorage.setItem(KEY,JSON.stringify(draft)); else localStorage.removeItem(KEY) }catch(e){}}
+function offLabel(n){var s=n2d(n),o=(plan.off||[]).find(function(o){return s>=o.from&&s<=o.to});return o&&o.label?o.label:'Day off'}
+
+function render(){
+  P=compute(plan,draft,todayN());
+  // keep the draft's book order complete and in step with what is shown
+  draft.m=P.orderM; draft.p=P.orderP;
+  renderFacts();renderRun();renderDraft();
+  if(view==='cal')renderCal();else renderList();
+  $('vCal').setAttribute('aria-pressed',view==='cal'); $('vList').setAttribute('aria-pressed',view==='list');
+  $('tryBtn').setAttribute('aria-pressed',trying); $('tryBtn').classList.toggle('on',trying);
+  $('tryBtn').textContent=trying?'Trying changes':'Try changes';
+  renderBar();
+}
+
+function fact(c,lab,big,sub){return '<div class="fact '+c+'"><span class="lab">'+lab+'</span><span class="big">'+big+'</span><span class="sub">'+sub+'</span></div>'}
+function renderFacts(){
+  var h='', ns=P.nextS, fm=P.firstMiss;
+  h+=fact(P.rw!=null?'have':'need','What we have',P.rw!=null?'Recorded through '+esc(fmtS(P.rw)):'Nothing recorded ahead',
+    P.banked+' episode'+(P.banked===1?'':'s')+' in the can'+(P.rw!=null?' &middot; '+days(P.rw-P.today)+' of runway':'')+(P.prw!=null?' &middot; Patreon through '+esc(fmtS(P.prw)):''));
+  h+=fact('','Next recording',ns?esc(fmt(ns.n)):'None planned',ns?full(ns.item)+'. Drops '+esc(fmtS(ns.item.rel))+'.':'Nothing is waiting to be recorded.');
+  h+=fact(P.cnt.miss?'need':'clear','What we still need',P.cnt.miss?P.cnt.miss+' with no recording date':'Every drop has a date',
+    P.cnt.miss?'First one: '+esc(fm.short)+(fm.part?' '+esc(fm.part):'')+', due '+esc(fmt(fm.rel))+'.':P.cnt.plan+' still to record, each with a session.');
+  $('facts').innerHTML=h;
+}
+function renderRun(){
+  var last=P.upcoming.length?P.upcoming[P.upcoming.length-1].rel:null;
+  $('runLab').textContent=last!=null?'Every drop through '+fmtS(last):'Every drop coming up';
+  $('runCnt').innerHTML=P.cnt.have+' recorded &middot; '+P.cnt.plan+' planned &middot; '+P.cnt.miss+' with no date';
+  $('blocks').innerHTML=P.upcoming.map(function(i){var p=parts(i.rel);
+    return '<button class="blk '+cls(i.state)+'" data-n="'+i.rel+'" title="'+esc(i.title+(i.part?' '+i.part:''))+'"><b>'+MON[p.m].toUpperCase()+'</b><span>'+p.d+'</span>'+(i.lane==='patreon'?'<em>P</em>':'')+'</button>'}).join('');
+}
+function renderDraft(){
+  var ch=changed(), box=$('draft');
+  box.hidden=!(trying||ch||shared);
+  var bo=core(base), dc=core(draft), bits=[];
+  var offAdd=dc.off.filter(function(s){return bo.off.indexOf(s)<0}).length, offDel=bo.off.filter(function(s){return dc.off.indexOf(s)<0}).length;
+  if(offAdd)bits.push(offAdd+' more Sunday'+(offAdd===1?'':'s')+' off');
+  if(offDel)bits.push(offDel+' Sunday'+(offDel===1?'':'s')+' back on');
+  var xd=dc.x.length-bo.x.length; if(xd>0)bits.push(xd+' session'+(xd===1?'':'s')+' added'); else if(xd<0)bits.push((-xd)+' session'+(xd===-1?'':'s')+' removed');
+  if(JSON.stringify(dc.m)!==JSON.stringify(bo.m)||JSON.stringify(dc.p)!==JSON.stringify(bo.p))bits.push('the book order changed');
+  $('draftMsg').textContent=shared?'This is a version someone shared, not the saved plan'+(bits.length?': '+bits.join(', ')+'.':'.')
+    :ch?'Not the saved plan. You changed: '+bits.join(', ')+'.'
+    :'Tap a day on the calendar to take it off or add a session, or use the arrows in the list to move a book. Nothing is saved until you share it.';
+  var dn=$('draftNote'); dn.hidden=!(shared&&draft.note); dn.textContent=shared&&draft.note?'Note: '+draft.note:'';
+  if(document.activeElement!==$('note'))$('note').value=shared?'':draft.note;
+}
+
+function evRec(s){
+  if(s.off)return '';
+  if(!s.item)return '<span class="ev rec st-open"><i data-s="R">REC</i><b>Open</b></span>';
+  return '<span class="ev rec '+(s.done?'st-have':cls(s.item.state))+'" data-item="'+esc(s.item.id)+'"><i data-s="R">REC</i><b>'+brief(s.item)+'</b></span>';
+}
+function evDrop(d){
+  var pat=d.lane==='patreon', k=pat?'PATREON':'DROP';
+  if(!d.item)return '<span class="ev drop st-open'+(pat?' pat':'')+'"><i data-s="'+k.charAt(0)+'">'+k+'</i><b>Open</b></span>';
+  return '<span class="ev drop '+cls(d.item.state)+(pat?' pat':'')+'" data-item="'+esc(d.item.id)+'"><i data-s="'+k.charAt(0)+'">'+k+'</i><b>'+brief(d.item)+'</b></span>';
+}
+function renderCal(){
+  var h=DOWL.map(function(x){return '<div class="dh"><span class="l">'+x.slice(0,3)+'</span><span class="s">'+x.charAt(0)+'</span></div>'}).join('');
+  for(var n=P.ws0;n<=P.end;n++){
+    var p=parts(n), w=dow(n), d=P.days[n]||{recs:[],drops:[]}, c='day';
+    if(p.m%2)c+=' alt'; if(n<P.today)c+=' past'; if(n===P.today)c+=' today'; if(n===sel)c+=' sel';
+    if(w!==0&&w!==4)c+=' nw';
+    var off=d.recs.some(function(s){return s.off}); if(off)c+=' off';
+    h+='<button class="'+c+'" data-n="'+n+'" aria-label="'+esc(DOWL[w]+', '+MONL[p.m]+' '+p.d)+'">'
+      +'<span class="dn"><span>'+((p.d===1||n===P.ws0)?MON[p.m]+' ':'')+p.d+'</span>'+(off?'<small>OFF</small>':'')+'</span>'
+      +d.recs.map(evRec).join('')+d.drops.map(evDrop).join('')+'</button>';
+  }
+  $('view').innerHTML='<div class="cal">'+h+'</div>';
+  markLinks();
+}
+function markLinks(){
+  if(view!=='cal'||sel==null)return;
+  var d=P.days[sel]; if(!d)return; var ids={};
+  d.recs.forEach(function(s){if(s.item)ids[s.item.id]=1}); d.drops.forEach(function(x){if(x.item)ids[x.item.id]=1});
+  [].forEach.call(document.querySelectorAll('.ev[data-item]'),function(e){ if(ids[e.getAttribute('data-item')])e.classList.add('hl') });
+}
+function renderList(){
+  var h='', mo=-1, books={};
+  P.orderM.forEach(function(id,i){books[id]={lane:'m',i:i,n:P.orderM.length}}); P.orderP.forEach(function(id,i){books[id]={lane:'p',i:i,n:P.orderP.length}});
+  P.upcoming.forEach(function(it){
+    var p=parts(it.rel), key=p.y*12+p.m;
+    if(key!==mo){mo=key;h+='<h2 class="mh">'+MONL[p.m]+' '+p.y+'</h2><div class="rowh lab"><span></span><span>Episode</span><span>Record</span><span>Drops</span></div>'}
+    var mk=it.state==='can'?'&#10003;':it.state==='miss'?'!':'';
+    var rc=it.state==='can'?'<span class="cell rc">&#10003; '+esc(fmtS(it.recN))+'</span>'
+      :it.state==='ok'?'<span class="cell rc">'+esc(fmt(it.rec))+'</span>'
+      :it.state==='tight'?'<span class="cell rc warn">'+esc(fmt(it.rec))+', only '+days(it.lead)+' before</span>'
+      :it.state==='gap'?'<span class="cell rc dim">No recording needed</span>'
+      :'<span class="cell rc bad">No date yet</span>';
+    var mv='';
+    if(trying&&it.first){var b=books[it.book];
+      mv='<span class="mv"><button class="btn sm" data-act="move" data-id="'+esc(it.book)+'" data-dir="-1" aria-label="Move this book earlier"'+(b.i===0?' disabled':'')+'>&#9650;</button>'
+        +'<button class="btn sm" data-act="move" data-id="'+esc(it.book)+'" data-dir="1" aria-label="Move this book later"'+(b.i===b.n-1?' disabled':'')+'>&#9660;</button></span>'}
+    h+='<div class="row"><span class="mark '+cls(it.state)+'">'+mk+'</span>'
+      +'<span class="ttl">'+esc(it.title)+(it.part?' <span class="pt">'+esc(it.part)+'</span>':'')+(it.lane==='patreon'?'<span class="tag">PATREON</span>':'')+(fifth(it.rel)?'<span class="tag">5TH THURSDAY</span>':'')+mv+'</span>'
+      +rc.replace('">','"><small>Record</small>')
+      +'<span class="cell dr"><small>Drops</small>'+esc(fmt(it.rel))+'</span></div>';
+  });
+  $('view').innerHTML='<div class="list">'+(h||'<p class="upd">Nothing is queued.</p>')+'</div>';
+}
+
+function renderBar(){
+  var bar=$('daybar');
+  if(sel==null||sel<P.ws0||sel>P.end){bar.hidden=true;document.body.classList.remove('bar-open');return}
+  var p=parts(sel), d=P.days[sel]||{recs:[],drops:[]}, h='', acts='', w=dow(sel);
+  $('dbT').textContent=DOWL[w]+', '+MONL[p.m]+' '+p.d;
+  d.recs.forEach(function(s){
+    if(s.off){h+='<p>Not recording: '+esc(offLabel(s.n))+'.</p>';return}
+    if(!s.item){h+='<p>Recording session with nothing left to record. A good day to bank one.</p>';return}
+    var it=s.item;
+    if(s.done)h+='<p>Recorded <b>'+full(it)+'</b>. It drops '+esc(fmt(it.rel))+'.</p>';
+    else h+='<p>Record <b>'+full(it)+'</b>. It drops '+esc(fmt(it.rel))+', '+days(it.lead)+' later'+(it.state==='tight'?', which is cutting it close':'')+'.</p>';
+  });
+  d.drops.forEach(function(x){
+    var it=x.item, who=x.lane==='patreon'?'Patreon: ':'';
+    if(!it){h+='<p>'+who+'open slot. Nothing is queued for this '+(x.lane==='patreon'?'month':'Thursday')+(fifth(sel)?' (a 5th Thursday)':'')+'.</p>';return}
+    var t=who+'<b>'+full(it)+'</b> drops'+(fifth(sel)&&x.lane==='main'?' (5th Thursday)':'')+'. ';
+    if(it.state==='out')t+='Already out.';
+    else if(it.state==='can')t+='Recorded '+esc(fmtS(it.recN))+'.';
+    else if(it.state==='ok')t+='Recording planned for '+esc(fmt(it.rec))+'.';
+    else if(it.state==='tight')t+='Recording planned for '+esc(fmt(it.rec))+', only '+days(it.lead)+' before.';
+    else if(it.state==='gap')t+='Planned break, no recording needed.';
+    else t+='<span style="color:var(--red-ink)">There is no recording date for it yet.</span>';
+    h+='<p>'+t+'</p>';
+  });
+  if(!h)h='<p>Nothing is planned for this day.</p>';
+  if(trying&&sel>=P.today){
+    var sun=d.recs.find(function(s){return s.kind==='sun'}), nx=d.recs.filter(function(s){return s.kind==='extra'}).length;
+    if(sun&&!sun.done)acts+='<button class="btn solid" data-act="off">'+(sun.off?'Record this Sunday after all':'Take this Sunday off')+'</button>';
+    acts+='<button class="btn" data-act="xadd">'+(w===0?'Add a second session':'Add a recording session')+'</button>';
+    if(nx)acts+='<button class="btn" data-act="xdel">Remove the added session</button>';
+  }
+  $('dbB').innerHTML=h+(acts?'<div class="acts">'+acts+'</div>':'');
+  bar.hidden=false; document.body.classList.add('bar-open');
+}
+
+function moveBook(id,dir){
+  var key=P.orderM.indexOf(id)>=0?'m':'p', arr=(key==='m'?P.orderM:P.orderP).slice(), i=arr.indexOf(id), j=i+dir;
+  if(i<0||j<0||j>=arr.length)return;
+  var isOut=function(b){return P.all.some(function(x){return x.book===b&&x.state==='out'})};
+  if(isOut(arr[i])||isOut(arr[j])){toast('Episodes that are already out stay where they are.');return}
+  var t=arr[i];arr[i]=arr[j];arr[j]=t; draft[key]=arr; shared=false; save(); render();
+}
+async function share(){
+  draft.note=$('note').value.trim();
+  var url=location.origin+location.pathname+'#v='+encode(clean(draft));
+  var text=(draft.note?draft.note+'\n\n':'')+'My version of the BCE recording plan:';
+  if(navigator.share){ try{await navigator.share({title:'BCE recording plan',text:text,url:url});return}catch(e){ if(e&&e.name==='AbortError')return } }
+  try{await navigator.clipboard.writeText(url);toast('Link copied. Send it to your co-host.')}
+  catch(e){var l=$('lnk');l.hidden=false;l.value=url;l.focus();l.select();toast('Copy this link and send it to your co-host.')}
+}
+
+document.addEventListener('click',function(ev){
+  if(!plan)return;
+  var a=ev.target.closest('[data-act]'), dn=ev.target.closest('[data-n]');
+  if(a){
+    var act=a.getAttribute('data-act');
+    if(act==='view'){view=a.getAttribute('data-v');try{localStorage.setItem('bcePlanView',view)}catch(e){}render()}
+    else if(act==='try'){trying=!trying;render()}
+    else if(act==='close'){sel=null;render()}
+    else if(act==='move')moveBook(a.getAttribute('data-id'),+a.getAttribute('data-dir'));
+    else if(act==='reset'){draft=clone(base);shared=false;trying=false;$('lnk').hidden=true;try{localStorage.removeItem(KEY)}catch(e){}if(location.hash.indexOf('#v=')===0)history.replaceState(null,'',location.pathname);render()}
+    else if(act==='share')share();
+    else if(sel!=null&&(act==='off'||act==='xadd'||act==='xdel')){
+      var s=n2d(sel), i;
+      if(act==='off'){i=draft.off.indexOf(s);if(i>=0)draft.off.splice(i,1);else draft.off.push(s)}
+      else if(act==='xadd')draft.x.push(s);
+      else{i=draft.x.lastIndexOf(s);if(i>=0)draft.x.splice(i,1)}
+      shared=false;save();render();
+    }
+    return;
+  }
+  if(dn){var n=+dn.getAttribute('data-n'); sel=(sel===n&&dn.classList.contains('day'))?null:n; if(view==='cal')renderCal(); renderBar()}
+});
+$('note').addEventListener('input',function(){draft.note=$('note').value;save()});
+
+function boot(json){
+  plan=json; base=baseDraft(plan); draft=clone(base);
+  try{var v=localStorage.getItem('bcePlanView');if(v==='list'||v==='cal')view=v}catch(e){}
+  if(location.hash==='#list')view='list'; if(location.hash==='#calendar')view='cal';
+  var got=null;
+  if(location.hash.indexOf('#v=')===0){try{got=clean(decode(location.hash.slice(3)));shared=true}catch(e){toast('That link could not be read. Showing the saved plan.')}}
+  if(!got){try{var raw=localStorage.getItem(KEY);if(raw)got=clean(JSON.parse(raw))}catch(e){}}
+  if(got){draft=got;trying=true}
+  if(plan.updated&&isDate(plan.updated))$('upd').textContent='Saved plan updated '+fmtS(d2n(plan.updated));
+  render();
+}
+fetch('plan.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(boot)
+  .catch(function(){$('view').innerHTML='<p class="upd">The plan could not be loaded. Reload the page in a moment.</p>'});
+})();
+</script>
+</body></html>

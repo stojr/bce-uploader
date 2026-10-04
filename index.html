@@ -3,102 +3,209 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BCE Comics Pod Uploader</title>
-<meta name="description" content="A private, single-user tool used by BCE Comics Pod to publish our own episodes to our own YouTube channel.">
+<title>BCE Comics Pod</title>
+<meta name="description" content="Nick and stojr read Marvel and DC runs cover to cover - collected editions, back issues, creator history, and whether the comics still hold up today.">
+<meta property="og:title" content="BCE Comics Pod">
+<meta property="og:description" content="Big collected editions, read cover to cover.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600&family=Inter:wght@400;500;600&display=swap">
 <style>
   :root{
-    --paper:#f5f4f2; --card:#ffffff; --ink:#1a1817; --body:#39353a;
-    --muted:#6d6763; --rule:#dcd8d3; --red:#cc2028;
+    /* straight off bce_intro.py - RED, RED_DEEP, WHITE */
+    --red:#ED1D24;
+    --red-deep:#9E1318;
+    --bone:#F5F5F5;
+    --paper:#f4f2f0;
+    --card:#ffffff;
+    --ink:#16141a;
+    --body:#3b3740;
+    --muted:#746d78;
+    --line:#ded8d3;
+    --shadow:0 1px 2px rgba(20,18,22,.07), 0 8px 24px rgba(20,18,22,.05);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --paper:#141312; --card:#1c1a19; --ink:#efedea; --body:#cbc5c0;
-      --muted:#8d8680; --rule:#333029; --red:#f4535b;
+      --paper:#121013; --card:#1c191e; --ink:#f2efec; --body:#ccc5cd;
+      --muted:#938b98; --line:#322d35;
+      --shadow:0 1px 2px rgba(0,0,0,.5), 0 8px 24px rgba(0,0,0,.35);
     }
   }
   :root[data-theme="dark"]{
-    --paper:#141312; --card:#1c1a19; --ink:#efedea; --body:#cbc5c0;
-    --muted:#8d8680; --rule:#333029; --red:#f4535b;
+    --paper:#121013; --card:#1c191e; --ink:#f2efec; --body:#ccc5cd;
+    --muted:#938b98; --line:#322d35;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 8px 24px rgba(0,0,0,.35);
   }
+
   *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
   body{
     margin:0; background:var(--paper); color:var(--body);
-    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px; line-height:1.6;
   }
-  .wrap{max-width:720px; margin:0 auto; padding:48px 20px 80px}
-  header{border-bottom:3px solid var(--red); padding-bottom:18px; margin-bottom:30px}
-  .kicker{
-    font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--red); font-weight:700; margin:0 0 8px;
+
+  /* ---- the intro card, as a page header ---- */
+  .hero{
+    background:linear-gradient(180deg,var(--red) 0%,var(--red) 38%,var(--red-deep) 100%);
+    color:var(--bone);
+    padding:clamp(46px,11vw,86px) 20px clamp(34px,8vw,58px);
+    text-align:center;
   }
-  h1{font-size:clamp(28px,6vw,38px); line-height:1.12; color:var(--ink); margin:0 0 10px}
-  .lede{font-size:17px; margin:0; max-width:60ch}
-  h2{font-size:19px; color:var(--ink); margin:34px 0 8px}
-  p,li{margin:0 0 12px}
-  ul{padding-left:22px}
-  a{color:var(--red)}
-  code{
-    font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:.88em;
-    background:var(--card); border:1px solid var(--rule); border-radius:3px; padding:1px 5px;
+  .markline{
+    display:flex; align-items:center; justify-content:center;
+    gap:clamp(12px,3.2vw,30px); max-width:980px; margin:0 auto;
   }
-  .links{display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 0}
+  .markline .rule{
+    flex:1 1 0; height:3px; background:var(--bone); max-width:190px;
+    opacity:.95; border-radius:2px;
+  }
+  h1{
+    font-family:Anton,Impact,"Haettenschweiler","Arial Narrow",sans-serif;
+    font-weight:400; margin:0; color:var(--bone);
+    font-size:clamp(38px,11.5vw,92px); line-height:.94;
+    letter-spacing:.012em; white-space:nowrap;
+  }
+  .tag{
+    font-family:"Barlow Condensed",system-ui,sans-serif; font-weight:600;
+    margin:clamp(12px,2.4vw,18px) 0 0;
+    font-size:clamp(13px,3.1vw,21px);
+    letter-spacing:.34em; text-indent:.34em;
+    text-transform:uppercase; color:var(--bone); opacity:.96;
+  }
+
+  /* ---- body ---- */
+  .wrap{max-width:620px; margin:0 auto; padding:0 20px 72px}
+  .blurb{
+    margin:clamp(28px,6vw,44px) 0 clamp(22px,5vw,32px);
+    font-size:clamp(16.5px,4vw,18.5px); line-height:1.55;
+    color:var(--ink); text-align:center; text-wrap:balance;
+  }
+  .blurb b{font-weight:600}
+
+  .links{display:grid; gap:11px; margin:0 0 34px}
   .links a{
-    display:inline-block; background:var(--card); border:1px solid var(--rule);
-    border-radius:4px; padding:9px 15px; text-decoration:none; color:var(--ink);
-    font-size:14.5px; font-weight:600;
+    display:flex; align-items:center; gap:14px;
+    background:var(--card); border:1px solid var(--line); border-left:4px solid var(--red);
+    border-radius:7px; padding:15px 17px; text-decoration:none;
+    color:var(--ink); box-shadow:var(--shadow);
+    transition:transform .12s ease, border-color .12s ease;
   }
-  .links a:hover{border-color:var(--red)}
-  footer{margin-top:46px; padding-top:16px; border-top:1px solid var(--rule);
-    font-size:13.5px; color:var(--muted)}
+  .links a:hover,.links a:focus-visible{transform:translateY(-1px); border-color:var(--red)}
+  .links a:focus-visible{outline:3px solid var(--red); outline-offset:2px}
+  .links .ic{flex:0 0 26px; height:26px; color:var(--red)}
+  .links .ic svg{width:26px; height:26px; display:block; fill:currentColor}
+  .links .t{flex:1; min-width:0}
+  /* both must be block or they run together on one line at phone widths */
+  .links .n{
+    display:block;
+    font-family:"Barlow Condensed",system-ui,sans-serif; font-weight:600;
+    font-size:20px; letter-spacing:.045em; text-transform:uppercase;
+    line-height:1.15; color:var(--ink);
+  }
+  .links .s{display:block; font-size:13.5px; color:var(--muted); line-height:1.4}
+  .links .go{flex:0 0 auto; color:var(--muted); font-size:19px; line-height:1}
+
+  .hosts{
+    border-top:1px solid var(--line); padding-top:22px; margin-top:4px;
+    display:flex; flex-wrap:wrap; gap:10px 22px; justify-content:center;
+    font-size:14.5px;
+  }
+  .hosts a{color:var(--red); text-decoration:none; font-weight:500}
+  .hosts a:hover{text-decoration:underline}
+
+  footer{
+    border-top:1px solid var(--line); margin-top:30px; padding-top:18px;
+    text-align:center; font-size:12.8px; color:var(--muted); line-height:1.7;
+  }
   footer a{color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header>
-  <p class="kicker">BCE Comics Pod</p>
-  <h1>BCE Comics Pod Uploader</h1>
-  <p class="lede">A private, single-user tool that publishes our own podcast episodes and clips to our
-  own YouTube channel.</p>
+<header class="hero">
+  <div class="markline">
+    <span class="rule" aria-hidden="true"></span>
+    <h1>BCE COMICS POD</h1>
+    <span class="rule" aria-hidden="true"></span>
+  </div>
+  <p class="tag">Big Collected Editions</p>
 </header>
 
-<h2>What it does</h2>
-<p>BCE Comics Pod is a comics review podcast. Each recorded episode is cut into per-issue clips and
-short-form versions, and each one needs a title, a description, tags, a caption track and a thumbnail.
-This tool takes the files and copy we have already produced and uploads them to our own channel,
-scheduling each one for its release time.</p>
+<div class="wrap">
 
-<h2>Who can use it</h2>
-<p>Only the channel owner. It is not distributed, not sold, and has no sign-up. It runs on one computer
-and signs in to one Google account &mdash; the one that owns the channel.</p>
+  <p class="blurb">
+    Nick and stojr read Marvel and DC runs <b>cover to cover</b> &mdash; collected
+    editions, back issues, creator history, and whether the comics still hold up today.
+  </p>
 
-<h2>What it accesses</h2>
-<ul>
-  <li><code>youtube.upload</code> &mdash; uploading our own videos and setting their thumbnails.</li>
-  <li><code>youtube.force-ssl</code> &mdash; attaching our own caption tracks and adding our videos to our
-      own playlists.</li>
-  <li><code>youtube.readonly</code> &mdash; reading our own upload list and public view counts for our
-      internal tracking page.</li>
-</ul>
-<p>It never touches any channel or account other than our own, and it collects nothing about viewers.
-The <a href="privacy.html">privacy policy</a> sets this out in full.</p>
+  <nav class="links" aria-label="Where to find the show">
 
-<h2>YouTube API Services</h2>
-<p>This application uses YouTube API Services, and is subject to the
-<a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a> and Google's
-<a href="https://policies.google.com/privacy">Privacy Policy</a>.</p>
+    <a href="https://www.youtube.com/@BCEComicsPod">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.5 15.6V8.4l6.3 3.6z"/></svg></span>
+      <span class="t">
+        <span class="n">YouTube</span>
+        <span class="s">Every episode, full reviews and shorts</span>
+      </span>
+      <span class="go" aria-hidden="true">&rsaquo;</span>
+    </a>
 
-<div class="links">
-  <a href="privacy.html">Privacy Policy</a>
-  <a href="terms.html">Terms of Service</a>
-  <a href="https://www.youtube.com/@BCEComicsPod">YouTube channel</a>
-  <a href="mailto:bcecomicspod@gmail.com">Contact</a>
-</div>
+    <a href="https://www.patreon.com/c/BCEComicsPod">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.8 2.2a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM2 2.2h3.6v19.6H2z"/></svg></span>
+      <span class="t">
+        <span class="n">Patreon</span>
+        <span class="s">Episodes early, plus a monthly exclusive</span>
+      </span>
+      <span class="go" aria-hidden="true">&rsaquo;</span>
+    </a>
 
-<footer>
-  BCE Comics Pod &middot; <a href="mailto:bcecomicspod@gmail.com">bcecomicspod@gmail.com</a>
-</footer>
+    <a href="https://www.instagram.com/bcecomicspod/">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9s.7.8.9 1.4c.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2a3.9 3.9 0 0 1-2.3 2.3c-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4a3.9 3.9 0 0 1-2.3-2.3c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4s.8-.7 1.4-.9c.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2a6.6 6.6 0 1 0 0 13.2 6.6 6.6 0 0 0 0-13.2zm0 10.9a4.3 4.3 0 1 1 0-8.6 4.3 4.3 0 0 1 0 8.6zm6.9-11.1a1.5 1.5 0 1 1-3.1 0 1.5 1.5 0 0 1 3.1 0z"/></svg></span>
+      <span class="t">
+        <span class="n">Instagram</span>
+        <span class="s">Reels from every issue we cover</span>
+      </span>
+      <span class="go" aria-hidden="true">&rsaquo;</span>
+    </a>
+
+    <a href="https://www.tiktok.com/@stojrs.shelf">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16.6 2h-3.1v13.2a2.7 2.7 0 1 1-2.7-2.7c.2 0 .4 0 .6.1V9.4a6 6 0 0 0-.6 0 5.8 5.8 0 1 0 5.8 5.8V8.6a7 7 0 0 0 4.1 1.3V6.8a4 4 0 0 1-4.1-4.1V2z"/></svg></span>
+      <span class="t">
+        <span class="n">TikTok</span>
+        <span class="s">Clips and shelf tours &mdash; @stojrs.shelf</span>
+      </span>
+      <span class="go" aria-hidden="true">&rsaquo;</span>
+    </a>
+
+    <a href="https://www.facebook.com/BCEComicsPod">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.6 4.5-4.6 1.3 0 2.7.2 2.7.2v2.9h-1.5c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12z"/></svg></span>
+      <span class="t">
+        <span class="n">Facebook</span>
+        <span class="s">The page, for everything we post</span>
+      </span>
+      <span class="go" aria-hidden="true">&rsaquo;</span>
+    </a>
+
+  </nav>
+
+  <div class="hosts">
+    <span style="color:var(--muted)">The hosts:</span>
+    <a href="https://linktr.ee/stojrsshelf">stojr&rsquo;s shelf</a>
+    <a href="https://linktr.ee/DrSmithHistory">Nick &mdash; Dr Smith History</a>
+  </div>
+
+  <footer>
+    <p>
+      <a href="mailto:bcecomicspod@gmail.com">bcecomicspod@gmail.com</a>
+    </p>
+    <p>
+      BCE Comics Pod Uploader &middot;
+      <a href="privacy.html">Privacy Policy</a> &middot;
+      <a href="terms.html">Terms of Service</a>
+    </p>
+  </footer>
 
 </div>
 </body>

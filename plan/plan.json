@@ -11,15 +11,14 @@
     {"id": "batditf", "lane": "main", "title": "Batman DC Finest: A Death in the Family", "short": "Batman", "parts": [{}, {}]},
     {"id": "xm22", "lane": "main", "title": "X-Men Epic 22: Legacies", "short": "X-Men 22", "parts": [{}, {}]},
     {"id": "thor25", "lane": "main", "title": "Thor Epic 25: The Dark Gods", "short": "Thor 25", "parts": [{}, {}]},
+    {"id": "quickhit", "lane": "main", "title": "Quick Hit (Nick, pre-recorded)", "short": "Quick Hit", "parts": [{"recorded": true}]},
     {"id": "yir2026", "lane": "main", "title": "2026: A Year in Review (Rerank Show)", "short": "Year in Review", "parts": [{}]},
+    {"id": "xm23", "lane": "main", "title": "X-Men Epic 23 (next in the read-through)", "short": "X-Men 23", "parts": [{}, {}]},
     {"id": "na1", "lane": "patreon", "title": "New Avengers Modern Epic 1: Assembled", "short": "New Avengers 1", "parts": [{"recorded": "2026-09-20"}]},
     {"id": "na2", "lane": "patreon", "title": "New Avengers Modern Epic 2: Civil War", "short": "New Avengers 2", "parts": [{"recorded": "2026-10-04"}]},
     {"id": "na3", "lane": "patreon", "title": "New Avengers Modern Epic 3: The Initiative", "short": "New Avengers 3", "parts": [{}]},
-    {"id": "na4", "lane": "patreon", "title": "New Avengers Modern Epic 4", "short": "New Avengers 4", "parts": [{}]}
+    {"id": "na4", "lane": "patreon", "title": "New Avengers Modern Epic 4: Secret Invasion", "short": "New Avengers 4", "parts": [{}]}
   ],
-  "off": [
-    {"from": "2026-11-15", "to": "2026-12-12", "label": "Time off (guess)"},
-    {"from": "2026-12-20", "to": "2027-01-02", "label": "Holidays (guess)"}
-  ],
-  "extra": []
+  "off": [{"from": "2026-11-22", "to": "2027-01-02", "label": "Time off (start date is a guess)"}],
+  "extra": ["2026-10-07", "2026-10-14", "2026-10-21", "2026-10-28", "2026-11-04", "2026-11-11"]
 }

@@ -248,7 +248,7 @@ function compute(plan,d,today){
   function sortS(){S.sort(function(p,q){return p.n-q.n||(p.kind===q.kind?0:p.kind==='sun'?-1:1)})}
   sortS();
   all.forEach(function(it){
-    it.recN=isDate(it.recorded)?d2n(it.recorded):null; it.rec=null; it.lead=null;
+    it.recN=isDate(it.recorded)?d2n(it.recorded):null; it.have=it.recN!=null||it.recorded===true; it.rec=null; it.lead=null;
     if(it.recN!=null&&it.recN>=ws0){
       var s=S.find(function(s){return s.n===it.recN&&!s.item&&!s.off});
       if(s){s.item=it;s.done=true}else S.push({n:it.recN,kind:'done',off:false,item:it,done:true});
@@ -257,12 +257,12 @@ function compute(plan,d,today){
   sortS();
 
   // Each open session records the next thing that has not dropped yet.
-  var need=all.filter(function(i){return !i.norec&&i.recN==null&&i.rel>=today}).sort(function(p,q){return p.rel-q.rel||(p.lane===q.lane?0:p.lane==='main'?-1:1)});
+  var need=all.filter(function(i){return !i.norec&&!i.have&&i.rel>=today}).sort(function(p,q){return p.rel-q.rel||(p.lane===q.lane?0:p.lane==='main'?-1:1)});
   S.forEach(function(s){ if(s.off||s.done||s.item)return; var it=need.find(function(i){return i.rec==null&&i.rel>s.n}); if(it){s.item=it;it.rec=s.n} });
   all.forEach(function(it){
     if(it.norec){it.state=it.rel<today?'out':'gap';return}
     if(it.rel<today){it.state='out';return}
-    if(it.recN!=null){it.state='can';it.lead=it.rel-it.recN;return}
+    if(it.have){it.state='can';if(it.recN!=null)it.lead=it.rel-it.recN;return}
     if(it.rec==null){it.state='miss';return}
     it.lead=it.rel-it.rec; it.state=it.lead<minLead?'tight':'ok';
   });
@@ -401,7 +401,7 @@ function renderList(){
     var p=parts(it.rel), key=p.y*12+p.m;
     if(key!==mo){mo=key;h+='<h2 class="mh">'+MONL[p.m]+' '+p.y+'</h2><div class="rowh lab"><span></span><span>Episode</span><span>Record</span><span>Drops</span></div>'}
     var mk=it.state==='can'?'&#10003;':it.state==='miss'?'!':'';
-    var rc=it.state==='can'?'<span class="cell rc">&#10003; '+esc(fmtS(it.recN))+'</span>'
+    var rc=it.state==='can'?'<span class="cell rc">&#10003; '+(it.recN!=null?esc(fmtS(it.recN)):'Pre-recorded')+'</span>'
       :it.state==='ok'?'<span class="cell rc">'+esc(fmt(it.rec))+'</span>'
       :it.state==='tight'?'<span class="cell rc warn">'+esc(fmt(it.rec))+', only '+days(it.lead)+' before</span>'
       :it.state==='gap'?'<span class="cell rc dim">No recording needed</span>'
@@ -435,7 +435,7 @@ function renderBar(){
     if(!it){h+='<p>'+who+'open slot. Nothing is queued for this '+(x.lane==='patreon'?'month':'Thursday')+(fifth(sel)?' (a 5th Thursday)':'')+'.</p>';return}
     var t=who+'<b>'+full(it)+'</b> drops'+(fifth(sel)&&x.lane==='main'?' (5th Thursday)':'')+'. ';
     if(it.state==='out')t+='Already out.';
-    else if(it.state==='can')t+='Recorded '+esc(fmtS(it.recN))+'.';
+    else if(it.state==='can')t+=(it.recN!=null?'Recorded '+esc(fmtS(it.recN)):'Already recorded')+'.';
     else if(it.state==='ok')t+='Recording planned for '+esc(fmt(it.rec))+'.';
     else if(it.state==='tight')t+='Recording planned for '+esc(fmt(it.rec))+', only '+days(it.lead)+' before.';
     else if(it.state==='gap')t+='Planned break, no recording needed.';

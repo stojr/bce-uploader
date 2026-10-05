@@ -58,6 +58,8 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,56px);lin
 .btn.on,.btn.solid{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn.sm{padding:2px 9px;font-size:14px}
 .btn:disabled{opacity:.3;cursor:default}
+a.btn{text-decoration:none;display:inline-block}
+.noprep{color:var(--ink-3);font-size:16px;align-self:center}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .draft{background:var(--panel);border:2px solid var(--accent);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
@@ -221,7 +223,7 @@ function compute(plan,d,today){
     (ids||[]).concat(plan.books.map(function(b){return b.id})).forEach(function(id){
       var b=byId[id]; if(!b||seen[id]||((b.lane==='patreon')!==isPat))return; seen[id]=1;
       var ps=(b.parts&&b.parts.length)?b.parts:[{}];
-      ps.forEach(function(p,k){out.push({id:id+'.'+(k+1),book:id,first:k===0,lane:isPat?'patreon':'main',title:b.title,short:b.short||b.title,part:ps.length>1?'Pt '+(k+1):'',recorded:p.recorded||'',pin:p.pin||'',norec:!!b.norecord})});
+      ps.forEach(function(p,k){out.push({id:id+'.'+(k+1),book:id,first:k===0,lane:isPat?'patreon':'main',title:b.title,short:b.short||b.title,part:ps.length>1?'Pt '+(k+1):'',recorded:p.recorded||'',pin:p.pin||'',norec:!!b.norecord,prep:b.prep||''})});
     });
     return out;
   }
@@ -302,6 +304,7 @@ function full(it){return esc(it.title)+(it.part?', '+esc(it.part):'')}
 function brief(it){return esc(it.short)+(it.part?' &middot; '+esc(it.part):'')}
 function cls(st){return st==='can'?'st-have':st==='ok'?'st-plan':st==='tight'?'st-tight':st==='miss'?'st-miss':st==='gap'?'st-open':'st-out'}
 function fifth(n){return dow(n)===4&&parts(n).d>=29}
+function prepUrl(u){return typeof u==='string'&&(/^https:\/\/[^\s"'<>]+$/.test(u)||/^(?!\/\/)[\w.\/-]+$/.test(u))?u:''}
 var KEY='bcePlanDraft';
 
 var plan=null, base=null, draft=null, P=null, view='cal', trying=false, shared=false, sel=null, toastT=0;
@@ -367,7 +370,7 @@ function renderDraft(){
 function evRec(s){
   if(s.off)return '';
   if(!s.item)return '<span class="ev rec st-open"><i data-s="R">REC</i><b>Open</b></span>';
-  return '<span class="ev rec '+(s.done?'st-have':cls(s.item.state))+'" data-item="'+esc(s.item.id)+'"><i data-s="R">REC</i><b>'+brief(s.item)+'</b></span>';
+  return '<span class="ev rec '+(s.done?'st-have':cls(s.item.state))+'" data-item="'+esc(s.item.id)+'"><i data-s="R">REC'+(!s.done&&prepUrl(s.item.prep)?' &middot; PREP READY':'')+'</i><b>'+brief(s.item)+'</b></span>';
 }
 function evDrop(d){
   var pat=d.lane==='patreon', k=pat?'PATREON':'DROP';
@@ -411,7 +414,7 @@ function renderList(){
       mv='<span class="mv"><button class="btn sm" data-act="move" data-id="'+esc(it.book)+'" data-dir="-1" aria-label="Move this book earlier"'+(b.i===0?' disabled':'')+'>&#9650;</button>'
         +'<button class="btn sm" data-act="move" data-id="'+esc(it.book)+'" data-dir="1" aria-label="Move this book later"'+(b.i===b.n-1?' disabled':'')+'>&#9660;</button></span>'}
     h+='<div class="row"><span class="mark '+cls(it.state)+'">'+mk+'</span>'
-      +'<span class="ttl">'+esc(it.title)+(it.part?' <span class="pt">'+esc(it.part)+'</span>':'')+(it.lane==='patreon'?'<span class="tag">PATREON</span>':'')+(fifth(it.rel)?'<span class="tag">5TH THURSDAY</span>':'')+mv+'</span>'
+      +'<span class="ttl">'+esc(it.title)+(it.part?' <span class="pt">'+esc(it.part)+'</span>':'')+(it.lane==='patreon'?'<span class="tag">PATREON</span>':'')+(fifth(it.rel)?'<span class="tag">5TH THURSDAY</span>':'')+(it.first&&prepUrl(it.prep)?'<a class="tag" href="'+esc(prepUrl(it.prep))+'" target="_blank" rel="noopener">SHOW PREP</a>':'')+mv+'</span>'
       +rc.replace('">','"><small>Record</small>')
       +'<span class="cell dr"><small>Drops</small>'+esc(fmt(it.rel))+'</span></div>';
   });
@@ -443,13 +446,21 @@ function renderBar(){
     h+='<p>'+t+'</p>';
   });
   if(!h)h='<p>Nothing is planned for this day.</p>';
+  var seen={}, links='';
+  function addPrep(it,want){
+    if(seen[it.book])return; seen[it.book]=1; var u=prepUrl(it.prep);
+    if(u)links+='<a class="btn solid" href="'+esc(u)+'" target="_blank" rel="noopener">Show prep: '+esc(it.short)+'</a>';
+    else if(want)links+='<span class="noprep">No prep sheet yet for '+esc(it.short)+'.</span>';
+  }
+  d.recs.forEach(function(s){if(s.item&&!s.off)addPrep(s.item,!s.done)});
+  d.drops.forEach(function(x){if(x.item)addPrep(x.item,false)});
   if(trying&&sel>=P.today){
     var sun=d.recs.find(function(s){return s.kind==='sun'}), nx=d.recs.filter(function(s){return s.kind==='extra'}).length;
     if(sun&&!sun.done)acts+='<button class="btn solid" data-act="off">'+(sun.off?'Record this Sunday after all':'Take this Sunday off')+'</button>';
     acts+='<button class="btn" data-act="xadd">'+(w===0?'Add a second session':'Add a recording session')+'</button>';
     if(nx)acts+='<button class="btn" data-act="xdel">Remove the added session</button>';
   }
-  $('dbB').innerHTML=h+(acts?'<div class="acts">'+acts+'</div>':'');
+  $('dbB').innerHTML=h+(links?'<div class="acts">'+links+'</div>':'')+(acts?'<div class="acts">'+acts+'</div>':'');
   bar.hidden=false; document.body.classList.add('bar-open');
 }
 

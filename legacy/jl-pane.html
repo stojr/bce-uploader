@@ -368,8 +368,18 @@ function setScore(n,label,noPct){
   if(reduce || from===n){ paint(n); return; }
   function tick(t){ if(t0==null) t0=t; var q=Math.min(1,(t-t0)/380); q=1-Math.pow(1-q,3); paint(from+(n-from)*q); if(q<1) tween=requestAnimationFrame(tick); }
   tween=requestAnimationFrame(tick);
+  /* a background tab gets no animation frames - land on the final number regardless */
+  clearTimeout(settle); settle=setTimeout(function(){ cancelAnimationFrame(tween); paint(n); },600);
 }
+var settle=0;
 function setSt(list,st){ for(var i=0;i<list.length;i++) list[i].setAttribute("data-st",st); }
+/* a read-through says which ERA a stretch is in, not its positions - they mean nothing across sixty titles */
+var READING = D.order==="reading";
+function eraName(rs){
+  var names=[];
+  rs.forEach(function(r){ (D.eras||[]).forEach(function(e){ if(e.to>=r[0] && e.from<=r[1]){ var nm=e.card||e.label; if(names.indexOf(nm)<0) names.push(nm); } }); });
+  return names.length<=2 ? names.join(" + ") : names[0]+" → "+names[names.length-1];
+}
 function boxPath(b){ return "M"+f1(b[0])+" "+f1(b[1])+"h"+f1(b[2])+"v"+f1(b[3])+"h"+f1(-b[2])+"Z"; }
 function render(){
   $("stage").setAttribute("data-mode",mode);
@@ -425,14 +435,14 @@ function render(){
     cap.className="cap";
     $("capK").textContent=(cur.els?(cur.b.thin?"Thin trade"+DOT:"Inside another book"+DOT):cur.outside?"Outside the count"+DOT:"")+cur.b.format+(cur.b.vol?DOT+cur.b.vol:"");
     $("capT").textContent=cur.b.title;
-    if(cur.n){ $("capL").textContent=T.pos+" "+cur.legacy.map(function(r){return rng(r[0],r[1]);}).join(" + "); $("capC").textContent=plural(cur.n,"ISSUE")+(cur.pn?" + "+cur.pn+" BEFORE #1":""); }
+    if(cur.n){ $("capL").textContent=READING ? eraName(cur.legacy) : T.pos+" "+cur.legacy.map(function(r){return rng(r[0],r[1]);}).join(" + "); $("capC").textContent=plural(cur.n,"ISSUE")+(cur.pn?" + "+cur.pn+" BEFORE #1":""); }
     else if(cur.pn){ $("capL").textContent="NOT COUNTED"; $("capC").textContent=plural(cur.pn,"ISSUE")+" BEFORE #1"; }
     else { $("capL").textContent="NOT COUNTED"; $("capC").textContent=(cur.b.outside_why||"Outside the count").toUpperCase(); }
   } else if(cur){
     cap.className="cap gap"; cap.style.top=(COV_Y+COV_H-86)+"px";
     $("capK").textContent="Not on the shelf"; $("capT").textContent=cur.g.title;
-    $("capL").textContent=T.pos+" "+rng(cur.g.from,cur.g.to); $("capC").textContent=plural(cur.n,"ISSUE")+" MISSING";
-    $("stampBig").textContent=rng(cur.g.from,cur.g.to);
+    $("capL").textContent=READING ? eraName([[cur.g.from,cur.g.to]]) : T.pos+" "+rng(cur.g.from,cur.g.to); $("capC").textContent=plural(cur.n,"ISSUE")+" MISSING";
+    $("stampBig").textContent=READING ? plural(cur.n,"ISSUE") : rng(cur.g.from,cur.g.to);
   }
   /* reveal: question + guess first; after it, the guess against the real number */
   $("askCard").className="ask-card"+(mode==="reveal" && revealN===0 ? " show" : "");

@@ -206,6 +206,39 @@ body.revealing .rundown{visibility:hidden}
 .sw.pod{width:14px;height:26px;margin-left:6px;background:var(--red);clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)}
 .row .r-pod{font-weight:700;font-size:14px;letter-spacing:.12em;color:var(--red-ink)}
 
+/* ---- THE TITLE BOARD (a read-through with D.titles - Krakoa): reading-order numbers mean nothing
+   across sixty titles, so the foot of the slide lists the TITLES, biggest first, one cell an issue,
+   filled by what is on the shelf. It replaces the hole cards; the key becomes one line above it. ---- */
+.tboard{position:absolute;left:64px;width:1792px;display:grid;grid-auto-flow:column;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:30px}
+.trow{display:grid;grid-template-columns:214px minmax(0,1fr) 58px;align-items:center;column-gap:10px;cursor:pointer;margin:0 -6px;padding:0 6px;
+  transition:opacity .2s,background .2s}
+.trow:hover{background:rgba(246,243,234,.06)}
+.trow.picked{background:rgba(246,243,234,.12);box-shadow:inset 4px 0 0 var(--accent)}
+.trow.unpicked{opacity:.38}
+.trow:focus-visible{outline:2px solid var(--accent);outline-offset:0}
+.tn{font-weight:700;font-size:16px;letter-spacing:.05em;line-height:1;color:var(--ink);white-space:nowrap;overflow:hidden;text-transform:uppercase}
+.tb{display:flex;align-items:center;height:13px;min-width:0}
+.tc{flex:0 0 auto;height:13px;background:#6a161b;transition:opacity .2s,background .2s}
+/* (t-own, not own: the bar's own / els / sng rules hide a pending book in the reveal, and a hidden cell beside a
+   visible one would say which issues are held) */
+.tc.t-own{background:var(--accent)} .tc.t-els{background:var(--accent);opacity:.5} .tc.t-sng{background:var(--sng,#E8E2D2)}
+.tc[data-st="pending"]{background:#2b2b30;opacity:1}
+.tc[data-st="mute"]{opacity:.2}
+.tc[data-st="focus"]{background:#fff;opacity:1}
+.tc.t-gap[data-st="focus"]{background:#ff4047}
+.tb.lump{position:relative;height:13px;background:#6a161b}
+.tf{position:absolute;left:0;top:0;bottom:0;background:var(--accent)}
+.tk{font-family:var(--display);font-size:18px;line-height:1;text-align:right;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
+.tk b{font-weight:400;color:var(--ink)}
+.tk.full b{color:var(--accent)}
+.tt{pointer-events:none}
+.tt.held{fill:#fff} .tt.sng{fill:var(--sng,#E8E2D2)} .tt.miss{fill:none;stroke:#fff;stroke-width:1;opacity:.5}
+.stage.board .key{width:1792px;flex-direction:row;align-items:center;flex-wrap:nowrap;gap:0 26px}
+.stage.board .key-row{display:flex;align-items:center;gap:9px;margin:0;padding:2px 8px;white-space:nowrap}
+.stage.board .key-row .key-n{font-size:24px}
+.stage.board .key-note{display:none}
+.stage.board .key-foot{margin:0 0 0 auto;border-top:0;padding-top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+
 /* ---- side lane: a character's own books that sit outside the count (The Thing) ---- */
 :root{--side:#F28A2E}
 .sidepanel{position:absolute;display:flex;flex-direction:column;gap:7px;background:var(--panel);border-top:4px solid var(--side);padding:10px 14px 12px}
@@ -336,8 +369,11 @@ var CX0=CROP[0], CY0=CROP[1], CX1=CROP[2], CY1=CROP[3];
 var S = W / (CX1-CX0);
 var PH_H = (CY1-CY0)*S, PH_B = PH_Y+PH_H;
 var SINGLES = D.singles || null;              /* legacy numbers owned as single issues (CLZ) */
-var BAR_Y = Math.max(Math.round(PH_B+72), 735), BAR_H=50, SING_Y=BAR_Y+BAR_H+3;
-var STRIP_Y=BAR_Y+BAR_H+2+(SINGLES?13:0), STRIP_H=24, CARDS_Y=STRIP_Y+STRIP_H+36;
+/* a read-through with a TITLE BOARD (D.titles): a slimmer run bar close under a shorter shelf,
+   so the titles get the foot of the slide */
+var BOARD = (D.titles && D.titles.length) ? D.titles : null, READING = D.order==="reading";
+var BAR_Y = BOARD ? Math.round(PH_B+54) : Math.max(Math.round(PH_B+72), 735), BAR_H = BOARD ? 34 : 50, SING_Y=BAR_Y+BAR_H+3;
+var STRIP_Y=BAR_Y+BAR_H+2+(SINGLES?13:0), STRIP_H=24, CARDS_Y=STRIP_Y+STRIP_H+(BOARD ? 12 : 36);
 var PRE = D.pre ? D.pre.count : 0, BRK = PRE ? 10 : 0, MAX = D.run_max;
 var K = (W-BRK)/(PRE+MAX);                       /* pixels per issue: one scale for the whole run */
 function xl(n){ return n<0 ? MX+(n+PRE)*K : MX+PRE*K+BRK+(n-1)*K; }
@@ -524,7 +560,7 @@ var eraText=[];
   var t=el("text",{x:f1(x0+7),y:STRIP_Y+17,"class":"era"},gEra); t.textContent=e.label;
   eraText.push({t:t,e:e,w:x1-x0});
 });
-var endT=el("text",{x:f1(xr(MAX)-7),y:STRIP_Y+17,"class":"era","text-anchor":"end"},gEra); endT.textContent="#"+MAX;
+var endT=el("text",{x:f1(xr(MAX)-7),y:STRIP_Y+17,"class":"era","text-anchor":"end"},gEra); endT.textContent=READING ? MAX+" ISSUES" : "#"+MAX;
 function fitEras(){
   eraText.forEach(function(o,i){
     var room=o.w-12-(i===eraText.length-1 ? endT.getComputedTextLength()+10 : 0);
@@ -557,13 +593,14 @@ if(PRE){ keyRow("pre","BEFORE THE COUNT",PREOWN); if(!(ELSONLY && SINGLES && POD
 if(PODN){ keyRow("pod","REVIEWED ON THE POD",PODN); key.lastChild.classList.add("sub"); key.lastChild.lastChild.textContent=PODN+(PODN===1?" BOOK":" BOOKS"); }
 h("div","key-foot",T.counted+MAX+DOT+(D.latest||"")+DOT+(D.as_of||""),key);
 /* a full key (six rows: Hulk) starts higher, into the free space under the era axis */
-if(key.querySelectorAll(".key-row").length>=6){ key.style.top=(CARDS_Y-22)+"px"; key.style.gap="4px"; }
+if(!BOARD && key.querySelectorAll(".key-row").length>=6){ key.style.top=(CARDS_Y-22)+"px"; key.style.gap="4px"; }
 
 /* ---- hole cards: one per card id, parked as close under its hole as the row allows ---- */
 var cards=[], byId={};
 segs.forEach(function(s){ if(s.type!=="gap") return;
   var c=byId[s.g.card]; if(!c){ c=byId[s.g.card]={parts:[],n:0,what:s.g.what,why:s.g.why}; cards.push(c); }
   c.parts.push(s); c.n+=s.n; s.card=c; });
+if(BOARD) cards=[];                 /* the title board takes the cards' place */
 var GAPX=12, L=MX+316+(SIDE?420:0), R=MX+W, YBR=STRIP_Y+STRIP_H+5;
 cards.forEach(function(c){
   var runs=[]; c.parts.forEach(function(s){ var last=runs[runs.length-1];
@@ -599,12 +636,73 @@ cards.forEach(function(c){
 });
 
 /* a complete run (New Mutants) gets the card row to itself */
-if(!cards.length && !SIDE){
+if(!cards.length && !SIDE && !BOARD){
   var done=h("div","card done",null,cardBox);
   done.style.left=L+"px"; done.style.top=CARDS_Y+"px"; done.style.width=(R-L)+"px"; done.style.height=(1080-CARDS_Y-26)+"px";
   h("div","done-big","Every issue is on the shelf",done);
   h("div","done-sub","#1"+DASH+MAX+DOT+"the complete run",done);
 }
+
+/* ---- THE TITLE BOARD: every title of the era, biggest first, one cell an issue ---- */
+/* which era(s) a stretch of a read-through falls in - what the slide says instead of positions */
+function eraName(rs,brief){
+  var names=[];
+  rs.forEach(function(r){ (D.eras||[]).forEach(function(e){ if(e.to>=r[0] && e.from<=r[1]){
+    var nm=brief ? (e.short||e.label) : (e.card||e.label); if(names.indexOf(nm)<0) names.push(nm); } }); });
+  return names.length<=2 ? names.join(" + ") : names[0]+" \u2192 "+names[names.length-1];
+}
+var boardRows=[], tsel=null, gTitle=el("g",{"pointer-events":"none"},svg);
+function setTitle(i){ if(mode==="reveal") return; stopAuto(); stopReveal();
+  if(mode==="title" && tsel===i){ mode="overview"; tsel=null; } else { mode="title"; tsel=i; } render(); }
+if(BOARD){
+  $("stage").classList.add("board");
+  var bd=h("div","tboard",null,$("stage")), BTOP=CARDS_Y+38, RH=24, RWS=Math.max(4,Math.floor((1068-BTOP)/RH)), SLOTS=RWS*3;
+  bd.style.top=BTOP+"px"; bd.style.gridTemplateRows="repeat("+RWS+","+RH+"px)";
+  /* every title gets a line if they fit; if not, the shortest ones share the last line */
+  var tshow=BOARD.length<=SLOTS ? BOARD.slice() : BOARD.slice(0,SLOTS-1), trest=BOARD.slice(tshow.length);
+  if(trest.length){ var lc=[]; trest.forEach(function(t){ lc=lc.concat(t.cells); });
+    tshow.push({label:"+ "+trest.length+" shorter titles", cells:lc, breaks:[], lump:true}); }
+  var tmax=tshow.reduce(function(a,t){ return t.lump ? a : Math.max(a,t.cells.length); },1), PITCH=Math.max(3,Math.min(9,Math.floor(286/tmax)));
+  tshow.forEach(function(t,i){
+    var r=h("div","trow",null,bd), nm=h("span","tn",t.label,r), bar=h("span","tb"+(t.lump?" lump":""),null,r), k=h("span","tk",null,r);
+    var row={t:t, el:r, k:k, name:nm, cells:[], held:0};
+    t.cells.forEach(function(n,j){ if(HELD[n]) row.held++;
+      if(t.lump) return;
+      var c=h("i","tc "+(OWNSET[n]?"t-own":HELD[n]?"t-els":SING[n]?"t-sng":"t-gap"),null,bar);
+      c.style.width=(PITCH-1)+"px"; c.style.marginRight="1px";
+      if(t.breaks && t.breaks.indexOf(j)>=0) c.style.marginLeft="3px";   /* a relaunch: the next #1 */
+      row.cells.push(c); });
+    if(t.lump) row.fill=h("i","tf",null,bar);
+    r.setAttribute("role","button"); r.tabIndex=0; r.title=t.label+": "+row.held+" of "+t.cells.length+" on the shelf";
+    var act=function(ev){ if(ev) ev.stopPropagation(); setTitle(i); };
+    r.addEventListener("click",act); r.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); act(e); } });
+    boardRows.push(row);
+  });
+}
+/* each cell takes the state of the book or hole its issue is in (the brightest, when two books share it) */
+function paintBoard(){
+  if(!BOARD) return;
+  var rank={pending:0,mute:1,on:2,focus:3}, pst={};
+  segs.forEach(function(s){ var rs=s.type==="book" ? s.legacy : [[s.g.from,s.g.to]];
+    each(rs,function(n){ if(pst[n]==null || rank[s.st]>rank[pst[n]]) pst[n]=s.st; }); });
+  if(mode==="filter" && filter==="sng") for(var a=1;a<=MAX;a++) pst[a]=(SING[a] && !HELD[a]) ? "on" : "mute";
+  boardRows.forEach(function(row,i){
+    var lit=0;
+    row.t.cells.forEach(function(n,j){
+      var st=(mode==="title") ? (i===tsel ? "on" : "mute") : (pst[n]||"on");
+      if(row.cells[j]) row.cells[j].setAttribute("data-st",st);
+      if(HELD[n] && st!=="pending") lit++; });
+    var shown=(mode==="reveal") ? lit : row.held, tot=row.t.cells.length;     /* the reveal counts up with the shelf */
+    row.k.textContent=""; h("b",null,String(shown),row.k); row.k.appendChild(document.createTextNode("/"+tot));
+    row.k.className="tk"+(shown===tot ? " full" : "");
+    if(row.fill) row.fill.style.width=f1(shown/tot*100)+"%";
+    row.el.className="trow"+(mode==="title" ? (i===tsel ? " picked" : " unpicked") : "");
+  });
+}
+/* a long title shrinks to fit its column rather than being cut */
+function fitBoard(){ boardRows.forEach(function(row){ var a=row.name; a.style.fontSize="";
+  var fs=parseFloat(window.getComputedStyle(a).fontSize)||16, rg=document.createRange(); rg.selectNodeContents(a);
+  while(rg.getBoundingClientRect().width>a.getBoundingClientRect().width-1 && fs>10){ fs-=0.5; a.style.fontSize=fs+"px"; } }); }
 
 /* ---- side lane panel (e.g. The Thing's own series): its own little run, its own scale ---- */
 var SIDE_OWN=0, SIDE_MAX=0;
@@ -642,12 +740,12 @@ segs.forEach(function(s){
   var r=h("button","row "+(s.type==="gap"?"gap":s.els?"book els":(s.n?"book":"pre")),null,rows); r.type="button";
   var m;
   if(s.type==="book"){
-    h("span","r-range", s.n ? s.legacy.map(function(x){return rng(x[0],x[1]);}).join(" + ") : s.sn ? (SIDE.short||SIDE.label) : "not counted", r);
+    h("span","r-range", s.n ? (READING ? eraName(s.legacy,true) : s.legacy.map(function(x){return rng(x[0],x[1]);}).join(" + ")) : s.sn ? (SIDE.short||SIDE.label) : "not counted", r);
     m=h("span","r-main",null,r); h("span","r-title",s.b.title+(s.b.vol?" "+DASH+" "+s.b.vol:""),m); h("span","r-sub",s.b.format+DOT+s.b.collects,m);
     if(s.b.pod) h("span","r-pod",podText(s.b),m);
     h("span","r-n",String(s.n||s.pn||s.sn||""),r);
   } else {
-    h("span","r-range",rng(s.g.from,s.g.to),r);
+    h("span","r-range",READING ? eraName([[s.g.from,s.g.to]],true) : rng(s.g.from,s.g.to),r);
     m=h("span","r-main",null,r); h("span","r-title","Not on the shelf: "+s.g.title,m); h("span","r-sub",s.g.why,m);
     h("span","r-n",String(s.n),r);
   }
@@ -677,25 +775,29 @@ var FLABEL={own:"IN "+D.character.toUpperCase()+" BOOKS", els:"IN THIN TRADES & 
             pre:"BEFORE THE COUNT", pod:"IN BOOKS REVIEWED ON BCE"};
 var gLift=el("g",{"pointer-events":"none"},svg);    /* the pod filter lifts every reviewed cover out of the stack */
 svg.insertBefore(gLift, spot);
-function setScore(n,label,noPct){
+function setScore(n,label,noPct,den){
   $("scoreLabel").textContent=label;
   var from=(shownN==null)?n:shownN, t0=null; shownN=n; cancelAnimationFrame(tween);
-  function paint(v){ $("scoreN").textContent=String(Math.round(v)); $("scorePct").textContent=noPct ? "—" : Math.round(v/MAX*100)+"%"; }
+  function paint(v){ $("scoreN").textContent=String(Math.round(v)); $("scorePct").textContent=noPct ? "—" : Math.round(v/(den||MAX)*100)+"%"; }
   if(reduce || from===n){ paint(n); return; }
   function tick(t){ if(t0==null) t0=t; var p=Math.min(1,(t-t0)/380); p=1-Math.pow(1-p,3); paint(from+(n-from)*p); if(p<1) tween=requestAnimationFrame(tick); }
   tween=requestAnimationFrame(tick);
+  /* the count-up is drawn on animation frames, and a tab in the background gets none: without this
+     the score sat on the OLD number ("172 of 50") until the tab was looked at */
+  clearTimeout(settle); settle=setTimeout(function(){ cancelAnimationFrame(tween); paint(n); },600);
 }
+var settle=0;
 function setSt(list,st){ for(var i=0;i<list.length;i++) list[i].setAttribute("data-st",st); }
 function render(){
   var stage=$("stage"); stage.setAttribute("data-mode",mode); stage.setAttribute("data-filter",mode==="filter" ? filter : "");
   document.body.classList.toggle("revealing", mode==="reveal");
   for(var kr in keyRows) keyRows[kr].className="key-row"+(keyRows[kr].classList.contains("sub")?" sub":"")+
     ((mode==="filter" && filter===kr) || (mode==="gaps" && kr==="gap") ? " picked" : (mode==="filter"||mode==="gaps") ? " unpicked" : "");
-  gLift.textContent=""; gPop.textContent=""; gPopRib.textContent="";
+  gLift.textContent=""; gPop.textContent=""; gPopRib.textContent=""; gTitle.textContent=""; $("scoreOf").textContent="OF "+MAX;
   var cur=(mode==="walk") ? segs[step] : null, soFar=0, seen={};
   segs.forEach(function(s){
     var st = mode==="overview" ? "on" : mode==="gaps" ? (s.type==="gap"?"on":"mute") : mode==="reveal" ? (s.i<revealN ? "on" : "pending")
-           : mode==="filter" ? (inFilter(s,filter) ? "on" : "mute")
+           : mode==="filter" ? (inFilter(s,filter) ? "on" : "mute") : mode==="title" ? "mute"
            : s.i<step ? "on" : s.i===step ? "focus" : "pending";
     s.st=st; setSt(s.rects,st); if(s.ribs) setSt(s.ribs,st); if(s.leads) setSt(s.leads,st); if(s.srects) setSt(s.srects,st);
     if(s.type==="book" && (st==="on"||st==="focus")) each(s.legacy,function(n){ if(!seen[n]){ seen[n]=1; soFar++; } });
@@ -704,6 +806,19 @@ function render(){
     var any=function(v){ return c.parts.some(function(s){return s.st===v;}); };
     c.el.setAttribute("data-st", any("focus") ? "focus" : ((mode==="walk"||mode==="reveal"||mode==="filter") && !any("on")) ? "pending" : "on");
   });
+  paintBoard();
+  if(mode==="title"){
+    /* one title picked on the board: where its issues fall in the read-through, and which are held */
+    var tt=boardRows[tsel].t, th=0;
+    tt.cells.forEach(function(n){ var hd=!!HELD[n]; if(hd) th++;
+      el("rect",{x:f1(xl(n)),y:BAR_Y-7,width:f1(Math.max(2.2,K-0.4)),height:BAR_H+14,"class":"tt "+(hd?"held":SING[n]?"sng":"miss")},gTitle); });
+    dim.setAttribute("d",photoRect); dim.setAttribute("opacity",.6);
+    lift.setAttribute("visibility","hidden"); spot.setAttribute("visibility","hidden"); $("slam").className="slam";
+    $("askCard").className="ask-card"; $("guessBadge").className="guess-badge";
+    $("scoreOf").textContent="OF "+tt.cells.length;
+    setScore(th, tt.label.toUpperCase()+" ON THE SHELF", false, tt.cells.length);
+    return;
+  }
   if(mode==="filter"){
     /* light the filtered books on the shelf: a stacked cover lifts out whole, a face-out
        one just stays lit; els / singles have no cover of their own, so the shelf dims */
@@ -788,7 +903,7 @@ function render(){
     $("pColl").textContent=cur.b.collects;
     $("pNote").textContent=cur.b.note||"";
     if(cur.n){
-      $("pLgy").textContent=T.pos+" "+cur.legacy.map(function(r){return rng(r[0],r[1]);}).join(" + ");
+      $("pLgy").textContent=READING ? eraName(cur.legacy) : T.pos+" "+cur.legacy.map(function(r){return rng(r[0],r[1]);}).join(" + ");
       $("pCnt").textContent=plural(cur.n,"ISSUE")+(cur.pn?" + "+cur.pn+" BEFORE THE COUNT":"");
     } else if(cur.sn){
       $("pLgy").textContent=sideName(cur.sideR).toUpperCase();
@@ -807,9 +922,9 @@ function render(){
     $("pColl").textContent=cur.g.what;
     var gs=0; for(var gn=cur.g.from;gn<=cur.g.to;gn++) if(SING[gn]) gs++;
     $("pNote").textContent=cur.g.why+(SINGLES ? DOT+(gs===cur.n ? "all of them in the longboxes as singles" : gs ? gs+" of them in the longboxes as singles" : "none as singles") : "");
-    $("pLgy").textContent=T.pos+" "+rng(cur.g.from,cur.g.to);
+    $("pLgy").textContent=READING ? eraName([[cur.g.from,cur.g.to]]) : T.pos+" "+rng(cur.g.from,cur.g.to);
     $("pCnt").textContent=plural(cur.n,"ISSUE")+" MISSING";
-    $("slamBig").textContent=rng(cur.g.from,cur.g.to);
+    $("slamBig").textContent=READING ? plural(cur.n,"ISSUE") : rng(cur.g.from,cur.g.to);
     slam.style.top=(PH_Y+PLATE_H)+"px"; slam.style.height=(PH_H-PLATE_H)+"px";
   }
   if(mode==="gaps") setScore(MISSING,T.unit+" NOT ON THE SHELF");
@@ -900,13 +1015,14 @@ function fitAsk(){ var a=$("ask"), m=a.parentNode; a.hidden=false; if(m.scrollWi
 /* a long range ("#345-408 + #410-434") shrinks until it fits its card */
 function fitCards(){ cards.forEach(function(c){ var r=c.el.querySelector(".c-r"); if(!r) return; r.style.fontSize=""; var fs=parseFloat(getComputedStyle(r).fontSize)||32;
   while(r.scrollWidth>r.clientWidth+1 && fs>16){ fs-=2; r.style.fontSize=fs+"px"; } }); }
-fitEras(); fitAsk(); fitCards(); render();
+fitEras(); fitAsk(); fitCards(); fitBoard(); render();
 requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.body.classList.remove("preload"); }); });
 if(/auto/.test(hash) && mode!=="reveal") toggleAuto();
 (function(){ var ac=$("askCard"); ac.style.top=f1(PH_Y+Math.max(20,(PH_H-360)/2))+"px"; })();
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitAsk);
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitEras);
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitCards);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitBoard);
 })();
 </script>
 </body>

@@ -782,7 +782,11 @@ function setScore(n,label,noPct,den){
   if(reduce || from===n){ paint(n); return; }
   function tick(t){ if(t0==null) t0=t; var p=Math.min(1,(t-t0)/380); p=1-Math.pow(1-p,3); paint(from+(n-from)*p); if(p<1) tween=requestAnimationFrame(tick); }
   tween=requestAnimationFrame(tick);
+  /* the count-up is drawn on animation frames, and a tab in the background gets none: without this
+     the score sat on the OLD number ("172 of 50") until the tab was looked at */
+  clearTimeout(settle); settle=setTimeout(function(){ cancelAnimationFrame(tween); paint(n); },600);
 }
+var settle=0;
 function setSt(list,st){ for(var i=0;i<list.length;i++) list[i].setAttribute("data-st",st); }
 function render(){
   var stage=$("stage"); stage.setAttribute("data-mode",mode); stage.setAttribute("data-filter",mode==="filter" ? filter : "");

@@ -368,7 +368,10 @@ function setScore(n,label,noPct){
   if(reduce || from===n){ paint(n); return; }
   function tick(t){ if(t0==null) t0=t; var q=Math.min(1,(t-t0)/380); q=1-Math.pow(1-q,3); paint(from+(n-from)*q); if(q<1) tween=requestAnimationFrame(tick); }
   tween=requestAnimationFrame(tick);
+  /* a background tab gets no animation frames - land on the final number regardless */
+  clearTimeout(settle); settle=setTimeout(function(){ cancelAnimationFrame(tween); paint(n); },600);
 }
+var settle=0;
 function setSt(list,st){ for(var i=0;i<list.length;i++) list[i].setAttribute("data-st",st); }
 /* a read-through says which ERA a stretch is in, not its positions - they mean nothing across sixty titles */
 var READING = D.order==="reading";

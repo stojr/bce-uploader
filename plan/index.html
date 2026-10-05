@@ -13,7 +13,7 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--label);font-size:18px;line-height:1.3;font-variant-numeric:tabular-nums}
-body.bar-open{padding-bottom:210px}
+body.bar-open{padding-bottom:300px}
 h1,h2,p{margin:0}
 button{font:inherit;color:inherit}
 .wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:0 56px;display:flex;flex-direction:column;gap:22px}
@@ -80,6 +80,8 @@ a.btn{text-decoration:none;display:inline-block}
 .day.past{opacity:.45}
 .day.off{background-image:repeating-linear-gradient(135deg,transparent 0 8px,rgba(246,243,234,.09) 8px 10px)}
 .day.sel{outline:3px solid var(--accent);outline-offset:-3px}
+.cal.picking .day.ntg{opacity:.3}
+.cal.picking .day.tg{outline:2px dashed var(--accent);outline-offset:-4px}
 .dn{font-weight:700;font-size:15px;color:var(--ink-2);display:flex;gap:6px;align-items:baseline;white-space:nowrap}
 .day.today .dn span{background:var(--red);color:#fff;padding:0 6px}
 .dn small{font-size:11px;letter-spacing:.14em;color:var(--ink-3);font-weight:700}
@@ -197,7 +199,7 @@ footer{color:var(--ink-3);font-size:16px;max-width:75ch}
 
   <section id="view"><p class="upd">The calendar appears here once the plan loads.</p></section>
 
-  <footer>Main episodes drop every Thursday in the order of the list, and the Patreon episode drops on the 1st. Each recording session takes whatever drops next. Changes you try here stay on your own device until you share the link.</footer>
+  <footer>Main episodes drop every Thursday in the order of the list, and the Patreon episode drops on the 1st. Each recording session takes whatever drops next, unless you move it. Changes you try here stay on your own device until you share the link.</footer>
 </div>
 
 <dialog id="addDlg" aria-labelledby="addT">
@@ -243,9 +245,10 @@ function isDate(s){return /^\d{4}-\d{2}-\d{2}$/.test(s||'')}
 function baseDraft(plan){
   var off={};
   (plan.off||[]).forEach(function(o){ if(!isDate(o.from)||!isDate(o.to))return; for(var n=nextDow(d2n(o.from),0);n<=d2n(o.to);n+=7)off[n2d(n)]=1 });
+  var r={}; plan.books.forEach(function(b){(b.parts||[]).forEach(function(pt,k){if(isDate(pt.on))r[b.id+'.'+(k+1)]=pt.on})});
   return{m:plan.books.filter(function(b){return b.lane!=='patreon'}).map(function(b){return b.id}),
          p:plan.books.filter(function(b){return b.lane==='patreon'}).map(function(b){return b.id}),
-         off:Object.keys(off).sort(), x:(plan.extra||[]).filter(isDate).sort(), note:'', add:[]};
+         off:Object.keys(off).sort(), x:(plan.extra||[]).filter(isDate).sort(), note:'', add:[], r:r};
 }
 
 function compute(plan,d,today){
@@ -294,13 +297,18 @@ function compute(plan,d,today){
 
   // Each open session records the next thing that has not dropped yet.
   var need=all.filter(function(i){return !i.norec&&!i.have&&i.rel>=today}).sort(function(p,q){return p.rel-q.rel||(p.lane===q.lane?0:p.lane==='main'?-1:1)});
+  var rp=d.r||{};
+  need.forEach(function(it){
+    var ds=rp[it.id]; if(!isDate(ds))return; var pn=d2n(ds); if(pn<today)return;
+    var s=S.find(function(s){return s.n===pn&&!s.item&&!s.off&&!s.done}); if(s){s.item=it;it.rec=pn;it.moved=true}
+  });
   S.forEach(function(s){ if(s.off||s.done||s.item)return; var it=need.find(function(i){return i.rec==null&&i.rel>s.n}); if(it){s.item=it;it.rec=s.n} });
   all.forEach(function(it){
     if(it.norec){it.state=it.rel<today?'out':'gap';return}
     if(it.rel<today){it.state='out';return}
     if(it.have){it.state='can';if(it.recN!=null)it.lead=it.rel-it.recN;return}
     if(it.rec==null){it.state='miss';return}
-    it.lead=it.rel-it.rec; it.state=it.lead<minLead?'tight':'ok';
+    it.lead=it.rel-it.rec; it.state=it.lead<=0?'miss':it.lead<minLead?'tight':'ok';
   });
 
   var rw=null,banked=0,t,it;
@@ -344,15 +352,16 @@ var KEY='bcePlanDraft';
 var plan=null, base=null, draft=null, P=null, view='cal', trying=false, shared=false, sel=null, toastT=0;
 
 function toast(msg){var t=$('toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true},3600)}
-function core(d){return{m:d.m,p:d.p,off:d.off.slice().sort(),x:d.x.slice().sort(),add:d.add||[]}}
+function core(d){return{m:d.m,p:d.p,off:d.off.slice().sort(),x:d.x.slice().sort(),add:d.add||[],r:sortObj(d.r)}}
 function changed(){return JSON.stringify(core(draft))!==JSON.stringify(core(base))}
-function clone(d){return{m:d.m.slice(),p:d.p.slice(),off:d.off.slice(),x:d.x.slice(),note:d.note||'',add:(d.add||[]).map(function(a){return Object.assign({},a)})}}
+function clone(d){return{m:d.m.slice(),p:d.p.slice(),off:d.off.slice(),x:d.x.slice(),note:d.note||'',add:(d.add||[]).map(function(a){return Object.assign({},a)}),r:Object.assign({},d.r||{})}}
 function encode(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
 function decode(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}
 function clean(o){
   var arr=function(a,ok){return Array.isArray(a)?a.filter(ok).slice(0,400):[]}, str=function(s){return typeof s==='string'};
   var add=(Array.isArray(o.add)?o.add:[]).filter(function(a){return a&&str(a.id)&&/^u[a-z0-9]{3,16}$/.test(a.id)&&str(a.title)&&a.title.trim()}).slice(0,20).map(function(a){return{id:a.id,lane:a.lane==='patreon'?'patreon':'main',title:a.title.slice(0,120),short:(str(a.short)&&a.short?a.short:a.title).slice(0,40),n:a.n===2?2:1,pre:a.pre===true}});
-  return{m:arr(o.m,str),p:arr(o.p,str),off:arr(o.off,isDate),x:arr(o.x,isDate),note:str(o.note)?o.note.slice(0,280):'',add:add};
+  var r={}; if(o.r&&typeof o.r==='object')Object.keys(o.r).slice(0,200).forEach(function(k){if(k.length<60&&isDate(o.r[k]))r[k]=o.r[k]});
+  return{m:arr(o.m,str),p:arr(o.p,str),off:arr(o.off,isDate),x:arr(o.x,isDate),note:str(o.note)?o.note.slice(0,280):'',add:add,r:r};
 }
 function save(){try{ if(changed()||draft.note)localStorage.setItem(KEY,JSON.stringify(draft)); else localStorage.removeItem(KEY) }catch(e){}}
 function offLabel(n){var s=n2d(n),o=(plan.off||[]).find(function(o){return s>=o.from&&s<=o.to});return o&&o.label?o.label:'Day off'}
@@ -394,12 +403,15 @@ function renderDraft(){
   if(offAdd)bits.push(offAdd+' more Sunday'+(offAdd===1?'':'s')+' off');
   if(offDel)bits.push(offDel+' Sunday'+(offDel===1?'':'s')+' back on');
   var xd=dc.x.length-bo.x.length; if(xd>0)bits.push(xd+' session'+(xd===1?'':'s')+' added'); else if(xd<0)bits.push((-xd)+' session'+(xd===-1?'':'s')+' removed');
+  var rk={}; Object.keys(dc.r).concat(Object.keys(bo.r)).forEach(function(k){rk[k]=1});
+  var rch=Object.keys(rk).filter(function(k){return dc.r[k]!==bo.r[k]}).length;
+  if(rch)bits.push(rch+' recording'+(rch===1?'':'s')+' moved');
   var addIds=(draft.add||[]).map(function(a){return a.id}), strip=function(a){return a.filter(function(id){return addIds.indexOf(id)<0})};
   if(addIds.length)bits.push(addIds.length+' volume'+(addIds.length===1?'':'s')+' added');
   if(JSON.stringify(strip(dc.m))!==JSON.stringify(bo.m)||JSON.stringify(strip(dc.p))!==JSON.stringify(bo.p))bits.push('the book order changed');
   $('draftMsg').textContent=shared?'This is a version someone shared, not the saved plan'+(bits.length?': '+bits.join(', ')+'.':'.')
     :ch?'Not the saved plan. You changed: '+bits.join(', ')+'.'
-    :'Tap a day on the calendar to take it off or add a session, use the arrows in the list to move a book, or add a volume. Nothing is saved until you share it.';
+    :'Tap a day on the calendar to move or swap what is on it, take it off or add a session. Add a volume with the button above. Nothing is saved until you share it.';
   var dn=$('draftNote'); dn.hidden=!(shared&&draft.note); dn.textContent=shared&&draft.note?'Note: '+draft.note:'';
   if(document.activeElement!==$('note'))$('note').value=shared?'':draft.note;
 }
@@ -420,12 +432,13 @@ function renderCal(){
     var p=parts(n), w=dow(n), d=P.days[n]||{recs:[],drops:[]}, c='day';
     if(p.m%2)c+=' alt'; if(n<P.today)c+=' past'; if(n===P.today)c+=' today'; if(n===sel)c+=' sel';
     if(w!==0&&w!==4)c+=' nw';
+    if(pick)c+=isTarget(n,d)?' tg':' ntg';
     var off=d.recs.some(function(s){return s.off}); if(off)c+=' off';
     h+='<button class="'+c+'" data-n="'+n+'" aria-label="'+esc(DOWL[w]+', '+MONL[p.m]+' '+p.d)+'">'
       +'<span class="dn"><span>'+((p.d===1||n===P.ws0)?MON[p.m]+' ':'')+p.d+'</span>'+(off?'<small>OFF</small>':'')+'</span>'
       +d.recs.map(evRec).join('')+d.drops.map(evDrop).join('')+'</button>';
   }
-  $('view').innerHTML='<div class="cal">'+h+'</div>';
+  $('view').innerHTML='<div class="cal'+(pick?' picking':'')+'">'+h+'</div>';
   markLinks();
 }
 function markLinks(){
@@ -445,7 +458,7 @@ function renderList(){
       :it.state==='ok'?'<span class="cell rc">'+esc(fmt(it.rec))+'</span>'
       :it.state==='tight'?'<span class="cell rc warn">'+esc(fmt(it.rec))+', only '+days(it.lead)+' before</span>'
       :it.state==='gap'?'<span class="cell rc dim">No recording needed</span>'
-      :'<span class="cell rc bad">No date yet</span>';
+      :'<span class="cell rc bad">'+(it.rec!=null?esc(fmt(it.rec))+', too late':'No date yet')+'</span>';
     var mv='';
     if(trying&&it.first){var b=books[it.book];
       mv='<span class="mv"><button class="btn sm" data-act="move" data-id="'+esc(it.book)+'" data-dir="-1" aria-label="Move this book earlier"'+(b.i===0?' disabled':'')+'>&#9650;</button>'
@@ -461,6 +474,18 @@ function renderList(){
 
 function renderBar(){
   var bar=$('daybar');
+  if(pick){
+    var pi=pick.kind==='rec'?P.all.find(function(i){return i.id===pick.item}):P.all.find(function(i){return i.book===pick.book});
+    if(!pi){pick=null}
+    else{
+      $('dbT').textContent=pick.kind==='rec'?'Move a recording':'Swap drop dates';
+      $('dbB').innerHTML=(pick.kind==='rec'
+        ?'<p>Tap the day to record <b>'+esc(plainBrief(pi))+'</b>. Tap a day that already has a recording and the two trade places.</p>'
+        :'<p>Tap another episode&rsquo;s drop day. <b>'+esc(pi.short)+'</b> and that book trade places, every part of them.</p>')
+        +'<div class="acts"><button class="btn" data-act="pickcancel">Cancel</button></div>';
+      bar.hidden=false;document.body.classList.add('bar-open');return;
+    }
+  }
   if(sel==null||sel<P.ws0||sel>P.end){bar.hidden=true;document.body.classList.remove('bar-open');return}
   var p=parts(sel), d=P.days[sel]||{recs:[],drops:[]}, h='', acts='', w=dow(sel);
   $('dbT').textContent=DOWL[w]+', '+MONL[p.m]+' '+p.d;
@@ -469,6 +494,7 @@ function renderBar(){
     if(!s.item){h+='<p>Recording session with nothing left to record. A good day to bank one.</p>';return}
     var it=s.item;
     if(s.done)h+='<p>Recorded <b>'+full(it)+'</b>. It drops '+esc(fmt(it.rel))+'.</p>';
+    else if(it.lead<=0)h+='<p>Record <b>'+full(it)+'</b>. <span style="color:var(--red-ink)">It is due to drop '+esc(fmt(it.rel))+', before this session.</span></p>';
     else h+='<p>Record <b>'+full(it)+'</b>. It drops '+esc(fmt(it.rel))+', '+days(it.lead)+' later'+(it.state==='tight'?', which is cutting it close':'')+'.</p>';
   });
   d.drops.forEach(function(x){
@@ -480,7 +506,7 @@ function renderBar(){
     else if(it.state==='ok')t+='Recording planned for '+esc(fmt(it.rec))+'.';
     else if(it.state==='tight')t+='Recording planned for '+esc(fmt(it.rec))+', only '+days(it.lead)+' before.';
     else if(it.state==='gap')t+='Planned break, no recording needed.';
-    else t+='<span style="color:var(--red-ink)">There is no recording date for it yet.</span>';
+    else t+='<span style="color:var(--red-ink)">'+(it.rec!=null?'Its recording is set for '+esc(fmt(it.rec))+', which is too late.':'There is no recording date for it yet.')+'</span>';
     h+='<p>'+t+'</p>';
   });
   if(!h)h='<p>Nothing is planned for this day.</p>';
@@ -493,8 +519,17 @@ function renderBar(){
   d.recs.forEach(function(s){if(s.item&&!s.off)addPrep(s.item,!s.done)});
   d.drops.forEach(function(x){if(x.item)addPrep(x.item,false)});
   if(trying&&sel>=P.today){
+    d.recs.forEach(function(s){
+      if(s.off||s.done||!s.item)return;
+      acts+='<button class="btn solid" data-act="pickrec" data-item="'+esc(s.item.id)+'">Move or swap recording: '+brief(s.item)+'</button>';
+      if(s.item.moved)acts+='<button class="btn" data-act="unpin" data-item="'+esc(s.item.id)+'">Put '+brief(s.item)+' back in line</button>';
+    });
+    d.drops.forEach(function(x){
+      if(!x.item||x.item.state==='out')return;
+      acts+='<button class="btn solid" data-act="pickdrop" data-book="'+esc(x.item.book)+'">Swap drop dates: '+esc(x.item.short)+'</button>';
+    });
     var sun=d.recs.find(function(s){return s.kind==='sun'}), nx=d.recs.filter(function(s){return s.kind==='extra'}).length;
-    if(sun&&!sun.done)acts+='<button class="btn solid" data-act="off">'+(sun.off?'Record this Sunday after all':'Take this Sunday off')+'</button>';
+    if(sun&&!sun.done)acts+='<button class="btn" data-act="off">'+(sun.off?'Record this Sunday after all':'Take this Sunday off')+'</button>';
     acts+='<button class="btn" data-act="xadd">'+(w===0?'Add a second session':'Add a recording session')+'</button>';
     if(nx)acts+='<button class="btn" data-act="xdel">Remove the added session</button>';
   }
@@ -516,6 +551,49 @@ async function share(){
   if(navigator.share){ try{await navigator.share({title:'BCE recording plan',text:text,url:url});return}catch(e){ if(e&&e.name==='AbortError')return } }
   try{await navigator.clipboard.writeText(url);toast('Link copied. Send it to your co-host.')}
   catch(e){var l=$('lnk');l.hidden=false;l.value=url;l.focus();l.select();toast('Copy this link and send it to your co-host.')}
+}
+
+/* ---- move or swap: pick an entry, then tap where it goes ---- */
+var pick=null;
+function plainBrief(it){return it.short+(it.part?' '+it.part:'')}
+function sortObj(o){var out={};Object.keys(o||{}).sort().forEach(function(k){out[k]=o[k]});return out}
+function isTarget(n,d){
+  if(!pick)return false;
+  if(pick.kind==='rec'){
+    if(n<P.today||n===pick.from)return false;
+    return !d.recs.some(function(s){return s.off})||d.recs.some(function(s){return !s.off&&!s.done});
+  }
+  return d.drops.some(function(x){return x.item&&x.item.book!==pick.book&&x.item.lane===pick.lane&&x.item.state!=='out'});
+}
+function startPick(p){pick=p;view='cal';render()}
+function endPick(){pick=null;render()}
+function applyPick(n){
+  var d=P.days[n]||{recs:[],drops:[]}, msg;
+  if(pick.kind==='rec'){
+    if(n<P.today){toast('Pick today or a later day.');return}
+    if(n===pick.from){toast('It is already on that day. Pick a different one.');return}
+    var X=P.all.find(function(i){return i.id===pick.item}); if(!X){endPick();return}
+    var usable=d.recs.filter(function(s){return !s.off&&!s.done});
+    var tgt=usable.find(function(s){return s.item})||usable[0]||null;
+    if(!tgt&&d.recs.some(function(s){return s.off})){toast('That Sunday is off. Turn it back on first.');return}
+    draft.r=draft.r||{};
+    if(tgt&&tgt.item){draft.r[tgt.item.id]=n2d(pick.from);draft.r[X.id]=n2d(n);msg=plainBrief(X)+' and '+plainBrief(tgt.item)+' traded recording days.'}
+    else{if(!tgt)draft.x.push(n2d(n));draft.r[X.id]=n2d(n);msg=plainBrief(X)+' now records '+fmt(n)+'.'}
+    pick=null;sel=n;shared=false;save();render();
+    if(P.all.some(function(i){return i.moved&&i.lead!=null&&i.lead<=0}))msg+=' One of them now records after it is due: look for the red entry.';
+    toast(msg);
+    return;
+  }
+  var hit=d.drops.find(function(x){return x.item&&x.item.book!==pick.book&&x.item.lane===pick.lane&&x.item.state!=='out'});
+  if(!hit){toast('Tap a day where another '+(pick.lane==='patreon'?'Patreon':'main channel')+' episode drops.');return}
+  var key=pick.lane==='patreon'?'p':'m', arr=(key==='m'?P.orderM:P.orderP).slice(), i=arr.indexOf(pick.book), j=arr.indexOf(hit.item.book);
+  if(i<0||j<0){endPick();return}
+  var isOut=function(b){return P.all.some(function(x){return x.book===b&&x.state==='out'})};
+  if(isOut(arr[i])||isOut(arr[j])){toast('Episodes that are already out stay where they are.');return}
+  var mine=P.all.find(function(x){return x.book===pick.book});
+  var t=arr[i];arr[i]=arr[j];arr[j]=t;draft[key]=arr;
+  msg=(mine?mine.short:'It')+' and '+hit.item.short+' traded drop dates.';
+  pick=null;sel=null;shared=false;save();render();toast(msg);
 }
 
 /* ---- add a volume: a draft entry, placed at the end of its channel ---- */
@@ -559,15 +637,19 @@ document.addEventListener('click',function(ev){
   var a=ev.target.closest('[data-act]'), dn=ev.target.closest('[data-n]');
   if(a){
     var act=a.getAttribute('data-act');
-    if(act==='view'){view=a.getAttribute('data-v');try{localStorage.setItem('bcePlanView',view)}catch(e){}render()}
-    else if(act==='try'){trying=!trying;render()}
-    else if(act==='close'){sel=null;render()}
+    if(act==='view'){pick=null;view=a.getAttribute('data-v');try{localStorage.setItem('bcePlanView',view)}catch(e){}render()}
+    else if(act==='try'){trying=!trying;pick=null;render()}
+    else if(act==='close'){sel=null;pick=null;render()}
     else if(act==='move')moveBook(a.getAttribute('data-id'),+a.getAttribute('data-dir'));
-    else if(act==='reset'){draft=clone(base);shared=false;trying=false;$('lnk').hidden=true;try{localStorage.removeItem(KEY)}catch(e){}if(location.hash.indexOf('#v=')===0)history.replaceState(null,'',location.pathname);render()}
+    else if(act==='reset'){draft=clone(base);pick=null;shared=false;trying=false;$('lnk').hidden=true;try{localStorage.removeItem(KEY)}catch(e){}if(location.hash.indexOf('#v=')===0)history.replaceState(null,'',location.pathname);render()}
     else if(act==='share')share();
     else if(act==='addopen')openAdd();
     else if(act==='addcancel')closeAdd();
     else if(act==='unadd')unAdd(a.getAttribute('data-id'));
+    else if(act==='pickrec'&&sel!=null)startPick({kind:'rec',item:a.getAttribute('data-item'),from:sel});
+    else if(act==='pickdrop'){var pb=a.getAttribute('data-book'),pbi=P.all.find(function(x){return x.book===pb});if(pbi)startPick({kind:'drop',book:pb,lane:pbi.lane})}
+    else if(act==='pickcancel')endPick();
+    else if(act==='unpin'){if(draft.r)delete draft.r[a.getAttribute('data-item')];shared=false;save();render()}
     else if(sel!=null&&(act==='off'||act==='xadd'||act==='xdel')){
       var s=n2d(sel), i;
       if(act==='off'){i=draft.off.indexOf(s);if(i>=0)draft.off.splice(i,1);else draft.off.push(s)}
@@ -577,6 +659,7 @@ document.addEventListener('click',function(ev){
     }
     return;
   }
+  if(dn&&pick){if(dn.classList.contains('day'))applyPick(+dn.getAttribute('data-n'));return}
   if(dn){var n=+dn.getAttribute('data-n'); sel=(sel===n&&dn.classList.contains('day'))?null:n; if(view==='cal')renderCal(); renderBar()}
 });
 $('note').addEventListener('input',function(){draft.note=$('note').value;save()});

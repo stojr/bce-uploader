@@ -149,6 +149,54 @@ body.obs .ak-hint{display:none}
 .controls button[aria-pressed="true"]{background:var(--accent);color:#111}
 .controls a{font:700 16px var(--label);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 .controls .hint{color:var(--ink-3);font-size:15px;letter-spacing:.04em;width:100%}
+/* ON A PHONE (body.phone, set by the script: an upright screen 700 px wide or less, never in OBS).
+   The pane was drawn for a 1080 px video frame; at a third of that its small type is 5-6 px. So:
+   the pane runs edge to edge, the stage grows as tall as the screen allows (the script sets its
+   height and moves the cells, key and cards down), the small type grows with it, the walk's caption
+   takes the hole cards' place instead of covering the covers, and the buttons are a bar across the
+   bottom of the screen. Nothing here applies at 1080x1244. */
+body.phone .page{padding:0;max-width:none;gap:0}
+body.phone .band{height:100px;padding:0 32px;gap:14px}
+body.phone .chip{font-size:30px;padding:6px 14px 4px}
+body.phone .kick{font-size:26px;letter-spacing:.12em}
+body.phone .src{font-size:22px;letter-spacing:.1em}
+body.phone .ask{font-size:34px;line-height:1.15}
+body.phone .nums .of{font-size:40px}
+body.phone .slabel{font-size:24px;letter-spacing:.08em}
+body.phone .legend{gap:0 40px}
+body.phone .lg-br{flex:0 0 100%;height:10px}     /* the line break IS the gap between the key's lines */
+body.phone .lg{gap:12px;height:46px}
+body.phone .sw{width:30px;height:30px}
+body.phone .sw.pod{width:18px;height:32px}
+body.phone .lg-t{font-size:28px;letter-spacing:.08em}
+body.phone .lg-n{font-size:40px}
+body.phone .holes{gap:12px}
+body.phone .hole{padding:8px 16px 10px;border-top-width:5px}
+body.phone .h-top{gap:12px;white-space:nowrap}
+body.phone .h-n{font-size:66px}
+body.phone .h-u{font-size:24px;letter-spacing:.08em}
+body.phone .h-r{font-size:40px;white-space:normal;text-wrap:balance;flex:0 0 auto}     /* an era name takes two lines before it shrinks */
+body.phone .holes.full .h-n{font-size:52px}
+body.phone .stage[data-mode="walk"] .holes{visibility:hidden}
+body.phone .cap{padding:0 24px;gap:24px}
+body.phone .cap-id{gap:6px}
+body.phone .cap-k{font-size:22px;letter-spacing:.1em}
+body.phone .cap-t{font-size:40px;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;text-wrap:balance}   /* a long title takes two lines, not an ellipsis */
+body.phone .cap-l{font-size:46px}
+body.phone .cap-c{font-size:24px;letter-spacing:.1em}
+body.phone .act-t{font-size:26px}
+body.phone .act-n{font-size:24px}
+body.phone .ak-kick{font-size:26px;letter-spacing:.16em}
+body.phone .ak-hint{font-size:34px;color:var(--ink-2);margin-top:14px}
+body.phone .gb-l{font-size:24px}
+body.phone .controls{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:#0c0c0e;border-top:1px solid var(--line)}
+body.phone .controls > *{grid-column:span 2;display:flex;align-items:center;justify-content:center;min-width:0;height:44px;padding:0 2px;
+  white-space:nowrap;font-size:15px;letter-spacing:.06em}
+body.phone .controls a.home-link,body.phone #btnPrev,body.phone #btnNext{grid-column:span 4;height:52px;font-size:19px;letter-spacing:.1em}
+body.phone #btnAll,body.phone #btnReveal{grid-column:span 3}
+body.phone .controls a.wide-link{border:1px solid var(--line);text-decoration:none}
+body.phone .controls .hint,body.phone .controls .lng{display:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 /* nothing fades on load - a fade-out would flash the answer under the reveal for 0.4 s */
 body.preload *,body.preload *::before,body.preload *::after{transition:none!important}
@@ -184,8 +232,8 @@ body.preload *,body.preload *::before,body.preload *::after{transition:none!impo
     <button type="button" id="btnAll">Whole run</button>
     <button type="button" id="btnGaps">Holes</button>
     <button type="button" id="btnReveal">Reveal</button>
-    <button type="button" id="btnAuto" aria-pressed="false">Auto walk</button>
-    <a href="blackpanther.html#wide">&larr; 16:9 slide</a>
+    <button type="button" id="btnAuto" aria-pressed="false">Auto<span class="lng">&nbsp;walk</span></button>
+    <a class="wide-link" href="blackpanther.html#wide" aria-label="The 16:9 slide"><span class="lng">&larr;&nbsp;</span>16:9<span class="lng">&nbsp;slide</span></a>
     <span class="hint">For OBS: a Browser source of this file at 1080&times;1244 over the comic pane (add #obs; #reveal opens on the guess). Keys: &larr; &rarr; walk &middot; G holes &middot; R reveal &middot; A auto walk &middot; Home whole run.</span>
   </div>
 </div>
@@ -219,6 +267,13 @@ R.setProperty("--accent", D.accent||"#F0F051"); R.setProperty("--rule", D.rule||
 /* ---- geometry (stage px) ---- */
 /* the cover box is as tall as its grid needs (pane_cov_h, at most 430); the cells take the rest */
 var GX=48, GW=984, COV_Y=334, COV_H=D.pane_cov_h||430, WAF_Y=COV_Y+COV_H+22, WAF_H=1082-WAF_Y;
+/* what the phone layout moves: stage height, the name block, the caption's bite out of the cover
+   box (0 on a phone - the caption sits where the hole cards are), an act heading, the hole cards */
+var SH=1244, ID_H=214, CAP_R=86, LAB_H=24, HOLE_Y=1134, KEY_COLS=0;
+var hash=location.hash||"";
+var OBS=/obs/.test(hash) || (window.innerWidth===1080 && window.innerHeight===1244);
+var PHONE=!OBS && window.innerWidth<=700 && window.innerHeight>window.innerWidth;
+if(PHONE) document.body.classList.add("phone");
 var MAX=D.run_max, PRE=D.pre ? D.pre.count : 0, SINGLES=D.singles||null;
 
 /* ---- segments: books and holes in run order (as on the slide) ---- */
@@ -241,6 +296,28 @@ if(SINGLES) each(SINGLES,function(n){ SING[n]=1; });
 var OWNED=Object.keys(HELD).length, PREOWN=Object.keys(PREHELD).length, ELSONLY=0, SINGONLY=0;
 for(var n0=1;n0<=MAX;n0++){ if(HELD[n0] && !OWNSET[n0]) ELSONLY++; if(SING[n0] && !HELD[n0]) SINGONLY++; }
 
+/* ---- the phone layout: a taller stage, measured off the screen ---- */
+if(PHONE){ (function(){
+  var kinds=[OWNED-ELSONLY, ELSONLY, SINGONLY, MAX-OWNED-SINGONLY, PRE?PREOWN:0,
+             D.books.filter(function(b){ return b.pod; }).length].filter(Boolean).length;
+  var kc=kinds<=3 ? Math.max(1,kinds) : kinds===4 ? 2 : 3, kr=Math.ceil(kinds/kc), LEG_H=kr*46+(kr-1)*10, HOLE_H=156;
+  KEY_COLS=kc;                                                   /* the key breaks its line after this many */
+  var ID_Y=118; ID_H=232; COV_Y=ID_Y+ID_H+16; WAF_Y=COV_Y+COV_H+22; CAP_R=0; LAB_H=38;
+  var bar=document.querySelector(".controls");
+  var nActs=(D.acts && D.acts.length && !PRE) ? D.acts.length : 0;       /* a read-through's act headings sit in with the cells */
+  var need=WAF_Y+nActs*LAB_H+260+16+LEG_H+14+HOLE_H+12;          /* never fewer than 260 px of cells */
+  var room=Math.floor((window.innerHeight-bar.offsetHeight)/(document.documentElement.clientWidth/1080));
+  SH=Math.max(need, Math.min(room, need+560));                   /* short screen: the page scrolls a little */
+  HOLE_Y=SH-12-HOLE_H; var LEG_Y=HOLE_Y-14-LEG_H; WAF_H=LEG_Y-16-WAF_Y;
+  $("frame").style.aspectRatio="1080 / "+SH; $("stage").style.height=SH+"px";
+  $("viz").style.height=SH+"px"; $("viz").setAttribute("viewBox","0 0 1080 "+SH);
+  var id=document.querySelector(".ident"); id.style.top=ID_Y+"px"; id.style.height=ID_H+"px";
+  $("legend").style.top=LEG_Y+"px";
+  $("holes").style.top=HOLE_Y+"px"; $("holes").style.height=HOLE_H+"px";
+  $("cap").style.height=HOLE_H+"px"; $("guessBadge").style.top=(COV_Y+10)+"px";
+  document.querySelector(".page").style.paddingBottom=bar.offsetHeight+"px";   /* the bar is fixed: leave room to scroll past it */
+})(); }
+
 /* ---- static text ---- */
 $("who").textContent=D.character;
 if(D.logo_uri){ var lgo=document.createElement("img"); lgo.className="who-logo"; lgo.src=D.logo_uri; lgo.alt=D.character;
@@ -256,7 +333,8 @@ if(window.matchMedia && window.matchMedia("(pointer: coarse)").matches){
   var hintEl=document.querySelector(".ak-hint"); if(hintEl) hintEl.textContent="TAP TO REVEAL";
   var gEl=document.querySelector(".ak-g"); if(gEl) gEl.style.display="none"; }
 function fitName(){ var w=$("who"); if(D.logo_uri) return; var fs=96; w.style.fontSize=fs+"px";
-  while(fs>54 && (w.scrollWidth>w.clientWidth+1 || w.offsetHeight>196)){ fs-=4; w.style.fontSize=fs+"px"; } }
+  var lim=PHONE ? ID_H-10-$("ask").offsetHeight : 196;
+  while(fs>54 && (w.scrollWidth>w.clientWidth+1 || w.offsetHeight>lim)){ fs-=4; w.style.fontSize=fs+"px"; } }
 
 /* ---- the drawing ---- */
 var svg=$("viz");
@@ -283,7 +361,7 @@ function popAt(s,x,y,w,hh,solo){
 
 /* every issue one cell: as many columns as make the cells biggest. A read-through with acts
    (Krakoa: Dawn of X, Reign of X...) gets one block of cells per act, each under its name. */
-var ACTS=(D.acts && D.acts.length && !PRE) ? D.acts : null, LAB=ACTS ? 24 : 0;
+var ACTS=(D.acts && D.acts.length && !PRE) ? D.acts : null, LAB=ACTS ? LAB_H : 0, LAB_T=Math.round(LAB_H*0.71);
 var NC=PRE+(PRE?1:0)+MAX, best=null;
 for(var c=6;c<=200;c++){
   var rws=0; if(ACTS) ACTS.forEach(function(a){ rws+=Math.ceil((a.to-a.from+1)/c); }); else rws=Math.ceil(NC/c);
@@ -294,8 +372,8 @@ var gCells=el("g",{},svg), cellOf={}, preCells=[], XY={};
 if(ACTS){ var yy=OY;
   ACTS.forEach(function(a){
     var held=0; for(var k=a.from;k<=a.to;k++) if(HELD[k]) held++;
-    var t1=el("text",{x:f1(OX),y:f1(yy+17),"class":"act-t"},svg); t1.textContent=a.label;
-    var t2=el("text",{x:f1(OX+COLS*CS-CG),y:f1(yy+17),"class":"act-n","text-anchor":"end"},svg); t2.textContent=held+" / "+(a.to-a.from+1);
+    var t1=el("text",{x:f1(OX),y:f1(yy+LAB_T),"class":"act-t"},svg); t1.textContent=a.label;
+    var t2=el("text",{x:f1(OX+COLS*CS-CG),y:f1(yy+LAB_T),"class":"act-n","text-anchor":"end"},svg); t2.textContent=held+" / "+(a.to-a.from+1);
     yy+=LAB;
     for(var n2=a.from;n2<=a.to;n2++){ var i2=n2-a.from; XY[n2]=[OX+(i2%COLS)*CS, yy+Math.floor(i2/COLS)*CS]; }
     yy+=Math.ceil((a.to-a.from+1)/COLS)*CS; });
@@ -316,7 +394,9 @@ segs.forEach(function(s){ s.cells=[];
 /* ---- key: one line ---- */
 /* every key item is a filter: click to light only that kind, again to clear */
 var lg=$("legend"), lgItems={};
-function lgItem(sw,t,n){ if(!n) return; var i=h("div","lg",null,lg); h("span","sw "+sw,null,i); h("span","lg-t",t,i); h("span","lg-n",String(n),i);
+function lgItem(sw,t,n){ if(!n) return; var made=Object.keys(lgItems).length;
+  if(KEY_COLS && made && made%KEY_COLS===0) h("span","lg-br",null,lg);       /* phone: 3 + 2, each line centred */
+  var i=h("div","lg",null,lg); h("span","sw "+sw,null,i); h("span","lg-t",t,i); h("span","lg-n",String(n),i);
   lgItems[sw]=i; i.setAttribute("role","button"); i.tabIndex=0;
   var act=function(ev){ if(ev) ev.stopPropagation(); setFilter(sw); };
   i.addEventListener("click",act); i.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); act(e); } }); }
@@ -328,8 +408,10 @@ lgItem("sng","SINGLES",SINGONLY);
 lgItem("gap",SINGLES?"NOT OWNED":"MISSING",MAX-OWNED-SINGONLY);
 if(PRE) lgItem("pre","BEFORE #1",PREOWN);
 if(PODN) lgItem("pod","ON BCE",PODN);
-(function(){ var fs=18; while(lg.scrollHeight>36 && fs>13){ fs-=1; lg.style.fontSize=fs+"px";
+(function(){ if(PHONE) return; var fs=18; while(lg.scrollHeight>36 && fs>13){ fs-=1; lg.style.fontSize=fs+"px";
   lg.querySelectorAll(".lg-t").forEach(function(t){ t.style.fontSize=fs+"px"; }); lg.style.columnGap=(26-(18-fs)*3)+"px"; } })();
+function fitKey(){ if(!PHONE) return; var fs=28, ts=lg.querySelectorAll(".lg-t"); ts.forEach(function(t){ t.style.fontSize=""; });
+  while(lg.scrollWidth>lg.clientWidth+1 && fs>20){ fs-=1; ts.forEach(function(t){ t.style.fontSize=fs+"px"; }); } }
 
 /* ---- the three biggest holes (cards as on the slide), shown in run order ---- */
 var cards=[], byId={};
@@ -415,8 +497,8 @@ function render(){
      darkened grid while it is selected; the key's OTHER BOOKS filter lines them all up */
   gPop.textContent="";
   if(cur && cur.type==="book" && cur.els && cur.b.pop_uri){
-    var ph=Math.min(cur.b.pop_wh[1], COV_H-86-22), pw=cur.b.pop_wh[0]*ph/cur.b.pop_wh[1];
-    popAt(cur, GX+(GW-pw)/2, COV_Y+11+(COV_H-86-22-ph)/2, pw, ph, true);
+    var ph=Math.min(cur.b.pop_wh[1], COV_H-CAP_R-22), pw=cur.b.pop_wh[0]*ph/cur.b.pop_wh[1];
+    popAt(cur, GX+(GW-pw)/2, COV_Y+11+(COV_H-CAP_R-22-ph)/2, pw, ph, true);
   } else if(mode==="filter" && (filter==="els" || (filter==="pod" && !lit.length))){
     var pops=segs.filter(function(s){ return s.els && s.b.pop_uri && (filter==="els" || s.b.pod); });
     if(pops.length){
@@ -426,11 +508,12 @@ function render(){
       pops.forEach(function(s,j){ popAt(s,x,COV_Y+(COV_H-hh)/2,ws[j],hh,false); x+=(stp==null) ? ws[j]+GAPP : stp; });
     }
   }
-  /* the walk's caption sits on the foot of the cover grid; a hole gets the stamp */
-  var cap=$("cap"), stamp=$("stamp");
-  cap.style.top=(COV_Y+COV_H-86)+"px";
-  if(cur && cur.box && cur.box[1]+cur.box[3]>COV_Y+COV_H-90) cap.style.top=COV_Y+"px";
-  stamp.className="stamp"+(cur && cur.type==="gap" ? " show" : ""); stamp.style.top=COV_Y+"px"; stamp.style.height=(COV_H-90)+"px";
+  /* the walk's caption sits on the foot of the cover grid (on a phone: where the hole cards are,
+     so every cover stays whole); a hole gets the stamp */
+  var cap=$("cap"), stamp=$("stamp"), capFoot=PHONE ? HOLE_Y : COV_Y+COV_H-86;
+  cap.style.top=capFoot+"px";
+  if(!PHONE && cur && cur.box && cur.box[1]+cur.box[3]>COV_Y+COV_H-90) cap.style.top=COV_Y+"px";
+  stamp.className="stamp"+(cur && cur.type==="gap" ? " show" : ""); stamp.style.top=COV_Y+"px"; stamp.style.height=(COV_H-(PHONE ? 0 : 90))+"px";
   if(cur && cur.type==="book"){
     cap.className="cap";
     $("capK").textContent=(cur.els?(cur.b.thin?"Thin trade"+DOT:"Inside another book"+DOT):cur.outside?"Outside the count"+DOT:"")+cur.b.format+(cur.b.vol?DOT+cur.b.vol:"");
@@ -439,7 +522,7 @@ function render(){
     else if(cur.pn){ $("capL").textContent="NOT COUNTED"; $("capC").textContent=plural(cur.pn,"ISSUE")+" BEFORE #1"; }
     else { $("capL").textContent="NOT COUNTED"; $("capC").textContent=(cur.b.outside_why||"Outside the count").toUpperCase(); }
   } else if(cur){
-    cap.className="cap gap"; cap.style.top=(COV_Y+COV_H-86)+"px";
+    cap.className="cap gap"; cap.style.top=capFoot+"px";
     $("capK").textContent="Not on the shelf"; $("capT").textContent=cur.g.title;
     $("capL").textContent=READING ? eraName([[cur.g.from,cur.g.to]]) : T.pos+" "+rng(cur.g.from,cur.g.to); $("capC").textContent=plural(cur.n,"ISSUE")+" MISSING";
     $("stampBig").textContent=READING ? plural(cur.n,"ISSUE") : rng(cur.g.from,cur.g.to);
@@ -499,8 +582,7 @@ document.addEventListener("keydown",function(e){
 });
 
 /* ---- fit: scale 1 in a 1080x1244 OBS browser source, shrink to the window anywhere else ---- */
-var hash=location.hash||"";
-if(/obs/.test(hash) || (window.innerWidth===1080 && window.innerHeight===1244)) document.body.classList.add("obs");
+if(OBS) document.body.classList.add("obs");
 var m=/(?:^|[^a-z])s(\d+)/.exec(hash.replace("#",""));
 if(m){ mode="walk"; step=Math.max(0,Math.min(segs.length-1,parseInt(m[1],10)-1)); }
 if(/holes/.test(hash)) mode="gaps";
@@ -520,11 +602,19 @@ if(/revealnow/.test(hash)) setTimeout(revealRun, 1500);   /* OBS: refresh the so
 function fit(){ var fr=$("frame"); $("stage").style.transform="scale("+(fr.clientWidth/1080)+")"; }
 /* a long hole name (a read-through's "DESTINY OF X -> FALL OF THE HOUSE") shrinks to fit its box */
 function fitHoles(){ [].forEach.call(document.querySelectorAll(".h-r"), function(r){ r.style.fontSize=""; var fs=parseFloat(getComputedStyle(r).fontSize)||26;
+  if(PHONE){ while((r.scrollHeight>68 || r.scrollWidth>r.clientWidth+1) && fs>18){ fs-=1; r.style.fontSize=fs+"px"; } return; }   /* two lines at most, inside the card */
   while(r.scrollWidth>r.clientWidth+1 && fs>13){ fs-=1; r.style.fontSize=fs+"px"; } }); }
-window.addEventListener("resize",fit); fit(); fitName(); fitHoles(); render();
-if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitHoles);
+/* phone: the strip's two labels give way before they run into each other */
+function fitBand(){ if(!PHONE) return; var b=document.querySelector(".band"), k=b.querySelector(".kick"), sr=$("src"), fs=26;
+  k.style.fontSize=""; sr.style.fontSize="";
+  while(b.scrollWidth>b.clientWidth+1 && fs>15){ fs-=1; k.style.fontSize=fs+"px"; sr.style.fontSize=Math.max(14,fs-4)+"px"; } }
+window.addEventListener("resize",fit); fit(); fitName(); fitHoles(); fitKey(); fitBand(); render();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ fitHoles(); fitKey(); fitBand(); });
 requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.body.classList.remove("preload"); }); });
 if(/auto/.test(hash) && mode!=="reveal") toggleAuto();
+/* the layout is measured once, off the screen as it was: a phone turned on its side (or back) starts again */
+window.addEventListener("orientationchange",function(){ setTimeout(function(){
+  var now=!OBS && window.innerWidth<=700 && window.innerHeight>window.innerWidth; if(now!==PHONE) location.reload(); },400); });
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitName);
 })();
 </script>

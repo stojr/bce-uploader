@@ -71,6 +71,7 @@ a.chip:focus-visible{outline:3px solid #fff;outline-offset:2px}
 /* a thin trade / another volume is not in the grid: its cover comes up only when it is selected */
 .pop-img{cursor:pointer}
 .pop-out{fill:none;stroke:var(--accent);stroke-width:4;stroke-dasharray:12 7;pointer-events:none}
+.pop-own{fill:none;stroke:var(--accent);stroke-width:4;pointer-events:none}      /* one of the run's own: a solid edge */
 
 .legend{position:absolute;left:48px;top:1094px;width:984px;display:flex;justify-content:center;flex-wrap:wrap;gap:6px 26px}
 .lg{display:flex;align-items:center;gap:9px;white-space:nowrap}
@@ -356,7 +357,7 @@ var gPop=el("g",{},svg);
 function popAt(s,x,y,w,hh,solo){
   var im=el("image",{href:s.b.pop_uri,x:f1(x),y:f1(y),width:f1(w),height:f1(hh),preserveAspectRatio:"none",filter:"url(#lsh)","class":"pop-img"},gPop);
   im.addEventListener("click",go(s.i));
-  if(solo) el("rect",{x:f1(x),y:f1(y),width:f1(w),height:f1(hh),"class":"pop-out"},gPop);
+  if(solo) el("rect",{x:f1(x),y:f1(y),width:f1(w),height:f1(hh),"class":solo==="own" ? "pop-own" : "pop-out"},gPop);
 }
 
 /* every issue one cell: as many columns as make the cells biggest. A read-through with acts
@@ -485,13 +486,23 @@ function render(){
   cards.forEach(function(c){ if(!c.el) return; var any=function(v){ return c.parts.some(function(s){return s.st===v;}); };
     c.el.setAttribute("data-st", any("focus") ? "focus" : (mode==="reveal" && !any("on")) ? "pending" : mode==="filter" ? "mute" : "on"); });
   /* the covers: one lit in the walk, lit one by one in the reveal, all dark on a hole */
+  /* EVERY BOOK COMES UP IN THE WALK, NOT ONLY THE OTHER ONES (Stephen, 2026-10-07: "only some of
+     the books pop out when going one by one"). With dozens of covers in the grid each is tiny, and
+     an outline round an 85 px cover is not "showing the book". So when the bring-up cover would be
+     clearly bigger than the one in the grid, the run's own book comes up as well - over its own
+     place in the row, solid-edged. A grid of three big covers keeps the plain spotlight. */
+  var ownPop=0;
+  if(cur && cur.type==="book" && !cur.els && cur.b.pop_uri && cur.box){
+    var oph=Math.min(cur.b.pop_wh[1], COV_H-CAP_R-22);
+    if(oph>cur.box[3]*1.2) ownPop=oph;
+  }
   var lit=[];
   if(mode==="reveal") segs.forEach(function(s){ if(s.box && s.i<revealN) lit.push(s.box); });
   else if(mode==="filter") segs.forEach(function(s){ if(s.box && inFilter(s,filter)) lit.push(s.box); });
-  else if(cur && cur.box) lit.push(cur.box);
+  else if(cur && cur.box && !ownPop) lit.push(cur.box);
   if(mode==="overview" || (mode==="filter" && filter==="own")){ cdim.setAttribute("opacity",0); }
   else { cdim.setAttribute("d",covRect+lit.map(boxPath).join("")); cdim.setAttribute("opacity", mode==="gaps" ? .55 : .82); }
-  if(cur && cur.box){ cspot.setAttribute("x",cur.box[0]); cspot.setAttribute("y",cur.box[1]); cspot.setAttribute("width",cur.box[2]); cspot.setAttribute("height",cur.box[3]); cspot.setAttribute("visibility","visible"); }
+  if(cur && cur.box && !ownPop){ cspot.setAttribute("x",cur.box[0]); cspot.setAttribute("y",cur.box[1]); cspot.setAttribute("width",cur.box[2]); cspot.setAttribute("height",cur.box[3]); cspot.setAttribute("visibility","visible"); }
   else cspot.setAttribute("visibility","hidden");
   /* a book that is not in the grid (thin trade, another volume): bring its cover up over the
      darkened grid while it is selected; the key's OTHER BOOKS filter lines them all up */
@@ -499,6 +510,9 @@ function render(){
   if(cur && cur.type==="book" && cur.els && cur.b.pop_uri){
     var ph=Math.min(cur.b.pop_wh[1], COV_H-CAP_R-22), pw=cur.b.pop_wh[0]*ph/cur.b.pop_wh[1];
     popAt(cur, GX+(GW-pw)/2, COV_Y+11+(COV_H-CAP_R-22-ph)/2, pw, ph, true);
+  } else if(ownPop){
+    var opw=cur.b.pop_wh[0]*ownPop/cur.b.pop_wh[1], ocx=cur.box[0]+cur.box[2]/2;
+    popAt(cur, Math.max(GX+8, Math.min(GX+GW-8-opw, ocx-opw/2)), COV_Y+11+(COV_H-CAP_R-22-ownPop)/2, opw, ownPop, "own");
   } else if(mode==="filter" && (filter==="els" || (filter==="pod" && !lit.length))){
     var pops=segs.filter(function(s){ return s.els && s.b.pop_uri && (filter==="els" || s.b.pod); });
     if(pops.length){
@@ -512,7 +526,7 @@ function render(){
      so every cover stays whole); a hole gets the stamp */
   var cap=$("cap"), stamp=$("stamp"), capFoot=PHONE ? HOLE_Y : COV_Y+COV_H-86;
   cap.style.top=capFoot+"px";
-  if(!PHONE && cur && cur.box && cur.box[1]+cur.box[3]>COV_Y+COV_H-90) cap.style.top=COV_Y+"px";
+  if(!PHONE && !ownPop && cur && cur.box && cur.box[1]+cur.box[3]>COV_Y+COV_H-90) cap.style.top=COV_Y+"px";
   stamp.className="stamp"+(cur && cur.type==="gap" ? " show" : ""); stamp.style.top=COV_Y+"px"; stamp.style.height=(COV_H-(PHONE ? 0 : 90))+"px";
   if(cur && cur.type==="book"){
     cap.className="cap";

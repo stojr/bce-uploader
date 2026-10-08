@@ -1,321 +1,77 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex, nofollow">
-<title>Tower of Shadows Prep</title>
-</head><body>
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<!-- bce-lock v1 -->
+<title>BCE Comics Pod - sign in</title>
 <style>
-  :root{
-    color-scheme: light;
-    --paper:#f4f1ec; --card:#fffdfa; --ink:#14100f; --body:#2f2a28;
-    --muted:#6d635d; --rule:#ded6cc; --accent:#9d4257; --accent-soft:#f7ebee;
-    --gold:#8a6a1f; --gold-soft:#f6efdd; --mono-bg:#ece7e0;
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      color-scheme: dark;
-      --paper:#131011; --card:#1c1719; --ink:#f4efe9; --body:#d6cec9;
-      --muted:#9a8f89; --rule:#33292d; --accent:#e2889c; --accent-soft:#2a171d;
-      --gold:#d8b25e; --gold-soft:#271f10; --mono-bg:#241d20;
-    }
-  }
-  :root[data-theme="dark"]{
-    color-scheme: dark;
-    --paper:#131011; --card:#1c1719; --ink:#f4efe9; --body:#d6cec9;
-    --muted:#9a8f89; --rule:#33292d; --accent:#e2889c; --accent-soft:#2a171d;
-    --gold:#d8b25e; --gold-soft:#271f10; --mono-bg:#241d20;
-  }
-  body{background:var(--paper); color:var(--body); padding:0;
-    font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
-    font-size:16px; line-height:1.58; margin:0;}
-  .wrap{max-width:720px; margin:0 auto; padding-inline:20px; padding-block:0 72px;}
-  header.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:5;
-    background:color-mix(in srgb, var(--paper) 93%, transparent);
-    backdrop-filter:blur(8px); border-bottom:1px solid var(--rule);}
-  header.top .inner{max-width:720px; margin:0 auto; padding:9px 20px;
-    display:flex; gap:10px; align-items:baseline;}
-  header.top .mark{font-family:"Oswald",Impact,sans-serif; font-weight:600;
-    text-transform:uppercase; letter-spacing:.09em; font-size:12.5px; color:var(--accent);}
-  header.top .who{font-size:11.5px; color:var(--muted);}
-  h1{font-family:"Oswald",Impact,sans-serif; font-weight:600;
-    font-size:clamp(30px,8vw,44px); line-height:1.05; color:var(--ink);
-    margin:26px 0 8px; text-wrap:balance;}
-  .lede{font-size:17px; margin:0 0 4px;}
-  .stamp{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted);
-    text-transform:uppercase; letter-spacing:.07em; margin:0 0 22px;}
-  h2{font-family:"Oswald",Impact,sans-serif; font-weight:500; font-size:22px;
-    color:var(--ink); margin:36px 0 4px; text-wrap:balance;}
-  h2 .n{color:var(--accent); font-size:15px; margin-right:8px;
-    font-family:"IBM Plex Mono",monospace;}
-  p{margin:0 0 12px;}
-  a{color:var(--accent);}
-  .facts{display:grid; margin:14px 0 6px; border-top:1px solid var(--rule);}
-  .facts div{display:flex; gap:12px; padding:7px 0; border-bottom:1px solid var(--rule); font-size:14.5px;}
-  .facts .k{flex:0 0 36%; font-family:"IBM Plex Mono",monospace; font-size:11px;
-    text-transform:uppercase; letter-spacing:.05em; color:var(--muted);}
-  .facts .v{flex:1; color:var(--ink);}
-  .hook{background:var(--accent-soft); border:1px solid var(--accent);
-    border-radius:3px; padding:15px 17px; margin:18px 0;}
-  .hook .tag{font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600;
-    text-transform:uppercase; letter-spacing:.1em; color:var(--accent); display:block; margin-bottom:5px;}
-  .hook p{margin:0 0 9px;} .hook p:last-child{margin:0;}
-  .iss{background:var(--card); border:1px solid var(--rule); border-radius:3px;
-    padding:15px 17px; margin:14px 0;}
-  .iss .hd{font-family:"Oswald",Impact,sans-serif; font-size:17px; font-weight:500;
-    text-transform:uppercase; letter-spacing:.04em; color:var(--ink);}
-  .iss .cov{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--accent); margin-bottom:9px;}
-  .story{padding:8px 0; border-top:1px dashed var(--rule);}
-  .story .t{font-weight:600; color:var(--ink); font-size:15px;}
-  .story .c{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--muted);}
-  .story p{margin:5px 0 0; font-size:14.5px;}
-  ul.talk{list-style:none; margin:10px 0 0; padding:0;}
-  ul.talk li{position:relative; padding-left:19px; margin-bottom:9px; font-size:15px;}
-  ul.talk li::before{content:""; position:absolute; left:2px; top:9px; width:7px; height:7px;
-    background:var(--accent); border-radius:1px;}
-  .note{background:var(--gold-soft); border-left:3px solid var(--gold);
-    padding:12px 15px; margin:14px 0; font-size:14.5px;}
-  .note b{color:var(--gold);}
-  blockquote{margin:12px 0; padding:0 0 0 16px; border-left:2px solid var(--rule);
-    font-style:italic; color:var(--ink);}
-  blockquote span{display:block; font-style:normal; font-size:12.5px; color:var(--muted); margin-top:5px;}
-  hr.rule{border:0; border-top:1px solid var(--rule); margin:34px 0 0;}
-  .src{font-size:12.5px; color:var(--muted); margin-top:12px;}
-</style>
-
-<header class="top">
-  <div class="inner">
-    <span class="mark">BCE Comics Pod</span>
-    <span class="who">recording prep</span>
-    <a href="../plan/" style="margin-left:auto;font-size:12.5px">Recording plan</a>
-  </div>
-</header>
-
-<div class="wrap">
-
-  <h1>Tower of Shadows</h1>
-  <p class="lede">Lost Marvels No. 1 — Marvel's 1969 horror anthology, reprinted
-  by the last publisher you would expect.</p>
-  <p class="stamp">Prepared 28 Sep 2026 &middot; read off the book itself + research</p>
-
-  <div class="facts">
-    <div><span class="k">Full title</span><span class="v">Lost Marvels No. 1: Tower of Shadows</span></div>
-    <div><span class="k">Publisher</span><span class="v">Fantagraphics Books, Seattle — under licence from Marvel</span></div>
-    <div><span class="k">Edition</span><span class="v">First Fantagraphics edition Feb 2025, on sale 29 April 2025</span></div>
-    <div><span class="k">ISBN</span><span class="v">979-8-8750-0037-9 &middot; printed in China</span></div>
-    <div><span class="k">Collects</span><span class="v">Tower of Shadows #1–9 (1969–71): all nine covers plus a selection of stories</span></div>
-    <div><span class="k">Editor</span><span class="v">Dr. Michael Dean (also writes the intro and the creator bios)</span></div>
-    <div><span class="k">Supervising editor</span><span class="v">Gary Groth</span></div>
-  </div>
-
-  <div class="hook">
-    <span class="tag">Lead with this — it is the story of the book</span>
-    <p><b>Fantagraphics is publishing Marvel comics.</b> Fantagraphics is the
-    home of Love and Rockets, Hate, and above all <em>The Comics Journal</em> —
-    the magazine that spent decades as the sharpest critic of exactly this kind
-    of corporate comics. Gary Groth, its co-founder and the Journal's editor,
-    is the supervising editor on a Marvel licensed reprint. Publishers Weekly
-    covered the deal under the headline "Strange Bedfellows".</p>
-    <p>That is your episode's spine: the alt-comix publisher curating Marvel's
-    unreprinted back catalogue, and doing it with essays and creator bios
-    rather than a bare Epic Collection dump.</p>
-  </div>
-
-  <h2><span class="n">01</span>Why this title exists at all</h2>
-  <p>Straight from Michael Dean's introduction, and it is the best context in
-  the book. The 1954 Comics Code — formed by the industry itself, in a panic
-  over Wertham's <em>Seduction of the Innocent</em> and the Senate juvenile
-  delinquency hearings — banned the word "horror", banned "gruesome
-  illustrations", banned the walking dead, vampires, ghouls and
-  "werewolfism", and required good to triumph. EC's <em>Vault of Horror</em>
-  was outlawed by its own title. <em>Mad</em> survived only by becoming a
-  magazine, which put it outside the Code's reach.</p>
-  <p>For fifteen years the only monsters allowed were matinee creatures and
-  rubbery aliens — the Atlas monster comics, <em>Tales to Astonish</em> and
-  <em>Journey into Mystery</em>. Then in 1968 DC started testing the water
-  again with <em>House of Mystery</em> and <em>House of Secrets</em>.</p>
-  <div class="note">
-    <b>The point worth making on air:</b> the Code did not relent until 1971,
-    when it finally allowed vampires and werewolves "when handled in the
-    classic tradition". Marvel did not wait. Tower of Shadows launched in
-    1969 — ahead of permission — with <em>Chamber of Darkness</em> a month
-    behind it. Everything that follows, Tomb of Dracula, Werewolf by Night,
-    Ghost Rider, comes through the door these two books pushed open.
-  </div>
-  <p>Dean's framing of the pair is good and worth stealing: <em>Chamber</em>
-  is the sudden "Boo!", <em>Tower</em> is the dread of what is waiting in the
-  dark.</p>
-
-  <h2><span class="n">02</span>The Steranko fight</h2>
-  <p>The lead story of issue #1 is the single most talked-about thing in this
-  book, and it is a production story rather than a plot.</p>
-  <p>Jim Steranko wrote and drew <b>"At the Stroke of Midnight!"</b> — except
-  he called it "The Lurking Fear at Shadow House", a deliberate Lovecraft
-  homage. Stan Lee rejected his cover, and the two clashed over panel design,
-  dialogue and the title. By Steranko's account Lee did not care for the
-  Lovecraft reference and substituted his own title; one version of the story
-  has Lee pushing for "Let Them Eat Cake". The rift was serious enough that
-  Steranko stopped freelancing for Marvel — Lee phoned him about a month
-  later once both had cooled off, and Steranko came back for covers in
-  1972–73.</p>
-  <ul class="talk">
-    <li>It won a <b>1969 Alley Award for Best Feature Story</b> — so the story
-    Lee fought him over is the one the readers voted best of the year.</li>
-    <li>Great debate: whose book is it? Steranko was at the height of his
-    reputation and Lee was still editor. Both were arguably right.</li>
-    <li>Look at the finished pages with this in mind — the argument was about
-    panel design, so the storytelling itself is the evidence.</li>
-  </ul>
-
-  <h2><span class="n">03</span>What is in it, issue by issue</h2>
-  <p class="stamp" style="margin-bottom:10px">Read off the book's own contents
-  page — creators exactly as credited</p>
-
-  <div class="iss">
-    <div class="hd">Tower of Shadows #1</div>
-    <div class="cov">cover: John Romita</div>
-    <div class="story"><span class="t">At the Stroke of Midnight!</span>
-      <div class="c">writer/artist Jim Steranko</div>
-      <p>The Alley Award winner, and the fight above.</p></div>
-    <div class="story"><span class="t">From the Brink!</span>
-      <div class="c">writer/artist Johnny Craig</div>
-      <p>Craig is EC royalty — artist and editor on <em>The Vault of Horror</em>.
-      A man the Code helped put out of work, back doing the thing it banned.</p></div>
-    <div class="story"><span class="t">A Time to Die!</span>
-      <div class="c">writer Stan Lee, pencils John Romita, inks Don Heck</div>
-      <p>Lee writing straight horror rather than superheroes is unusual by 1969.</p></div>
-  </div>
-
-  <div class="iss">
-    <div class="hd">Tower of Shadows #2</div>
-    <div class="cov">cover: John Romita</div>
-    <div class="story"><span class="t">Witch Hunt!</span>
-      <div class="c">writer Roy Thomas, pencils Don Heck, inks Dan Adkins</div></div>
-    <div class="story"><span class="t">Look Out, Wyatt … Automation's Gonna Get Your Job!</span>
-      <div class="c">writer Gary Friedrich, pencils John Buscema, inks John Verpoorten</div>
-      <p>That title is doing something very 1969 — worth reading for tone.</p></div>
-    <div class="story"><span class="t">One Hungers</span>
-      <div class="c">writer and pencils Neal Adams, inks Dan Adkins</div>
-      <p>Adams writing as well as drawing is rare. Same year he was remaking
-      Batman and X-Men.</p></div>
-  </div>
-
-  <div class="iss">
-    <div class="hd">Tower of Shadows #3</div>
-    <div class="cov">cover: Marie Severin pencils, Frank Giacoia inks</div>
-    <div class="story"><span class="t">The Moving Finger Writhes…!</span>
-      <div class="c">writer Len Wein, pencils Gene Colan, inks Mike Esposito</div></div>
-    <div class="story"><span class="t">Midnight in the Wax Museum!</span>
-      <div class="c">writer Gary Friedrich, art George Tuska and Marie Severin</div></div>
-  </div>
-
-  <div class="iss">
-    <div class="hd">Tower of Shadows #4</div>
-    <div class="cov">cover: Marie Severin pencils, Herb Trimpe inks</div>
-    <div class="story"><span class="t">Evil is a Baaaaad Scene!!</span>
-      <div class="c">writer Allyn Brodsky, art Don Heck</div></div>
-    <div class="story"><span class="t">One Little Indian!</span>
-      <div class="c">writer Marv Wolfman, pencils Gene Colan, inks Dan Adkins</div>
-      <p>A title that will need handling — flag it before you get there.</p></div>
-    <div class="story"><span class="t">To Sneak … Perchance to Dream!</span>
-      <div class="c">writer/artist Tom Sutton</div></div>
-  </div>
-
-  <div class="iss">
-    <div class="hd">Tower of Shadows #5</div>
-    <div class="cov">cover: Marie Severin pencils, Bill Everett inks</div>
-    <div class="story"><span class="t">The Demon That Devoured Hollywood!</span>
-      <div class="c">writer Roy Thomas, pencils Barry Windsor-Smith, inks Dan Adkins</div>
-      <p>Windsor-Smith years before Conan — very early, very Kirby-inflected.</p></div>
-    <div class="story"><span class="t">Flight Into Fear!</span>
-      <div class="c">writer/artist Wallace Wood</div></div>
-    <div class="story"><span class="t">Time Out!</span>
-      <div class="c">writer Gerry Conway, art Syd Shores</div>
-      <p>Conway was a teenager when he broke in — worth checking his age here.</p></div>
-  </div>
-
-  <div class="iss">
-    <div class="hd">Tower of Shadows #6</div>
-    <div class="cov">cover: Marie Severin</div>
-    <div class="story"><span class="t">The Ghost-Beast!</span>
-      <div class="c">writer/artist Wallace Wood</div></div>
-    <div class="story"><span class="t">Contact!</span>
-      <div class="c">writer/artist Tom Sutton</div></div>
-    <div class="story"><span class="t">The Scream from Beyond!</span>
-      <div class="c">writer Steve Skeates, pencils Gene Colan, inks Dan Adkins</div></div>
-  </div>
-
-  <div class="iss">
-    <div class="hd">Tower of Shadows #7</div>
-    <div class="cov">cover: JACK KIRBY pencils, STEVE DITKO inks, Marie Severin alterations</div>
-    <div class="story"><span class="t">The Scream of Things</span>
-      <div class="c">writer Allyn Brodsky, pencils Barry Windsor-Smith, inks Vince Colletta</div></div>
-    <div class="story"><span class="t">Of Swords and Sorcery!</span>
-      <div class="c">writer/artist Wallace Wood</div></div>
-    <p style="margin-top:10px"><b>Stop on that cover.</b> Kirby pencilling,
-    Ditko inking, and Severin altering it afterwards is a combination that
-    barely exists anywhere else — the two architects of the Marvel age on one
-    image, with a third hand on top. The cover sells "Titano! The Monster That
-    Time Forgot!", an Atlas-era monster dragged back out.</p>
-  </div>
-
-  <div class="iss">
-    <div class="hd">Tower of Shadows #8 and #9</div>
-    <div class="cov">covers: Bernie Wrightson (both)</div>
-    <div class="story"><span class="t">Sanctuary!</span>
-      <div class="c">writer/artist Wallace Wood</div></div>
-    <p style="margin-top:10px">Wrightson covers here are <em>before</em> Swamp
-    Thing. #9 is represented by its cover only. There is also a "Special Cover"
-    by John Romita at the back, then Dean's creator biographies.</p>
-  </div>
-
-  <h2><span class="n">04</span>The thread to pull: EC comes back</h2>
-  <p>The Code killed EC. Fifteen years later Marvel opens a horror book and
-  hires <b>Wallace Wood</b>, <b>Johnny Craig</b> and <b>Marie Severin</b> —
-  all EC alumni. Wood alone has four stories here, more than anyone.</p>
-  <ul class="talk">
-    <li>Wood is the most-represented creator in the book. If you want one
-    through-line for the episode, he is it.</li>
-    <li>Marie Severin pencils or draws five of the nine covers — she is the
-    visual identity of this title and is rarely given that credit.</li>
-    <li>Dan Adkins inks across five stories. Under-discussed connective tissue.</li>
-  </ul>
-
-  <h2><span class="n">05</span>Where the line is going</h2>
-  <p>Useful for the wrap-up. Fantagraphics has said future Lost Marvels
-  volumes will cover the 1980s <em>Savage Tales</em>, Marvel science fiction
-  like <em>Unknown Worlds of Science Fiction</em>, and Doug Murray and Michael
-  Golden's <em>The 'Nam</em>. Dean has said he hopes to collect
-  <em>Chamber of Darkness</em>, this book's companion title.</p>
-
-  <h2><span class="n">06</span>Questions to put to each other</h2>
-  <ul class="talk">
-    <li>Does Fantagraphics doing this change how the material reads, or is the
-    packaging just nicer?</li>
-    <li>Is an anthology of one-off horror shorts actually reviewable the way a
-    run is? What do you even rate?</li>
-    <li>The Code forced these stories into twist-ending shapes. Does the
-    restriction make them better or just samey?</li>
-    <li>Steranko versus Lee — whose call should it have been?</li>
-    <li>This is a curated selection, not a complete run. Does leaving stories
-    out make it a better book or an incomplete one?</li>
-  </ul>
-
-  <div class="note">
-    <b>Two things to check as you read.</b> First, the stories are 1969–71 and
-    some titles already signal dated content — "One Little Indian!" especially.
-    Decide before recording how you want to handle it. Second, this is a
-    selection: work out which stories from #1–9 are <em>missing</em> and
-    whether the omissions look like quality calls or rights problems. That
-    would be a genuinely original observation.
-  </div>
-
-  <hr class="rule">
-  <p class="src">Contents, credits and publication details read directly from
-  the book's own contents and indicia pages; historical context from Dr.
-  Michael Dean's introduction; the Steranko account and the Lost Marvels line
-  plans from Wikipedia, Publishers Weekly and Fantagraphics. Story plots are
-  deliberately not summarised — nobody has read them yet.</p>
-
-</div>
-
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#141416;color:#F6F3EA;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-size:18px;line-height:1.35;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+main{width:100%;max-width:380px;background:#1e1e21;border-top:6px solid #ED1D24;border-bottom:4px solid #F0F051;padding:22px 20px 20px}
+.k{font-weight:700;font-size:14px;letter-spacing:.22em;color:#F0F051;text-transform:uppercase}
+h1{font-family:Impact,"Anton","Arial Narrow Bold",sans-serif;font-weight:400;font-size:34px;line-height:1;text-transform:uppercase;margin:8px 0 6px}
+p{margin:0 0 14px;color:#C9C5BA}
+label{display:block;font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#C9C5BA;margin-bottom:6px}
+input{width:100%;font:inherit;font-size:20px;padding:9px 10px;background:#141416;color:#F6F3EA;border:2px solid #8F8C84}
+input:focus{outline:2px solid #F0F051;outline-offset:2px}
+button{margin-top:12px;width:100%;appearance:none;border:2px solid #F0F051;background:#F0F051;color:#17170F;font:inherit;font-weight:700;font-size:18px;letter-spacing:.12em;text-transform:uppercase;padding:9px 14px;cursor:pointer}
+button:disabled{opacity:.5;cursor:default}
+#msg{min-height:1.35em;margin:10px 0 0;color:#FF6166;font-size:16px}
+.s{margin:12px 0 0;font-size:15px;color:#8F8C84}
+</style></head><body>
+<main id="gate" hidden>
+  <div class="k">BCE Comics Pod</div>
+  <h1>Hosts only</h1>
+  <p>This page is for Nick and stojr.</p>
+  <form id="f" autocomplete="on">
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+    <button id="go" type="submit">Unlock</button>
+    <p id="msg" role="alert"></p>
+  </form>
+  <p class="s">Stays unlocked on this device after the first time.</p>
+</main>
+<noscript><p style="padding:24px">This page needs JavaScript to unlock.</p></noscript>
+<script>
+(function(){
+var S="zcLH5BTMIOLJ+feGjoCDIw==",N=600000,IV="uyWsHyM2bjuAcCkN",CT="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",K="bceSiteKey1";
+function b(s){var r=atob(s),a=new Uint8Array(r.length),i;for(i=0;i<r.length;i++)a[i]=r.charCodeAt(i);return a}
+function b64(a){var s="",i;for(i=0;i<a.length;i++)s+=String.fromCharCode(a[i]);return btoa(s)}
+function $(i){return document.getElementById(i)}
+function show(m){$("gate").hidden=false;$("msg").textContent=m||"";$("go").disabled=false;try{$("pw").focus()}catch(e){}}
+function plain(raw){
+  return crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"])
+    .then(function(k){return crypto.subtle.decrypt({name:"AES-GCM",iv:b(IV)},k,b(CT))})
+    .then(function(buf){return new TextDecoder().decode(buf)});
+}
+function put(html){
+  // A remembered key decrypts in a few ms - before this shell has finished
+  // loading. Writing then APPENDS to the shell instead of replacing it (the
+  // sign-in styles bleed into the page), so wait for the load to end.
+  if(document.readyState!=="complete"){window.addEventListener("load",function(){put(html)});return}
+  var h=location.hash;
+  document.open();document.write(html);document.close();
+  if(h&&h.length>1&&h.indexOf("#v=")!==0)setTimeout(function(){try{var e=document.getElementById(decodeURIComponent(h.slice(1)));if(e)e.scrollIntoView()}catch(x){}},60);
+}
+function derive(pw){
+  return crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveBits"])
+    .then(function(k){return crypto.subtle.deriveBits({name:"PBKDF2",salt:b(S),iterations:N,hash:"SHA-256"},k,256)})
+    .then(function(bits){return new Uint8Array(bits)});
+}
+if(!window.crypto||!crypto.subtle){show("This browser cannot unlock the page. Open it over https in a current browser.");return}
+if(location.hash==="#lock"){try{localStorage.removeItem(K)}catch(e){}history.replaceState(null,"",location.pathname);show("Signed out on this device.")}
+else{
+  var saved=null;try{saved=localStorage.getItem(K)}catch(e){}
+  if(saved){plain(b(saved)).then(put).catch(function(){try{localStorage.removeItem(K)}catch(e){}show("The password has changed. Enter the new one.")})}
+  else show("");
+}
+$("f").addEventListener("submit",function(ev){
+  ev.preventDefault();
+  var pw=$("pw").value.trim();if(!pw)return;
+  $("go").disabled=true;$("msg").textContent="";
+  derive(pw).then(function(raw){
+    return plain(raw).then(function(html){try{localStorage.setItem(K,b64(raw))}catch(e){}put(html)});
+  }).catch(function(){$("pw").value="";show("That password did not work.")});
+});
+})();
+</script>
 </body></html>

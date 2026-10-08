@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex, nofollow">
+<title>X-Cutioner's Song Prep</title>
+</head><body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --paper:#f2f3f5; --card:#fdfdfe; --ink:#0f1216; --body:#2a2e34;
+    --muted:#646b75; --rule:#d6dae0; --accent:#1c5c99; --accent-soft:#e7f0f8;
+    --gold:#8a6a1f; --gold-soft:#f6efdd; --mono-bg:#e6e9ed;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --paper:#0f1215; --card:#171b20; --ink:#eef1f4; --body:#cdd3da;
+      --muted:#8d96a1; --rule:#2a313a; --accent:#7db5e6; --accent-soft:#14212e;
+      --gold:#d8b25e; --gold-soft:#271f10; --mono-bg:#1e242b;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --paper:#0f1215; --card:#171b20; --ink:#eef1f4; --body:#cdd3da;
+    --muted:#8d96a1; --rule:#2a313a; --accent:#7db5e6; --accent-soft:#14212e;
+    --gold:#d8b25e; --gold-soft:#271f10; --mono-bg:#1e242b;
+  }
+  html{scroll-padding-top:86px;}
+  body{background:var(--paper); color:var(--body); padding:0;
+    font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+    font-size:16px; line-height:1.58; margin:0;}
+  .wrap{max-width:720px; margin:0 auto; padding-inline:20px; padding-block:0 72px;}
+  header.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:5;
+    background:color-mix(in srgb, var(--paper) 93%, transparent);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--rule);}
+  header.top .inner{max-width:720px; margin:0 auto; padding:9px 20px;
+    display:flex; gap:10px; align-items:baseline;}
+  header.top .mark{font-family:"Oswald",Impact,sans-serif; font-weight:600;
+    text-transform:uppercase; letter-spacing:.09em; font-size:12.5px; color:var(--accent);}
+  header.top .who{font-size:11.5px; color:var(--muted);}
+  nav.toc{max-width:720px; margin:0 auto; padding:0 20px 8px; display:flex; gap:6px;
+    overflow-x:auto; scrollbar-width:none;}
+  nav.toc::-webkit-scrollbar{display:none;}
+  nav.toc a{flex:0 0 auto; font-family:"IBM Plex Mono",monospace; font-size:11px;
+    text-transform:uppercase; letter-spacing:.04em; text-decoration:none;
+    color:var(--muted); background:var(--mono-bg); border-radius:3px; padding:4px 8px;}
+  h1{font-family:"Oswald",Impact,sans-serif; font-weight:600;
+    font-size:clamp(30px,8vw,44px); line-height:1.05; color:var(--ink);
+    margin:26px 0 8px; text-wrap:balance;}
+  .lede{font-size:17px; margin:0 0 4px;}
+  .stamp{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.07em; margin:0 0 22px;}
+  h2{font-family:"Oswald",Impact,sans-serif; font-weight:500; font-size:22px;
+    color:var(--ink); margin:38px 0 4px; text-wrap:balance;}
+  h2 .n{color:var(--accent); font-size:15px; margin-right:8px;
+    font-family:"IBM Plex Mono",monospace;}
+  h3{font-family:"Oswald",Impact,sans-serif; font-weight:500; font-size:16px;
+    text-transform:uppercase; letter-spacing:.05em; color:var(--accent); margin:26px 0 2px;}
+  p{margin:0 0 12px;}
+  a{color:var(--accent);}
+  .facts{display:grid; margin:14px 0 6px; border-top:1px solid var(--rule);}
+  .facts div{display:flex; gap:12px; padding:7px 0; border-bottom:1px solid var(--rule); font-size:14.5px;}
+  .facts .k{flex:0 0 30%; font-family:"IBM Plex Mono",monospace; font-size:11px;
+    text-transform:uppercase; letter-spacing:.05em; color:var(--muted);}
+  .facts .v{flex:1; color:var(--ink);}
+  .book{font-family:"Oswald",Impact,sans-serif; font-weight:500; font-size:15px;
+    text-transform:uppercase; letter-spacing:.05em; color:var(--ink); margin:18px 0 0;}
+  .hook{background:var(--accent-soft); border:1px solid var(--accent);
+    border-radius:3px; padding:15px 17px; margin:18px 0;}
+  .hook .tag{font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600;
+    text-transform:uppercase; letter-spacing:.1em; color:var(--accent); display:block; margin-bottom:5px;}
+  .hook p{margin:0 0 9px;} .hook p:last-child{margin:0;}
+  .iss{background:var(--card); border:1px solid var(--rule); border-radius:3px;
+    padding:14px 17px; margin:12px 0;}
+  .iss .hd{font-family:"Oswald",Impact,sans-serif; font-size:17px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.04em; color:var(--ink);}
+  .iss .hd .ch{color:var(--accent); font-family:"IBM Plex Mono",monospace; font-size:13px; margin-right:7px;}
+  .iss .ti{font-weight:600; color:var(--ink); font-size:15px;}
+  .iss .cov{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--accent); margin:2px 0 3px;}
+  .iss .c{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--muted); margin-bottom:8px;}
+  .iss p{margin:6px 0 0; font-size:14.5px;}
+  .iss p.say{border-top:1px dashed var(--rule); padding-top:7px; margin-top:9px;}
+  .iss p.say b{color:var(--accent);}
+  ul.talk{list-style:none; margin:10px 0 0; padding:0;}
+  ul.talk li{position:relative; padding-left:19px; margin-bottom:9px; font-size:15px;}
+  ul.talk li::before{content:""; position:absolute; left:2px; top:9px; width:7px; height:7px;
+    background:var(--accent); border-radius:1px;}
+  .note{background:var(--gold-soft); border-left:3px solid var(--gold);
+    padding:12px 15px; margin:14px 0; font-size:14.5px;}
+  .note b{color:var(--gold);}
+  .note p{margin:0 0 8px;} .note p:last-child{margin:0;}
+  blockquote{margin:12px 0; padding:0 0 0 16px; border-left:2px solid var(--rule);
+    font-style:italic; color:var(--ink);}
+  blockquote span{display:block; font-style:normal; font-size:12.5px; color:var(--muted); margin-top:5px;}
+  table.run{width:100%; border-collapse:collapse; margin:12px 0 4px; font-size:14px;}
+  table.run th{font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600;
+    text-transform:uppercase; letter-spacing:.05em; color:var(--muted); text-align:left;
+    padding:6px 6px 6px 0; border-bottom:1px solid var(--rule); vertical-align:bottom;}
+  table.run td{padding:6px 6px 6px 0; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--ink);}
+  table.run td.pg, table.run th.pg{font-family:"IBM Plex Mono",monospace; font-size:12.5px;
+    text-align:right; white-space:nowrap; padding-right:0; padding-left:8px;}
+  table.run td small{display:block; color:var(--muted); font-size:12.5px;}
+  table.run tr.sep td{font-family:"Oswald",Impact,sans-serif; text-transform:uppercase;
+    letter-spacing:.06em; font-size:13px; color:var(--accent); padding-top:14px;}
+  table.run td.dim{color:var(--muted); white-space:nowrap; font-size:13px;}
+  hr.rule{border:0; border-top:1px solid var(--rule); margin:34px 0 0;}
+  .src{font-size:12.5px; color:var(--muted); margin-top:12px;}
+</style>
+
+<header class="top">
+  <div class="inner">
+    <span class="mark">BCE Comics Pod</span>
+    <span class="who">recording prep</span>
+    <a href="../plan/" style="margin-left:auto;font-size:12.5px">Recording plan</a>
+  </div>
+  <nav class="toc">
+    <a href="#fit">Two books</a>
+    <a href="#order">Running order</a>
+    <a href="#part1">Part 1</a>
+    <a href="#song">The Song</a>
+    <a href="#after">Aftermath</a>
+    <a href="#made">How it was made</a>
+    <a href="#stands">1992</a>
+    <a href="#who">Creators</a>
+    <a href="#threads">Threads</a>
+    <a href="#ask">Questions</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <h1>The X-Cutioner's Song</h1>
+  <p class="lede">X-Men Epic Collection 21 and X-Force Epic Collection 2 — two
+  books, one twelve-part crossover, and the first X-Men comics made after the
+  stars walked out.</p>
+  <p class="stamp">Prepared 7 Oct 2026 &middot; read off both books + research</p>
+
+  <p class="book">X-Men Epic Collection vol. 21: The <span style="white-space:nowrap">X-Cutioner's</span> Song</p>
+  <div class="facts">
+    <div><span class="k">Collects</span><span class="v">Uncanny X-Men #289–296, X-Men #10–16, X-Factor #84–86, X-Force #16–18 (cover dates June 1992 – Jan 1993)</span></div>
+    <div><span class="k">Published</span><span class="v">Marvel, December 2022 &middot; ISBN 978-1-302-94828-3. A new printing is on retailer lists for 20 Oct 2026.</span></div>
+    <div><span class="k">Length</span><span class="v">505 pages in the digital file &middot; 21 issues, two Maverick back-ups, and extras</span></div>
+    <div><span class="k">Covers</span><span class="v">Front: Jim Lee &amp; Bob Wiacek — it is the cover of X-Men #11. Back: Andy Kubert &amp; Mark Pennington.</span></div>
+  </div>
+
+  <p class="book">X-Force Epic Collection vol. 2: <span style="white-space:nowrap">X-Cutioner's</span> Song</p>
+  <div class="facts">
+    <div><span class="k">Collects</span><span class="v">Cable: Blood &amp; Metal #1–2, Uncanny X-Men #294–296, X-Factor #84–86, X-Men #14–16, X-Force #16–19, Stryfe's Strike File, New Warriors #31 (Oct 1992 – Feb 1993)</span></div>
+    <div><span class="k">Published</span><span class="v">Marvel, December 2019 &middot; ISBN 978-1-302-92066-1</span></div>
+    <div><span class="k">Length</span><span class="v">475 pages in the digital file &middot; 17 comics and extras</span></div>
+    <div><span class="k">Covers</span><span class="v">Front: Brandon Peterson, Terry Austin &amp; Thomas Mason — the Uncanny #294 cover art, recoloured. Back: John Romita Jr. &amp; Dan Green.</span></div>
+  </div>
+
+  <div class="hook">
+    <span class="tag">Lead with this — it is the story of both books</span>
+    <p><b>The band walked out and the people left behind had to play the
+    gig.</b> Between page one of the X-Men volume and page 210, Whilce Portacio
+    draws his last Uncanny (#290) and Jim Lee draws his last X-Men (#11). Both
+    are gone to found Image, where Rob Liefeld had already gone from X-Force.
+    Marvel's answer, ordered from the top, is a twelve-part weekly crossover
+    through all four books — written and drawn by whoever was still in the
+    building: Scott Lobdell, Fabian Nicieza, Peter David, and four artists
+    nobody had ever bought seven million copies of. Brandon Peterson, Andy
+    Kubert, Jae Lee, Greg Capullo.</p>
+    <p>Nicieza says so himself in the 1994 introduction reprinted at the back of
+    both books. He calls these the post-Lee, post-Liefeld, post-Portacio comics,
+    compares the team to musicians picking up instruments somebody else left on
+    stage, and admits he wishes they could go back and do the whole story
+    again. And the X-Men Epic still goes out under a Jim Lee cover — to an issue
+    that has nothing to do with the crossover on the spine.</p>
+    <p>So the spine for both episodes: <b>did the replacements pull it off?</b>
+    And underneath it, the question the story itself asks and famously will not
+    answer — who is Cable?</p>
+  </div>
+
+  <h2 id="fit"><span class="n">01</span>Two books, one story</h2>
+  <p>These volumes overlap by more than half. Worth saying plainly on air,
+  because anyone buying both is buying the crossover twice.</p>
+  <ul class="talk">
+    <li><b>Only in X-Men Epic 21:</b> the nine issues before the crossover —
+    Uncanny #289–293 and X-Men #10–13. Storm and Forge, Mojo, the end of the
+    Morlocks, Xavier's father. 205 pages.</li>
+    <li><b>In both, page for page:</b> the twelve chapters of the Song.</li>
+    <li><b>Only in X-Force Epic 2:</b> the prologue (Cable: Blood &amp; Metal)
+    and the aftermath (Stryfe's Strike File, New Warriors #31, X-Force #19).
+    About 170 pages.</li>
+    <li><b>In neither:</b> Uncanny #297, the quiet day-after epilogue. Expect it
+    at the front of X-Men Epic 22: Legacies, already on the plan.</li>
+  </ul>
+  <div class="note">
+    <p><b>Which file to put on screen.</b> The X-Men file is a
+    standard-definition scan — pages 1,024 pixels wide. The X-Force file is
+    about twice that. For the twelve shared chapters, share the X-Force
+    file; it will be visibly sharper in the comic pane.</p>
+    <p><b>A split for two recordings.</b> Part 1, <em>Before the Song</em>:
+    the nine X-Men issues, then Cable: Blood &amp; Metal — 11 comics, about 290
+    pages. Part 2, <em>The Song</em>: the twelve chapters and the three
+    aftermath books — 15 comics, about 365 pages. If Part 2 looks long, the
+    natural break is after chapter 4, the end of the first month, with X-Force
+    in custody.</p>
+  </div>
+
+  <h2 id="order"><span class="n">02</span>Running order, with pages</h2>
+  <p class="stamp" style="margin-bottom:4px">Page = position in the digital
+  file, cover as page 1. The page given is the issue's own cover.</p>
+  <table class="run">
+    <tr><th>Comic</th><th>Date</th><th class="pg">X-Men<br>Epic</th><th class="pg">X-Force<br>Epic</th></tr>
+    <tr class="sep"><td colspan="4">Part 1 — before the Song</td></tr>
+    <tr><td>Uncanny X-Men #289 <small>Knots</small></td><td class="dim">Jun 92</td><td class="pg">5</td><td class="pg">–</td></tr>
+    <tr><td>Uncanny X-Men #290 <small>Frayed</small></td><td class="dim">Jul 92</td><td class="pg">28</td><td class="pg">–</td></tr>
+    <tr><td>X-Men #10 <small>Where Happy Little Bluebirds Fly… &middot; Maverick back-up p. 67</small></td><td class="dim">Jul 92</td><td class="pg">50</td><td class="pg">–</td></tr>
+    <tr><td>X-Men #11 <small>The X-Men vs. the X-Men! (Again) &middot; Maverick back-up p. 90</small></td><td class="dim">Aug 92</td><td class="pg">74</td><td class="pg">–</td></tr>
+    <tr><td>Uncanny X-Men #291 <small>Underbelly</small></td><td class="dim">Aug 92</td><td class="pg">98</td><td class="pg">–</td></tr>
+    <tr><td>Uncanny X-Men #292 <small>…The Morlocks Take Manhattan!</small></td><td class="dim">Sep 92</td><td class="pg">120</td><td class="pg">–</td></tr>
+    <tr><td>Uncanny X-Men #293 <small>The Last Morlock Story!</small></td><td class="dim">Oct 92</td><td class="pg">143</td><td class="pg">–</td></tr>
+    <tr><td>X-Men #12 <small>Broken Mirrors</small></td><td class="dim">Sep 92</td><td class="pg">166</td><td class="pg">–</td></tr>
+    <tr><td>X-Men #13 <small>Hazardous Territory</small></td><td class="dim">Oct 92</td><td class="pg">188</td><td class="pg">–</td></tr>
+    <tr><td>Cable: Blood &amp; Metal #1</td><td class="dim">Oct 92</td><td class="pg">–</td><td class="pg">5</td></tr>
+    <tr><td>Cable: Blood &amp; Metal #2</td><td class="dim">Nov 92</td><td class="pg">–</td><td class="pg">49</td></tr>
+    <tr class="sep"><td colspan="4">Part 2 — the Song</td></tr>
+    <tr><td>1 &middot; Uncanny X-Men #294 <small>Overture</small></td><td class="dim">Nov 92</td><td class="pg">210</td><td class="pg">93</td></tr>
+    <tr><td>2 &middot; X-Factor #84 <small>Tough Love</small></td><td class="dim">Nov 92</td><td class="pg">234</td><td class="pg">117</td></tr>
+    <tr><td>3 &middot; X-Men #14 <small>Fingers on the Trigger</small></td><td class="dim">Nov 92</td><td class="pg">258</td><td class="pg">141</td></tr>
+    <tr><td>4 &middot; X-Force #16 <small>Jacklighting</small></td><td class="dim">Nov 92</td><td class="pg">281</td><td class="pg">164</td></tr>
+    <tr><td>5 &middot; Uncanny X-Men #295 <small>Familiar Refrain</small></td><td class="dim">Dec 92</td><td class="pg">303</td><td class="pg">186</td></tr>
+    <tr><td>6 &middot; X-Factor #85 <small>Snikts and Bones</small></td><td class="dim">Dec 92</td><td class="pg">326</td><td class="pg">209</td></tr>
+    <tr><td>7 &middot; X-Men #15 <small>The Camel's Back</small></td><td class="dim">Dec 92</td><td class="pg">349</td><td class="pg">232</td></tr>
+    <tr><td>8 &middot; X-Force #17 <small>Sleeping with the Enemy</small></td><td class="dim">Dec 92</td><td class="pg">373</td><td class="pg">256</td></tr>
+    <tr><td>9 &middot; Uncanny X-Men #296 <small>Crescendo</small></td><td class="dim">Jan 93</td><td class="pg">398</td><td class="pg">279</td></tr>
+    <tr><td>10 &middot; X-Factor #86 <small>One of These Days… Pow! Zoom!</small></td><td class="dim">Jan 93</td><td class="pg">421</td><td class="pg">302</td></tr>
+    <tr><td>11 &middot; X-Men #16 <small>Conflicting Cathexes</small></td><td class="dim">Jan 93</td><td class="pg">444</td><td class="pg">325</td></tr>
+    <tr><td>12 &middot; X-Force #18 <small>Ghosts in the Machine</small></td><td class="dim">Jan 93</td><td class="pg">467</td><td class="pg">348</td></tr>
+    <tr class="sep"><td colspan="4">Aftermath</td></tr>
+    <tr><td>Stryfe's Strike File</td><td class="dim">Jan 93</td><td class="pg">–</td><td class="pg">373</td></tr>
+    <tr><td>New Warriors #31 <small>Ruins</small></td><td class="dim">Jan 93</td><td class="pg">–</td><td class="pg">408</td></tr>
+    <tr><td>X-Force #19 <small>The Open Hand, the Closed Fist</small></td><td class="dim">Feb 93</td><td class="pg">–</td><td class="pg">433</td></tr>
+    <tr><td>Back matter <small>Marvel Age article, trading cards, Nicieza's intro</small></td><td class="dim"></td><td class="pg">492</td><td class="pg">456</td></tr>
+  </table>
+  <p class="src">The printed books do not number their story pages, and they
+  count a double-page spread as two — so print positions drift up to 17 higher
+  than these by the end of the X-Men volume.</p>
+
+  <h2 id="part1"><span class="n">03</span>Part one — before the Song</h2>
+  <p class="stamp" style="margin-bottom:10px">Credits exactly as printed on each
+  splash page</p>
+
+  <div class="iss">
+    <div class="hd">Uncanny X-Men #289</div>
+    <div class="ti">Knots</div>
+    <div class="cov">X-Men Epic p. 5 &middot; June 1992</div>
+    <div class="c">writer Scott Lobdell &middot; pencils Whilce Portacio &middot; inks Scott Williams &middot; letters Tom Orzechowski &middot; colours Joe Rosas</div>
+    <p>A day off at the mansion. Storm gives Bishop his orientation. Forge, the
+    man who can build anything, cannot knot Iceman's bow tie. Mystique —
+    staying at the mansion in Forge's care — turns herself into the old
+    feathered Angel to cheer up Archangel and nearly gets cut in half for it.
+    Forge asks Storm to marry him and leave the X-Men. Bobby takes Opal Tanaka
+    to meet his parents, and his father is openly hostile to her — and then Hiro,
+    the cyborg samurai who once kidnapped her, arrives to say he is there to
+    protect them.</p>
+    <p class="say"><b>Talk about:</b> a whole issue with no villain until the
+    last page — this is Lobdell's signature mode and you will either love it or
+    not. Bobby's father as a bigot starts here and becomes a long-running
+    Iceman thread. The title does triple duty: the bow tie, tying the knot,
+    and everybody's stomach.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">Uncanny X-Men #290</div>
+    <div class="ti">Frayed</div>
+    <div class="cov">X-Men Epic p. 28 &middot; July 1992</div>
+    <div class="c">plot &amp; script Scott Lobdell &middot; pencils Whilce Portacio &middot; inks Scott Williams &middot; letters Lois Buhalis &middot; colours Kevin Tinsley</div>
+    <p>Iceman fights the Cyburai — cybernetic yakuza enforcers from Opal's own
+    family — in the wreck of the restaurant, and Hiro blows himself up to stop them. Colossus's
+    brother Mikhail is hearing the followers he got killed in the void (Uncanny
+    #285–286, your Epic 20). Storm decides she will say yes. Forge, sure she
+    never will, tells her she is still the orphan under the rubble and walks
+    out with Mystique. The last page is Storm alone, saying what she was going
+    to say.</p>
+    <p class="say"><b>Talk about:</b> <b>Portacio's last issue.</b> Who is in
+    the wrong, Forge or Storm? He proposes and withdraws it inside two issues.
+    That final page is as good as anything in the book.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">X-Men #10 and #11</div>
+    <div class="ti">Where Happy Little Bluebirds Fly… / The X-Men vs. the X-Men! (Again)</div>
+    <div class="cov">X-Men Epic pp. 50 and 74 &middot; July–Aug 1992</div>
+    <div class="c">#10: billed as a Jim Lee joint, script Scott Lobdell, inks Scott Williams with Bob Wiacek, Karl Altstaetter &amp; Dan Panosian &middot; #11: Jim Lee, Scott Lobdell, inks Bob Wiacek, letters Lois Buhalis, colours Marie Javins</div>
+    <p>Mojo has the Blue team. For ratings he has recast them in old Earth
+    movies — #10 opens as a Wizard of Oz pastiche with an amnesiac Longshot
+    falling into it — and then sets X-Man against X-Man on live television.
+    Dazzler and Lila Cheney are with the rebels. A clone calling himself Mojo
+    II: The Sequel offers to help. Xavier and Psylocke break the control,
+    Longshot kills Mojo, and Xavier senses that Dazzler is pregnant. Longshot
+    and Dazzler stay behind to rebuild. Jubilee gets the last word: are we
+    being played?</p>
+    <p class="say"><b>Talk about:</b> <b>this is Jim Lee's goodbye</b> — a
+    story about performers trapped making content for a boss who only cares
+    about ratings, published the same summer he left to own his work. Read as
+    a resignation letter it is hard to unsee. #11 is also the cover on the
+    front of the book.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">Maverick back-ups</div>
+    <div class="ti">Last Stand / Over… Again</div>
+    <div class="cov">X-Men Epic pp. 67 and 90 &middot; in X-Men #10–11</div>
+    <div class="c">writer Scott Lobdell &middot; art Mark Texeira &middot; colours Mike Rockwitz &middot; letters Lois Buhalis</div>
+    <p>Billed as Maverick's first solo adventure. He is bodyguarding a
+    scientist named Ryking against the armoured Warhawk, and what everybody
+    wants to know about is a missing file on Xavier. Fourteen pages across two
+    issues, and it exists to set up #12–13.</p>
+    <p class="say"><b>Talk about:</b> Texeira's scratchy, heavy style against
+    Jim Lee's polish in the same comic. Maverick is three issues old at this
+    point (he arrived in X-Men #5).</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">Uncanny X-Men #291</div>
+    <div class="ti">Underbelly</div>
+    <div class="cov">X-Men Epic p. 98 &middot; Aug 1992</div>
+    <div class="c">writer Scott Lobdell &middot; guest pencils Tom Raney &middot; guest inks Hilary Barta &middot; letters Lois Buhalis &middot; colours Joe Rosas</div>
+    <p>Callisto is carried to the mansion half dead. Since Masque died (in
+    X-Force) the Morlocks have gone mad. The Healer spends the last of his
+    power on her — and it strips away the beauty Masque had given her along
+    with the wounds. Archangel blames Storm's absentee leadership of the
+    Morlocks for the night he lost his wings. In the tunnels, a claustrophobic
+    Storm is mobbed and brings down a lightning bolt that opens the street
+    above. The Morlocks are loose in Manhattan.</p>
+    <p class="say"><b>Talk about:</b> the one-page interlude on p. 109 — a
+    blond man in a suit visits a strapped-down patient at a nursing home in
+    Arlington, Virginia and talks about him as the last hope of the human
+    race. Nothing in this
+    book explains it. By later accounts the patient is Steven Lang, the
+    Sentinel builder from the 1970s, and this is the first seed of the Phalanx,
+    two years early.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">Uncanny X-Men #292</div>
+    <div class="ti">…The Morlocks Take Manhattan!</div>
+    <div class="cov">X-Men Epic p. 120 &middot; Sept 1992</div>
+    <div class="c">writer Scott Lobdell &middot; layouts Rurik Tyler &middot; pencils Tom Raney &middot; inks Josef Rubinstein &amp; Al Milgrom &middot; colours Steve Buccellato</div>
+    <p>Colossus, Bishop and Jean try to contain the Morlocks in the rain
+    without hurting them. Jean has to shut down the mind of one who is
+    absorbing bystanders into his own body. The NYPD want Bishop for the
+    killings in #287. At the mansion Mikhail shows Iceman what he could be —
+    not a man in an ice shell but ice all the way through — then leaves with
+    Callisto. Xavier, tracking the psychic link to a Morlock child, has to
+    leave his chair and drag himself, and cuts his leg open without feeling
+    it.</p>
+    <p class="say"><b>Talk about:</b> Mikhail unlocking Iceman is the first
+    hint of the far more powerful Iceman that Emma Frost drags out of him two
+    years later. Xavier on the tunnel floor is a rare scene that treats the
+    wheelchair as a real disability. The editor-in-chief
+    credit is a Broadway gag, to match the Muppets title.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">Uncanny X-Men #293</div>
+    <div class="ti">The Last Morlock Story!</div>
+    <div class="cov">X-Men Epic p. 143 &middot; Oct 1992</div>
+    <div class="c">writer Scott Lobdell &middot; breakdowns Rurik Tyler &middot; pencils Tom Raney &middot; inks Joe Rubinstein &middot; letters Lois Buhalis &middot; colours Kevin Tinsley</div>
+    <p>Mikhail makes himself leader of the leaderless Morlocks and offers them
+    the only peace he believes in: he opens the tunnels to the East River.
+    Callisto goes for Xavier. Jean tells Warren the wings were never to
+    blame — Apocalypse supplied the tools, but the choices were his. Iceman
+    cannot hold back a river. Mikhail throws the X-Men clear and goes under
+    with his people. Colossus phones his little sister in Russia. Storm finds
+    her attic garden wrecked and Bishop, of all people, talks her through
+    it.</p>
+    <p class="say"><b>Talk about:</b> a mass suicide played straight in a 1992
+    X-Men comic — does Lobdell earn it? (They are not dead; the survivors come
+    back as Gene Nation in 1995.) This is step one in breaking Colossus: his
+    brother now, his parents and Illyana next year, and then he walks out to
+    join Magneto.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">X-Men #12 and #13</div>
+    <div class="ti">Broken Mirrors / Hazardous Territory</div>
+    <div class="cov">X-Men Epic pp. 166 and 188 &middot; Sept–Oct 1992</div>
+    <div class="c">writer Fabian Nicieza &middot; art Art Thibert &middot; art assist Dan Panosian (and Trevor Scott on #12) &middot; colours Joe Rosas &amp; Marie Javins &middot; letters Tom Orzechowski (#12), Lois Buhalis (#13)</div>
+    <p>Carter Ryking, a mutant his own father kept locked in a private
+    hospital in New Mexico, sees that father's death on CNN and breaks out.
+    Wolverine, digging in Xavier's files, has found a folder claiming Xavier's
+    father's atomic job was cover for government research into mutation.
+    Xavier goes to the funeral in South Dakota; Carter — a childhood friend,
+    now calling himself Hazard — takes him hostage and drags him to the ruins
+    of the facility where both their fathers worked with Kurt Marko. The Blue
+    team find a hidden sub-level, have a fight, and find nothing. Cutaways: a
+    drawling caller who will not leave a message with Jubilee, and the Mutant
+    Liberation Front fetching a relic for Stryfe.</p>
+    <p class="say"><b>Talk about:</b> <b>Nicieza's first issues as X-Men
+    writer, and the first without Jim Lee</b> — one of his inkers has been
+    promoted to draw them. The comic spells the place Almagordo; the real town is
+    Alamogordo. The whole plot is a loose end for sixteen years, until Mike
+    Carey's X-Men: Legacy (2008) makes the facility Mister Sinister's project.
+    The last panel of #13 announces the crossover in two weeks.</p>
+  </div>
+
+  <h3>Catch-up: X-Force #1–15 in two minutes</h3>
+  <p>You have not covered X-Force Epic 1, and the second volume assumes it.
+  What matters:</p>
+  <ul class="talk">
+    <li><b>The team</b> is Cable's militarised New Mutants: Cannonball, Boomer,
+    Warpath, Shatterstar, Feral, Siryn, with Sunspot and Rictor arriving
+    late. The Domino who was there for most of it was a shapeshifting plant,
+    Vanessa (Copycat), working for the arms dealer Tolliver; the real Domino
+    was his prisoner. Vanessa turns up in hiding in X-Force #19.</li>
+    <li><b>Cannonball died and got up again.</b> Cable's explanation is that
+    Sam is an External, a mutant immortal, and the reason Cable came back in
+    time at all. The Strike File and New Warriors #31 both lean on this.</li>
+    <li><b>Masque was killed</b> in X-Force's fight with the Brotherhood —
+    which is why the Morlocks fall apart in Uncanny #291–293.</li>
+    <li><b>Everybody is hunting Cable.</b> SHIELD's G.W. Bridge and Canada's
+    Kane (Weapon X) sent a squad called Weapon: PRIME after him. Both men are
+    his old mercenary partners, and Blood &amp; Metal is the story of why they
+    hate him.</li>
+    <li><b>Stryfe has Cable's face.</b> Readers saw it when he unmasked at the
+    end of New Mutants #100 — you covered that in New Mutants Epic 8.</li>
+    <li><b>X-Force #15 ends</b> with their base destroyed, Cable gone, and
+    Cannonball leading the team on the run in a stolen SHIELD aircraft.</li>
+    <li><b>Behind the page:</b> Liefeld drew his last issue with #9 and left
+    for Image. Nicieza, who had been scripting, took over, and Greg Capullo
+    arrived as artist with #15 — one issue before the crossover.</li>
+  </ul>
+
+  <div class="iss">
+    <div class="hd">Cable: Blood &amp; Metal #1 and #2</div>
+    <div class="cov">X-Force Epic pp. 5 and 49 &middot; Oct–Nov 1992 &middot; two double-size issues at $2.50</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils John Romita Jr. &middot; inks Dan Green &middot; letters Bill Oakley &middot; colours Brad Vancata</div>
+    <p><b>Then.</b> Cable's mercenary crew — Bridge, Domino, Hammer, Grizzly,
+    Kane — take jobs for Tolliver: Tehran, then the Khyber Pass, where they run
+    into Stryfe. They start out as the Wild Pack and become the Six
+    Pack after Symkaria objects to the name. In Uruguay, Stryfe has Kane and
+    wants a stolen data disc. Hammer is about to hand it over. Cable shoots
+    Hammer in the back and teleports out alone.</p>
+    <p><b>Now.</b> The MLF are robbing museums for Stryfe — a broken sword, a
+    shogun mask, a hieroglyph — all tied to Apocalypse. Cable ambushes them in
+    Paris. Kane is sent after him, they fight, and then strike a deal:
+    Stryfe for Cable, a cure for the paralysed Hammer for Kane. In the
+    Yucatán Stryfe offers the same trade again — Kane's life for Cable's
+    computer — and this time Cable picks his friend. Stryfe's power dwarfs
+    his. Cable sees what is under the helmet, and the two of them escape into
+    Cable's own future, where Kane gets new arms.</p>
+    <p class="say"><b>Talk about:</b> Romita Jr. drawing peak-1992 hardware,
+    with credits laid over maps and typed SHIELD memos. The Wild Pack rename
+    is a real-world fix — Silver Sable already had a Wild Pack. The splash
+    page carries a created-by credit for Rob Liefeld and Louise Simonson, months
+    after Liefeld left. Marvel Age calls this the transition into the
+    crossover: Cable is off in the future when somebody with his face shoots
+    Xavier.</p>
+  </div>
+
+  <h2 id="song"><span class="n">04</span>The Song, chapter by chapter</h2>
+  <p>A chapter a week from 1 September to 24 November 1992, by Marvel's own
+  announcement, rotating Uncanny, X-Factor, X-Men,
+  X-Force, three times round. Every chapter came sealed in a printed polybag
+  with a trading card. The three Uncanny chapters carry musical titles:
+  Overture, Familiar Refrain, Crescendo.</p>
+  <p><b>The plot in one breath.</b> A man with Cable's face shoots Xavier
+  with a techno-organic virus. In the confusion Mister Sinister has Cyclops
+  and Jean abducted and sells them to Stryfe for a sealed canister. The X-Men
+  and X-Factor hunt down X-Force as accomplices. Apocalypse, woken too early,
+  is beaten half to death by Stryfe and ends up curing Xavier. Everybody goes
+  to the Moon. Stryfe unmasks, calls Scott and Jean his parents, and vanishes
+  with Cable into a time vortex. Sinister opens his canister and finds
+  nothing in it but a cough.</p>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">1</span>Uncanny X-Men #294</div>
+    <div class="ti">Overture</div>
+    <div class="cov">X-Men Epic p. 210 &middot; X-Force Epic p. 93 &middot; card: Xavier</div>
+    <div class="c">writer Scott Lobdell &middot; pencils Brandon Peterson &middot; inks Terry Austin &middot; letters Chris Eliopoulos &middot; colours Mike Thomas</div>
+    <p>Lila Cheney plays a harmony concert in Central Park and Xavier makes an
+    unscheduled speech about bigotry. Under the stage, men planning to kill
+    him are killed first by someone who wants the job for himself. Xavier is
+    shot on live television by what looks like Cable. Across town Apocalypse's
+    Horsemen — Caliban now one of them — wreck Harry's Hideaway and take Scott
+    and Jean. X-Force watch it on the news.</p>
+    <p class="say"><b>Talk about:</b> Peterson's first issue. Xavier's speech
+    names race, religion and sexuality one after another — in the autumn of an
+    election, months after the Los Angeles riots. How does 1992's version of
+    the mutant metaphor land now?</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">2</span>X-Factor #84</div>
+    <div class="ti">Tough Love</div>
+    <div class="cov">X-Men Epic p. 234 &middot; X-Force Epic p. 117 &middot; card: Caliban</div>
+    <div class="c">writer Peter David &middot; pencils Jae Lee &middot; inks Al Milgrom &middot; letters Richard Starkings &middot; editor Kelly Corvese</div>
+    <p>X-Force come to New York to find out whether Cable really did it, and
+    run straight into the government's mutants. Havok lets them escape so he
+    can follow them home. The hospital cannot slow the virus; Xavier is moved
+    to the mansion. The Horsemen deliver Scott and Jean to their master — who
+    is not Apocalypse at all but Mister Sinister wearing his face.</p>
+    <p class="say"><b>Talk about:</b> Jae Lee. All shadow and scratch, nothing
+    like the three artists around him. Best thing in the book or the chapter
+    you dread? Peter David's jokes survive even here.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">3</span>X-Men #14</div>
+    <div class="ti">Fingers on the Trigger</div>
+    <div class="cov">X-Men Epic p. 258 &middot; X-Force Epic p. 141 &middot; card: Apocalypse</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils Andy Kubert &middot; inks Mark Pennington &middot; letters Lois Buhalis &middot; colours Marie Javins</div>
+    <p>In Panama, Sinister hands Scott and Jean to the MLF in exchange for a
+    package from Stryfe. Apocalypse's followers pull him out of his healing
+    sleep early, and he wakes weak and furious to learn a kidnapping has been
+    done in his name. The Blue team and X-Factor find X-Force in west
+    Texas.</p>
+    <p class="say"><b>Talk about:</b> <b>Andy Kubert's first X-Men</b> — the
+    credits box welcomes him aboard — and the start of a four-year run.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">4</span>X-Force #16</div>
+    <div class="ti">Jacklighting</div>
+    <div class="cov">X-Men Epic p. 281 &middot; X-Force Epic p. 164 &middot; card: Cable</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils Greg Capullo &middot; inks Harry Candelario &middot; letters Chris Eliopoulos &middot; colours Joe Rosas</div>
+    <p>The fight Marvel had been promising: the X-Men and X-Factor against
+    X-Force on a Texas farm. The kids lose. Sinister appears — first as a
+    hologram, then in person at the mansion — to admit he took Scott and Jean
+    and to say someone else is running the game. In his Swiss safehouse,
+    Cable, back from the future, works out who.</p>
+    <p class="say"><b>Talk about:</b> who is in the right — the kids who went
+    looking for answers, or the adults who arrest them off a news clip?
+    Jacklighting is hunting at night with a lamp, to freeze the prey.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">5</span>Uncanny X-Men #295</div>
+    <div class="ti">Familiar Refrain</div>
+    <div class="cov">X-Men Epic p. 303 &middot; X-Force Epic p. 186 &middot; card: Bishop &amp; Wolverine</div>
+    <div class="c">Lobdell &middot; Peterson &middot; Austin &middot; Eliopoulos &middot; colours Joe Rosas</div>
+    <p>Apocalypse, in agony and delighted to be alive, flattens the X-team
+    sent after him and then chooses not to kill them: somebody is playing
+    him too. X-Force are locked up in the mansion. Cannonball trades what he
+    knows about the MLF for a pardon and a place in the fight. Wolverine and
+    Bishop slip away to Canada's Department K for Cable's file — and Cable is
+    already in the building.</p>
+    <p class="say"><b>Talk about:</b> Cannonball negotiating with Havok as an
+    equal is the moment X-Force's leader stops being a New Mutant.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">6</span>X-Factor #85</div>
+    <div class="ti">Snikts and Bones</div>
+    <div class="cov">X-Men Epic p. 326 &middot; X-Force Epic p. 209 &middot; card: Polaris &amp; Havok</div>
+    <div class="c">writer Peter David &middot; pencils Jae Lee &middot; inks Al Milgrom &middot; letters Richard Starkings &middot; colours Glynis Oliver</div>
+    <p>Wolverine and Bishop against Cable among the filing cabinets, until he
+    talks them round. Apocalypse searches Cable's safehouse, recognises his
+    own technology in it, and reasons his way to who Cable must be. Stryfe
+    starts work on Scott and Jean. The X-teams hit the MLF.</p>
+    <p class="say"><b>Talk about:</b> Peter David pointed out at the time
+    that the big fight in this issue of X-Factor has nobody from X-Factor in
+    it. Apocalypse's deduction scene is the smartest two pages of the
+    crossover — and the closest it comes to answering its own question.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">7</span>X-Men #15</div>
+    <div class="ti">The Camel's Back</div>
+    <div class="cov">X-Men Epic p. 349 &middot; X-Force Epic p. 232 &middot; card: the M.L.F.</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils Andy Kubert &middot; inks Mark Pennington &middot; letters Chris Eliopoulos &middot; colours Joe Rosas</div>
+    <p>The Mutant Liberation Front are taken apart. Beast and Moira get
+    nowhere: the virus swallows every treatment they try. And Stryfe walks
+    into Apocalypse's sanctum, goes through the Dark Riders, and introduces
+    himself.</p>
+    <p class="say"><b>Talk about:</b> the cover promises that Reaper kills
+    Gambit and Quicksilver. He does not. Halfway through and the villain has
+    only just met the other villain — is this where it sags?</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">8</span>X-Force #17</div>
+    <div class="ti">Sleeping with the Enemy</div>
+    <div class="cov">X-Men Epic p. 373 &middot; X-Force Epic p. 256 &middot; card: Mister Sinister</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils Greg Capullo &middot; inks Harry Candelario &middot; letters Chris Eliopoulos &middot; colours Steve Buccellato</div>
+    <p>Stryfe against Apocalypse in Apocalypse's own temple, and Stryfe wins
+    — for something Apocalypse will do to him centuries from now. The Dark
+    Riders, raised on survival of the fittest, change sides. Aboard his
+    space station Cable tells Wolverine and Bishop that Stryfe has his face
+    and he does not know why. Apocalypse, jaw broken, teleports into the
+    X-Mansion to ask for an alliance.</p>
+    <p class="say"><b>Talk about:</b> Capullo cutting loose — a year later
+    McFarlane hires him away for Spawn. The editor-in-chief credit here has
+    DeFalco counting the money.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">9</span>Uncanny X-Men #296</div>
+    <div class="ti">Crescendo</div>
+    <div class="cov">X-Men Epic p. 398 &middot; X-Force Epic p. 279 &middot; card: Jean Grey &amp; Cyclops</div>
+    <div class="c">Lobdell &middot; Peterson &middot; Austin &middot; Eliopoulos &middot; colours Joe Rosas &amp; Marie Javins</div>
+    <p>Stryfe's experiment on the couple he calls Mother and Father: he ties
+    an infant's life to their escape, sure they will save themselves. They
+    will not, and it shakes him. At the mansion Archangel has to vouch that
+    Apocalypse can do what he claims — he once did this to Scott's baby son.
+    Scott and Jean fight their way out of the complex and find out where they
+    have been all along: the surface of the Moon.</p>
+    <p class="say"><b>Talk about:</b> this is the heart of the thing. Is
+    Cyclops a victim here, or a man finally being asked a fair question about
+    the child he sent away?</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">10</span>X-Factor #86</div>
+    <div class="ti">One of These Days… Pow! Zoom!</div>
+    <div class="cov">X-Men Epic p. 421 &middot; X-Force Epic p. 302 &middot; card: the Dark Riders</div>
+    <div class="c">writer Peter David &middot; pencils Jae Lee &middot; inks Al Milgrom &middot; letters Steve Dutro &middot; colours Glynis Oliver</div>
+    <p>Apocalypse cures Xavier by forcing the virus to grow so fast it
+    starves, while Archangel guards the door and everyone else is convinced
+    he has been turned again. Xavier wakes. The teams take Apocalypse's ship
+    to the Moon; Cable, Bishop and Wolverine go on ahead.</p>
+    <p class="say"><b>Talk about:</b> the title is Ralph Kramden's threat
+    from The Honeymooners — the one that ends on the Moon. The next-issue box
+    announces a new X-Factor artist: Joe Quesada.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">11</span>X-Men #16</div>
+    <div class="ti">Conflicting Cathexes</div>
+    <div class="cov">X-Men Epic p. 444 &middot; X-Force Epic p. 325 &middot; card: Archangel</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils Andy Kubert, who also inks pp. 20–23 &middot; inks Mark Pennington &middot; letters Chris Eliopoulos &middot; colours Joe Rosas</div>
+    <p>Two strike teams storm the Moon base — Apocalypse's old one — against
+    the Dark Riders, while Apocalypse hunts alone. Around Scott and Jean is a
+    barrier that only Cable and Havok can walk through. Inside, Stryfe is
+    waiting for Cable.</p>
+    <p class="say"><b>Talk about:</b> the barrier is the clue — it lets
+    through Summers blood. A cathexis is Freud's word for the emotional
+    energy you invest in another person — Nicieza's title for a chapter
+    about parents and children.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd"><span class="ch">12</span>X-Force #18</div>
+    <div class="ti">Ghosts in the Machine</div>
+    <div class="cov">X-Men Epic p. 467 &middot; X-Force Epic p. 348 &middot; card: Stryfe</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils Greg Capullo &middot; inks Harry Candelario &middot; letters Chris Eliopoulos &middot; colours Marie Javins</div>
+    <p>Archangel finds Apocalypse broken by his own Dark Riders and walks
+    away rather than finish him. Stryfe takes off the helmet for Scott and
+    Jean and accuses them of abandoning him. Cable hands Cyclops a trigger,
+    drags Stryfe into a time vortex, and Scott has to press it. Both vanish.
+    Scott is left believing he may have sacrificed his son a second time and
+    will never know. Epilogue, a farmhouse in Nebraska: Sinister's man opens
+    the canister that was supposed to hold the Summers bloodline. Empty. He
+    has a cough.</p>
+    <p class="say"><b>Talk about:</b> twelve chapters built on who Stryfe is,
+    and it ends without saying. Cheat or the right call? The last two pages
+    are the Legacy Virus being born — the editor-in-chief credit calls
+    DeFalco the fat lady, because the song is over.</p>
+  </div>
+
+  <h2 id="after"><span class="n">05</span>Aftermath — X-Force Epic only</h2>
+
+  <div class="iss">
+    <div class="hd">Stryfe's Strike File</div>
+    <div class="cov">X-Force Epic p. 373 &middot; Jan 1993 &middot; $1.75</div>
+    <div class="c">writers Fabian Nicieza &amp; Scott Lobdell &middot; pencils mostly Larry Stroman, with Andy Kubert, Greg Capullo and Brandon Peterson &middot; cover Andy Kubert &amp; Mark Pennington</div>
+    <p>Xavier sits alone with a computer disc Bishop found on the Moon:
+    Stryfe's private notes, thirty files of them. The trading cards in the
+    polybags were cut-down versions of these. He reads it, decides nobody
+    else should, and wipes it.</p>
+    <p>It is really the X-office's road map for 1993, hidden in plain sight.
+    The Acolytes entry says an X-Man will join them of his own free will
+    (Colossus) and that their saviour will rise again (Magneto). Illyana's
+    says the plague will take the youngest (she dies in Uncanny #303).
+    Beast's and Moira's say they are the ones who will have to fight it.
+    Psylocke's asks why nobody questions what happened to Betsy Braddock
+    (Revanche). And it introduces people who have not appeared yet: Graydon
+    Creed, pointedly described as the only living child of the most savage
+    mutant alive; Threnody; Siena Blaze; and a silent destroyer called
+    Holocaust who never shows up as described — the name was recycled for
+    Age of Apocalypse.</p>
+    <p class="say"><b>Talk about:</b> the art credits include Jim Lee,
+    Whilce Portacio and Marc Silvestri — three Image founders, in a Marvel
+    comic dated January 1993, presumably on reused art. It also names Cable in full
+    for readers, and calls Cannonball an immortal, which Marvel later
+    quietly dropped.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">New Warriors #31</div>
+    <div class="ti">Ruins</div>
+    <div class="cov">X-Force Epic p. 408 &middot; Jan 1993</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils Darick Robertson &middot; inks Larry Mahlstedt &middot; letters Joe Rosen &middot; colours Joe Rosas &middot; editor Rob Tokar</div>
+    <p>Subtitled a eulogy for the Hellions. Cannonball, Warpath and Firestar
+    travel to Nova Roma to tell Magma and Empath that their old classmates
+    are dead — killed by Fitzroy in Uncanny #281–282, your Epic 20. They find
+    Empath holding the whole city under his control, because the truth was
+    coming loose: Nova Roma was never a lost Roman colony. Selene kidnapped
+    its people and rewrote them. Amara is really a British girl called
+    Allison Crestmere.</p>
+    <p class="say"><b>Talk about:</b> the only comic that stops to mourn the
+    Hellions, and it is in a different title. That retcon was itself undone
+    years later. Robertson went on to Transmetropolitan and The Boys. The
+    Speedball, Nova and Namorita scenes are New Warriors business and can be
+    skipped past.</p>
+  </div>
+
+  <div class="iss">
+    <div class="hd">X-Force #19</div>
+    <div class="ti">The Open Hand, the Closed Fist</div>
+    <div class="cov">X-Force Epic p. 433 &middot; Feb 1993</div>
+    <div class="c">writer Fabian Nicieza &middot; pencils Greg Capullo &middot; inks Harry Candelario &middot; letters Chris Eliopoulos &middot; colours Steve Buccellato &amp; Marie Javins</div>
+    <p>X-Force have been well-treated prisoners at the mansion for nearly
+    three weeks. Boomer redesigns everyone's costume. Sunspot talks to
+    Stevie Hunter at the boathouse. Siryn and Warpath quietly copy twenty
+    years of Xavier's files. Then Cannonball tells Xavier they are leaving,
+    and makes his case: a closed fist can hit, but it can also warm, support
+    and protect. Xavier lets them go — and lets Sam know he knows about the
+    files. Lila Cheney teleports them out. Subplots: Vanessa in hiding in
+    Massachusetts, and SHIELD arguing over the bill for hunting Cable.</p>
+    <p class="say"><b>Talk about:</b> the new uniforms debut here, and the
+    credits are written as school-yearbook jokes. The whole issue is talk —
+    is it the best thing in the X-Force book? This is where X-Force stops
+    being Cable's team and becomes Cannonball's.</p>
+  </div>
+
+  <h2 id="made"><span class="n">06</span>How it was made — from the back of the books</h2>
+  <p>Both volumes reprint the same two documents, and together they are the
+  best material you have. One is the sales pitch written before the
+  crossover; the other is the confession written after.</p>
+
+  <h3>Before: Marvel Age #116, September 1992</h3>
+  <p class="src" style="margin-top:0">X-Men Epic pp. 492–497 &middot; X-Force Epic pp. 457–462 &middot; article by Steve Vrattos, cover by Andy Kubert</p>
+  <ul class="talk">
+    <li>Bob Harras says the crossover began with Tom DeFalco walking into his
+    office and telling him to do a big one for the autumn.</li>
+    <li>It was plotted at an X-Summit. The first of those, Harras says, was
+    Claremont, Jim Lee and Portacio at San Diego, and it produced X-Men #1 —
+    seven million copies by his count. This one was the new guys: David,
+    Nicieza, Lobdell and the editors, in an Italian restaurant near the
+    office and then crammed into DeFalco's own room because no conference
+    room was free.</li>
+    <li>Peter David's verdict on the summit:</li>
+  </ul>
+  <blockquote>"It's the creative equivalent of root canal."
+    <span>Peter David, Marvel Age #116</span></blockquote>
+  <ul class="talk">
+    <li><b>The article never once says why there are new guys.</b> Lee,
+    Portacio and Liefeld are not mentioned as having left. Read it with that
+    in mind.</li>
+    <li><b>It gets the future wrong.</b> It announces Joe Quesada as the new
+    Uncanny X-Men artist. That never happened — Peterson drew it, and
+    Quesada went to X-Factor instead.</li>
+    <li>It also previews 1993: a Cable monthly by Nicieza and Art Thibert;
+    mini-series for Sabretooth, Gambit and Deadpool (the last with a newcomer
+    named Joe Madureira); a quarterly then called X-Men Spectacular, which
+    shipped as X-Men Unlimited; and an Avengers crossover for the thirtieth
+    anniversary.</li>
+    <li>Harras jokes that Nicieza is writing so many books they expect him
+    to crack by December.</li>
+  </ul>
+
+  <h3>After: Nicieza's introduction, dated 3 February 1994</h3>
+  <p class="src" style="margin-top:0">X-Men Epic pp. 502–503 &middot; X-Force Epic p. 470 &middot; written for the first trade paperback</p>
+  <ul class="talk">
+    <li>He handed in the whole crossover as a single sheet of paper: a grid
+    of twelve boxes, one per issue, with no title.</li>
+    <li>He cannot remember who named it, but he remembers the argument over
+    spelling — X-ecutioner or X-cutioner — and says DeFalco's New York accent
+    settled it.</li>
+    <li><b>What was cut:</b> his outline gave Mister Sinister a much bigger
+    part, and had Magneto come back from the dead in the middle of it. He
+    calls that a kitchen-sink move born of nerves.</li>
+    <li><b>The best anecdote in either book:</b> at one of these planning
+    conferences Peter David shouted, as a joke, that Magneto should just rip
+    out Wolverine's skeleton — and then watched the room take him seriously.
+    That is the origin of Fatal Attractions, sitting in the back of this
+    volume.</li>
+    <li>He lists what the crossover seeded: Illyana's death, the Legacy
+    Virus, Magneto's return, the Betsy Braddock business, and a storyline he
+    calls Fathers and Sons.</li>
+    <li>And he is candid about the result: it was unfair, he says, to expect
+    a home run from a team at bat for the first time, and he would like to
+    do it over.</li>
+  </ul>
+
+  <h3>The other extras</h3>
+  <ul class="talk">
+    <li><b>The twelve trading cards</b>, front and back (X-Men Epic
+    pp. 498–501, X-Force Epic pp. 464–467). Each is stamped Hunter or Prey:
+    Xavier, Caliban, Apocalypse, Cable, Bishop &amp; Wolverine, Polaris &amp;
+    Havok, the M.L.F., Mister Sinister, Jean Grey &amp; Cyclops, the Dark
+    Riders, Archangel, Stryfe. Did either of you buy these sealed?</li>
+    <li><b>X-Men Epic</b> drops Jim Lee sketches from a Wizard hardcover
+    between the early issues — a little like leaving his photo on the
+    mantelpiece — plus a parody headache-pill ad starring Xavier from
+    Marvel's 1992 Year in Review.</li>
+    <li><b>X-Force Epic</b> has the Strike File's gold second-printing cover,
+    Capullo's original art for the #19 cover, and two pieces from the
+    Marvel Swimsuit Special.</li>
+  </ul>
+
+  <h2 id="stands"><span class="n">07</span>On the stands and in the world, autumn 1992</h2>
+  <ul class="talk">
+    <li><b>Image is eight months old.</b> Youngblood in April, Spawn in May,
+    Savage Dragon in July, Jim Lee's WildC.A.T.s in August — the same month
+    as his last X-Men — and Cyberforce in October. Portacio's Wetworks was
+    announced and then slipped to 1994.</li>
+    <li><b>Superman dies the week before the finale.</b> Superman #75 went on
+    sale 18 November 1992, also in a bag. Two publishers, same month, same
+    trick.</li>
+    <li><b>Both cartoons arrive.</b> Batman: The Animated Series started on
+    5 September; X-Men previewed on Halloween night. Marvel Age put the
+    crossover and the cartoon on the same cover line.</li>
+    <li><b>At Marvel:</b> Infinity War is finishing, the 2099 line launches
+    with Spider-Man 2099 #1, and Spider-Man's thirtieth-anniversary banner
+    is on some of the covers reprinted here. Regular issues are $1.25; the
+    bagged chapters are $1.50.</li>
+    <li><b>At DC:</b> Sword of Azrael is setting up Knightfall for the
+    spring.</li>
+    <li><b>In the news:</b> Clinton beats Bush and Perot on 3 November,
+    three weeks before the finale. The Los Angeles riots were that spring.
+    Anti-gay ballot measures were on the ballot in Colorado and Oregon.</li>
+    <li><b>The plague.</b> 1992 is the year AIDS became the leading cause of
+    death for American men aged 25 to 44. The Legacy Virus, planted on the
+    last two pages, is the X-office reaching for that — and Lobdell had
+    written Northstar's coming-out in Alpha Flight #106 only that
+    March.</li>
+    <li><b>Everything else:</b> Reservoir Dogs and Mortal Kombat in October;
+    Aladdin, Bram Stoker's Dracula and Sonic 2 in November; Boyz II Men at
+    number one for most of the run.</li>
+  </ul>
+
+  <h2 id="who"><span class="n">08</span>Who made it</h2>
+  <ul class="talk">
+    <li><b>Scott Lobdell</b> writes or scripts ten of the twenty-one issues in the
+    X-Men book, plus the back-ups. He had only taken over Uncanny that year
+    and stays until 1997. Harras's line on him in Marvel Age is that he had
+    wowed them on Excalibur.</li>
+    <li><b>Fabian Nicieza</b> writes eleven of the seventeen comics in the
+    X-Force book. Born in Buenos Aires, he came up through Marvel's
+    promotions department — he mentions it in his intro — co-created
+    Deadpool, and had been writing New Warriors since its first issue. Here
+    he inherits X-Force and X-Men in the same season.</li>
+    <li><b>Peter David</b> had been writing X-Factor since 1991 and is the
+    one voice here that pre-dates the exodus. He left the book with #89,
+    three issues after this, mid-story — by most accounts because crossovers
+    kept interrupting it. He died in May 2025.</li>
+    <li><b>Jim Lee and Whilce Portacio</b> each draw their last regular X-Men
+    comic in the first hundred pages. Lee now runs DC.</li>
+    <li><b>Brandon Peterson</b> gets Uncanny for the crossover and a few
+    issues after, co-creates Graydon Creed with Lobdell, and is replaced by
+    John Romita Jr. at #300. He ends up at Top Cow.</li>
+    <li><b>Andy Kubert</b>, son of Joe, starts on X-Men here and stays about
+    four years.</li>
+    <li><b>Jae Lee</b> is about twenty, coming off Namor. These three are his
+    only issues of X-Factor. He is at Image within two years and wins an
+    Eisner for Inhumans in 1999.</li>
+    <li><b>Greg Capullo</b> came over from Quasar — Marvel Age says so — and
+    leaves for Spawn at the end of 1993. Much later: Batman with Scott
+    Snyder.</li>
+    <li><b>John Romita Jr.</b> draws the Cable mini and returns to Uncanny at
+    #300.</li>
+    <li><b>Tom Raney</b> and <b>Rurik Tyler</b> are the fill-in team who end
+    up drawing the whole Morlock story. <b>Art Thibert</b> was Jim Lee's
+    inker, promoted for two issues and then given Cable #1. <b>Mark
+    Texeira</b> draws the Maverick strips. <b>Darick Robertson</b> draws New
+    Warriors #31.</li>
+    <li><b>Bob Harras</b> edits all of it, and becomes Marvel's
+    editor-in-chief in 1995. <b>Tom DeFalco</b>, who ordered the crossover,
+    gets a different joke credit almost every issue.</li>
+  </ul>
+
+  <h2 id="threads"><span class="n">09</span>What it leaves hanging</h2>
+  <ul class="talk">
+    <li><b>The Legacy Virus</b> runs for eight years. Illyana in 1993;
+    Colossus dies curing it in Uncanny #390 (2001).</li>
+    <li><b>Who is the clone?</b> Left open here on purpose. Cable #6–8, a
+    year later, says Cable is the real Nathan and Stryfe the copy. Lobdell
+    has since said the plan at the time was the other way round and that he
+    argued Harras out of it, because it made Cyclops the father of a mass
+    murderer. Then The Adventures of Cyclops and Phoenix (1994) sends Scott
+    and Jean forward to raise him.</li>
+    <li><b>Apocalypse</b> is left for dead on the Moon. Not for long.</li>
+    <li><b>Colossus</b>: brother, parents, sister, then Magneto.</li>
+    <li><b>The Morlocks</b> return as Gene Nation (Uncanny #323–325, 1995).</li>
+    <li><b>Storm and Forge</b> stay broken for years; he ends up running
+    X-Factor with Mystique on the team.</li>
+    <li><b>Iceman's real power</b> — Emma Frost, Uncanny #314 (1994).</li>
+    <li><b>Dazzler's baby</b> is later written off as lost. In 2013 Peter
+    David, back on X-Factor, makes Shatterstar the son of Dazzler and
+    Longshot.</li>
+    <li><b>Xavier's father and Alamogordo</b> — X-Men: Legacy, 2008.</li>
+    <li><b>The nursing-home patient</b> — the Phalanx Covenant, 1994.</li>
+    <li><b>X-Force</b> on their own until Cable walks back in at #25.</li>
+    <li><b>Wolverine's skeleton</b> — X-Men #25, October 1993.</li>
+  </ul>
+
+  <h2 id="ask"><span class="n">10</span>Questions to put to each other</h2>
+  <ul class="talk">
+    <li>Did the replacements pull it off? Rank the four art teams.</li>
+    <li>If a listener buys only one of these two books, which one — the
+    X-Men volume for the lead-in, or the X-Force volume for the prologue and
+    the fallout?</li>
+    <li>Twelve chapters. Where is the padding, and which one would you
+    cut?</li>
+    <li>The story's only question is who Stryfe is, and it will not say.
+    Does knowing the later answer change how chapter 12 reads?</li>
+    <li>Apocalypse as reluctant ally, with Archangel as his bodyguard — the
+    best idea in the crossover?</li>
+    <li>X-Factor against X-Force: law and order against the kids. Whose side
+    is the book on, and whose side are you on?</li>
+    <li>Jim Lee's last X-Men story is about Mojo. Fitting, or a waste of his
+    final two issues?</li>
+    <li>Forge and Storm: who walked away from whom?</li>
+    <li>Is the Legacy Virus a good idea, knowing it runs eight years?</li>
+    <li>Polybags and trading cards: what did this era train readers to
+    buy?</li>
+  </ul>
+
+  <div class="note">
+    <p><b>Three things to settle before you record.</b></p>
+    <p>First, the dinner scene in Uncanny #289: Bobby's father uses the word
+    Oriental about Opal, and her relatives are cybernetic samurai. The scene
+    knows he is a bigot — decide how you will say it out loud.</p>
+    <p>Second, if the X-Force back matter goes on screen, the two Swimsuit
+    Special pages are in it (pp. 472–473).</p>
+    <p>Third, a few things here come from outside the books and are worth a
+    second look before you state them flatly: the Steven Lang identification
+    in #291, Lobdell's account of the clone switch, and the reason Peter
+    David left X-Factor.</p>
+  </div>
+
+  <hr class="rule">
+  <p class="src">Contents, running order, page positions, credits, plots and
+  everything in section 06 read directly from the two collected editions
+  (X-Men Epic Collection vol. 21, 2022; X-Force Epic Collection vol. 2,
+  2019), including the reprinted Marvel Age #116 article and Fabian
+  Nicieza's 1994 introduction. Publication details, later-story payoffs and
+  creator history from
+  <a href="https://en.wikipedia.org/wiki/X-Cutioner%27s_Song">Wikipedia: X-Cutioner's Song</a>,
+  <a href="https://uncannyxmen.net/node/5357">UncannyXmen.net on the Cable/Stryfe clone question</a>,
+  <a href="https://en.wikipedia.org/wiki/Phalanx_Covenant">Wikipedia: Phalanx Covenant</a>,
+  <a href="https://en.wikipedia.org/wiki/Graydon_Creed">Graydon Creed</a>,
+  <a href="https://en.wikipedia.org/wiki/Threnody_(comics)">Threnody</a>,
+  <a href="https://en.wikipedia.org/wiki/Greg_Capullo">Greg Capullo</a>,
+  <a href="https://en.wikipedia.org/wiki/Jae_Lee">Jae Lee</a>,
+  <a href="https://en.wikipedia.org/wiki/Brandon_Peterson">Brandon Peterson</a>,
+  <a href="https://www.comicbookherald.com/x-factor-epic-collection-afterlives-review/">Comic Book Herald on Peter David's X-Factor</a>
+  and the publisher's
+  <a href="https://www.penguin.com.au/books/x-men-epic-collection-the-x-cutioners-song-new-printing-9781302967888">new-printing listing</a>.
+  Dialogue is paraphrased throughout; the one direct quotation is
+  marked.</p>
+
+</div>
+
+</body></html>

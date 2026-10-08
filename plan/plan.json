@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-04",
+  "updated": "2026-10-07",
   "minLead": 4,
   "mainStart": "2026-10-01",
   "patreonStart": "2026-10",
@@ -7,7 +7,7 @@
     {"id": "xm20", "lane": "main", "title": "X-Men Epic 20: Bishop's Crossing", "short": "X-Men 20", "parts": [{"recorded": "2026-09-13"}, {"recorded": "2026-09-17"}]},
     {"id": "morb2", "lane": "main", "title": "Morbius Epic 2: The End of a Living Vampire", "short": "Morbius 2", "parts": [{"recorded": "2026-09-24"}, {"recorded": "2026-09-27"}]},
     {"id": "lostmarvels", "lane": "main", "title": "Lost Marvels: Tower of Shadows", "short": "Lost Marvels", "prep": "../prep/tower-of-shadows.html", "parts": [{}]},
-    {"id": "xm21", "lane": "main", "title": "X-Men Epic 21 & X-Force Epic 2: The X-Cutioner's Song", "short": "X-Cutioner's Song", "parts": [{}, {}]},
+    {"id": "xm21", "lane": "main", "title": "X-Men Epic 21 & X-Force Epic 2: The X-Cutioner's Song", "short": "X-Cutioner's Song", "prep": "../prep/x-cutioners-song.html", "parts": [{}, {}]},
     {"id": "batditf", "lane": "main", "title": "Batman DC Finest: A Death in the Family", "short": "Batman", "parts": [{}, {}]},
     {"id": "xm22", "lane": "main", "title": "X-Men Epic 22: Legacies", "short": "X-Men 22", "parts": [{}, {}]},
     {"id": "thor25", "lane": "main", "title": "Thor Epic 25: The Dark Gods", "short": "Thor 25", "parts": [{}, {}]},

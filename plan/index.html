@@ -260,7 +260,7 @@ function compute(plan,d,today){
     (ids||[]).concat(books.map(function(b){return b.id})).forEach(function(id){
       var b=byId[id]; if(!b||seen[id]||((b.lane==='patreon')!==isPat))return; seen[id]=1;
       var ps=(b.parts&&b.parts.length)?b.parts:[{}];
-      ps.forEach(function(p,k){out.push({id:id+'.'+(k+1),book:id,first:k===0,lane:isPat?'patreon':'main',title:b.title,short:b.short||b.title,part:ps.length>1?'Pt '+(k+1):'',recorded:p.recorded||'',pin:p.pin||'',norec:!!b.norecord,prep:b.prep||'',added:!!b.added})});
+      ps.forEach(function(p,k){out.push({id:id+'.'+(k+1),book:id,first:k===0,lane:isPat?'patreon':'main',title:b.title,short:b.short||b.title,part:ps.length>1?'Pt '+(k+1):'',recorded:p.recorded||'',pin:p.pin||'',norec:!!b.norecord,prep:b.prep||'',built:p.built||'',added:!!b.added})});
     });
     return out;
   }
@@ -419,7 +419,7 @@ function renderDraft(){
 function evRec(s){
   if(s.off)return '';
   if(!s.item)return '<span class="ev rec st-open"><i data-s="R">REC</i><b>Open</b></span>';
-  return '<span class="ev rec '+(s.done?'st-have':cls(s.item.state))+'" data-item="'+esc(s.item.id)+'"><i data-s="R">REC'+(!s.done&&prepUrl(s.item.prep)?' &middot; PREP READY':'')+'</i><b>'+brief(s.item)+'</b></span>';
+  return '<span class="ev rec '+(s.done?'st-have':cls(s.item.state))+'" data-item="'+esc(s.item.id)+'"><i data-s="R">REC'+(!s.done&&prepUrl(s.item.prep)?' &middot; PREP READY':'')+(s.done&&prepUrl(s.item.built)?' &middot; BUILT':'')+'</i><b>'+brief(s.item)+'</b></span>';
 }
 function evDrop(d){
   var pat=d.lane==='patreon', k=pat?'PATREON':'DROP';
@@ -465,7 +465,7 @@ function renderList(){
         +'<button class="btn sm" data-act="move" data-id="'+esc(it.book)+'" data-dir="1" aria-label="Move this book later"'+(b.i===b.n-1?' disabled':'')+'>&#9660;</button></span>'}
     if(it.added&&it.first)mv='<span class="tag">NEW</span>'+mv+(trying?'<span class="mv"><button class="btn sm" data-act="unadd" data-id="'+esc(it.book)+'">Remove</button></span>':'');
     h+='<div class="row"><span class="mark '+cls(it.state)+'">'+mk+'</span>'
-      +'<span class="ttl">'+esc(it.title)+(it.part?' <span class="pt">'+esc(it.part)+'</span>':'')+(it.lane==='patreon'?'<span class="tag">PATREON</span>':'')+(fifth(it.rel)?'<span class="tag">5TH THURSDAY</span>':'')+(it.first&&prepUrl(it.prep)?'<a class="tag" href="'+esc(prepUrl(it.prep))+'" target="_blank" rel="noopener">SHOW PREP</a>':'')+mv+'</span>'
+      +'<span class="ttl">'+esc(it.title)+(it.part?' <span class="pt">'+esc(it.part)+'</span>':'')+(it.lane==='patreon'?'<span class="tag">PATREON</span>':'')+(fifth(it.rel)?'<span class="tag">5TH THURSDAY</span>':'')+(it.first&&prepUrl(it.prep)?'<a class="tag" href="'+esc(prepUrl(it.prep))+'" target="_blank" rel="noopener">SHOW PREP</a>':'')+(prepUrl(it.built)?'<a class="tag" href="'+esc(prepUrl(it.built))+'" target="_blank" rel="noopener">BUILD SUMMARY</a>':'')+mv+'</span>'
       +rc.replace('">','"><small>Record</small>')
       +'<span class="cell dr"><small>Drops</small>'+esc(fmt(it.rel))+'</span></div>';
   });
@@ -516,8 +516,17 @@ function renderBar(){
     if(u)links+='<a class="btn solid" href="'+esc(u)+'" target="_blank" rel="noopener">Show prep: '+esc(it.short)+'</a>';
     else if(want)links+='<span class="noprep">No prep sheet yet for '+esc(it.short)+'.</span>';
   }
+  // What came OUT of a recording: one build summary per part, shown on the day
+  // it was recorded and on the day it drops.
+  var seenB={};
+  function addBuilt(it){
+    var u=prepUrl(it.built); if(!u||seenB[it.id])return; seenB[it.id]=1;
+    links+='<a class="btn solid" href="'+esc(u)+'" target="_blank" rel="noopener">Build summary: '+esc(it.short)+(it.part?' '+esc(it.part):'')+'</a>';
+  }
   d.recs.forEach(function(s){if(s.item&&!s.off)addPrep(s.item,!s.done)});
   d.drops.forEach(function(x){if(x.item)addPrep(x.item,false)});
+  d.recs.forEach(function(s){if(s.item&&!s.off)addBuilt(s.item)});
+  d.drops.forEach(function(x){if(x.item)addBuilt(x.item)});
   if(trying&&sel>=P.today){
     d.recs.forEach(function(s){
       if(s.off||s.done||!s.item)return;

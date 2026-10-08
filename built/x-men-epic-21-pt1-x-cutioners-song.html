@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex, nofollow">
+<title>X-Men Epic 21 Pt1: The X-Cutioner&#x27;s Song - Build</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --paper:#f2f4f3; --card:#fdfefd; --ink:#0f1412; --body:#2a302d;
+    --muted:#626b66; --rule:#d5dcd8; --accent:#1f6f4a; --accent-soft:#e4f2ea;
+    --gold:#8a6a1f; --gold-soft:#f6efdd; --red:#a8322a; --red-soft:#f8e7e5;
+    --mono-bg:#e5eae7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --paper:#0f1311; --card:#171c19; --ink:#eef3f0; --body:#cdd5d0;
+      --muted:#8d9892; --rule:#2a332e; --accent:#7fd0a4; --accent-soft:#14261d;
+      --gold:#d8b25e; --gold-soft:#271f10; --red:#f0908a; --red-soft:#33191a;
+      --mono-bg:#1e2521;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --paper:#0f1311; --card:#171c19; --ink:#eef3f0; --body:#cdd5d0;
+    --muted:#8d9892; --rule:#2a332e; --accent:#7fd0a4; --accent-soft:#14261d;
+    --gold:#d8b25e; --gold-soft:#271f10; --red:#f0908a; --red-soft:#33191a;
+    --mono-bg:#1e2521;
+  }
+  html{scroll-padding-top:86px;}
+  body{background:var(--paper); color:var(--body); padding:0; margin:0;
+    font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+    font-size:16px; line-height:1.58;}
+  .wrap{max-width:720px; margin:0 auto; padding-inline:20px; padding-block:0 72px;}
+  header.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:5;
+    background:color-mix(in srgb, var(--paper) 93%, transparent);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--rule);}
+  header.top .inner{max-width:720px; margin:0 auto; padding:9px 20px;
+    display:flex; gap:10px; align-items:baseline;}
+  header.top .mark{font-family:"Oswald",Impact,sans-serif; font-weight:600;
+    text-transform:uppercase; letter-spacing:.09em; font-size:12.5px; color:var(--accent);}
+  header.top .who{font-size:11.5px; color:var(--muted);}
+  header.top .links{margin-left:auto; display:flex; gap:14px; font-size:12.5px; white-space:nowrap;}
+  nav.toc{max-width:720px; margin:0 auto; padding:0 20px 8px; display:flex; gap:6px;
+    overflow-x:auto; scrollbar-width:none;}
+  nav.toc::-webkit-scrollbar{display:none;}
+  nav.toc a{flex:0 0 auto; font-family:"IBM Plex Mono",monospace; font-size:11px;
+    text-transform:uppercase; letter-spacing:.04em; text-decoration:none;
+    color:var(--muted); background:var(--mono-bg); border-radius:3px; padding:4px 8px;}
+  h1{font-family:"Oswald",Impact,sans-serif; font-weight:600;
+    font-size:clamp(28px,7.5vw,42px); line-height:1.05; color:var(--ink);
+    margin:26px 0 8px; text-wrap:balance;}
+  .lede{font-size:16.5px; margin:0 0 6px;}
+  .stamp{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.07em; margin:0 0 20px;}
+  h2{font-family:"Oswald",Impact,sans-serif; font-weight:500; font-size:22px;
+    color:var(--ink); margin:38px 0 4px; text-wrap:balance;}
+  h2 .n{color:var(--accent); font-size:15px; margin-right:8px;
+    font-family:"IBM Plex Mono",monospace;}
+  p{margin:0 0 12px;}
+  a{color:var(--accent);}
+  .sub{color:var(--muted); font-size:14.5px; margin:0 0 10px;}
+  .tiles{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:14px 0 6px;}
+  .tile{background:var(--card); border:1px solid var(--rule); border-radius:3px;
+    padding:11px 12px 10px; min-width:0;}
+  .tile b{display:block; font-family:"Oswald",Impact,sans-serif; font-weight:600;
+    font-size:30px; line-height:1; color:var(--ink);}
+  .tile b small{font-size:15px; font-weight:500; color:var(--muted); margin-left:6px;}
+  .tile span{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+    text-transform:uppercase; letter-spacing:.06em; color:var(--accent); margin-top:7px;}
+  .tile em{display:block; font-style:normal; font-size:12.5px; color:var(--muted);
+    margin-top:2px; line-height:1.35;}
+  table.run{width:100%; border-collapse:collapse; margin:12px 0 4px; font-size:14px;}
+  table.run th{font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600;
+    text-transform:uppercase; letter-spacing:.05em; color:var(--muted); text-align:left;
+    padding:6px 6px 6px 0; border-bottom:1px solid var(--rule); vertical-align:bottom;}
+  table.run td{padding:7px 6px 7px 0; border-bottom:1px solid var(--rule);
+    vertical-align:top; color:var(--ink);}
+  table.run td small{display:block; color:var(--muted); font-size:12.5px;}
+  table.run .t{font-family:"IBM Plex Mono",monospace; font-size:12.5px;
+    text-align:right; white-space:nowrap; padding-right:0; padding-left:10px;}
+  table.run td.c{color:var(--accent); font-family:"IBM Plex Mono",monospace;
+    font-size:12.5px; white-space:nowrap; width:1%;}
+  table.run tr.sep td{font-family:"Oswald",Impact,sans-serif; text-transform:uppercase;
+    letter-spacing:.06em; font-size:13px; color:var(--accent); padding-top:14px;}
+  table.run tr.sum td{font-family:"IBM Plex Mono",monospace; font-size:12.5px;
+    color:var(--muted); border-bottom:0;}
+  .slip{background:var(--card); border:1px solid var(--rule); border-radius:3px;
+    padding:14px 16px; margin:12px 0; display:grid; gap:10px; min-width:0;}
+  .slip .hd{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px;}
+  .slip .num{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--accent);}
+  .slip .lab{font-family:"Oswald",Impact,sans-serif; font-size:17px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.04em; color:var(--ink);}
+  .slip .meta{flex-basis:100%; font-family:"IBM Plex Mono",monospace; font-size:11.5px;
+    color:var(--muted);}
+  .chip{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+    font-weight:600; text-transform:uppercase; letter-spacing:.08em; padding:3px 7px;
+    border-radius:3px; border:1px solid var(--rule); color:var(--muted); white-space:nowrap;}
+  .chip.pass{color:var(--accent); border-color:var(--accent); background:var(--accent-soft);}
+  .chip.reword, .chip.swap{color:var(--gold); border-color:var(--gold); background:var(--gold-soft);}
+  .cardline{font-family:"Oswald",Impact,sans-serif; font-weight:500; font-size:19px;
+    line-height:1.2; text-transform:uppercase; letter-spacing:.02em; color:var(--ink);
+    border:1.5px dashed var(--accent); background:var(--accent-soft); border-radius:3px;
+    padding:9px 12px; text-wrap:balance;}
+  .cardline small{display:block; font-family:"IBM Plex Mono",monospace; font-size:10px;
+    font-weight:600; letter-spacing:.1em; color:var(--accent); margin-bottom:4px;}
+  .lines{display:grid; gap:4px; font-size:14.5px;}
+  .lines span{font-family:"IBM Plex Mono",monospace; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:.06em; color:var(--muted); margin-right:7px;}
+  .said{border-left:3px solid var(--accent); padding-left:12px; font-size:14.5px; margin:0;}
+  ul.flags{list-style:none; margin:0; padding:0; display:grid; gap:4px;}
+  ul.flags li{font-size:13.5px; padding:3px 9px; border-left:3px solid var(--rule); color:var(--body);}
+  ul.flags li.amber{border-color:var(--gold); background:var(--gold-soft);}
+  ul.flags li.red{border-color:var(--red); background:var(--red-soft);}
+  .why{font-size:13.5px; color:var(--muted); margin:0;}
+  .why b{font-weight:600; color:var(--body);}
+  ol.ch{list-style:none; margin:12px 0 0; padding:0; border-top:1px solid var(--rule);}
+  ol.ch li{display:flex; gap:14px; padding:6px 0; border-bottom:1px solid var(--rule); font-size:14.5px;
+    color:var(--ink);}
+  ol.ch li span{flex:0 0 62px; font-family:"IBM Plex Mono",monospace; font-size:12.5px;
+    color:var(--accent); text-align:right;}
+  .titleline{font-weight:600; color:var(--ink); background:var(--card); border:1px solid var(--rule);
+    border-radius:3px; padding:10px 13px; font-size:15px; overflow-wrap:anywhere;}
+  ul.talk{list-style:none; margin:10px 0 0; padding:0;}
+  ul.talk li{position:relative; padding-left:19px; margin-bottom:9px; font-size:15px;}
+  ul.talk li::before{content:""; position:absolute; left:2px; top:9px; width:7px; height:7px;
+    background:var(--accent); border-radius:1px;}
+  .src{font-size:12.5px; color:var(--muted); margin-top:26px; border-top:1px solid var(--rule); padding-top:12px;}
+  @media (max-width:520px){
+    .tiles{grid-template-columns:repeat(2,minmax(0,1fr));}
+    table.run .hide{display:none;}
+    .chip{margin-left:0;}
+  }
+</style>
+</head><body>
+<header class="top"><div class="inner"><span class="mark">BCE Comics Pod</span><span class="who">build summary</span><span class="links"><a href="../prep/x-cutioners-song.html">Show prep</a><a href="../plan/">Recording plan</a></span></div>
+<nav class="toc"><a href="#glance">At a glance</a><a href="#issues">Issue by issue</a><a href="#hooks">Hooks</a><a href="#full">Full episode</a><a href="#status">Where it stands</a></nav></header>
+<div class="wrap">
+<h1>X-Men Epic 21 Pt1: The X-Cutioner&#x27;s Song</h1>
+<p class="lede">Nick and stojr team-up to read and review two books at once: X-Men Epic Collection vol. 21 and X-Force Epic Collection vol. 2, which both collect The X-Cutioner&#x27;s Song. Part 1 is everything before the crossover - Uncanny X-Men 289-293 and X-Men 10-13 from the X-Men volume, then Cable: Blood and Metal 1-2 from the X-Force volume. Part 2 covers the crossover itself and the rest of the X-Force book.</p>
+<p class="stamp">Episode 027 &middot; recorded 7 Oct 2026 &middot; summary made 8 Oct 2026</p>
+<h2 id="glance"><span class="n">01</span>At a glance</h2>
+<p class="sub">What the recording turned into. Vertical is the phone-shaped cut, horizontal the widescreen one.</p>
+<div class="tiles">
+<div class="tile"><b>1 h 51 min</b><span>Recording</span><em>11 issues covered</em></div>
+<div class="tile"><b>11</b><span>Vertical clips</span><em>1 h 26 min in all, 4:20 to 11:47 each</em></div>
+<div class="tile"><b>11</b><span>Hooks</span><em>65 to 71 seconds each</em></div>
+<div class="tile"><b>11</b><span>Horizontal One Shots</span><em>1 h 41 min in all, for Nick&#x27;s uploads</em></div>
+<div class="tile"><b>15</b><span>Chapters</span><em>full-episode description and thumbnail</em></div>
+<div class="tile"><b>11<small>of 11</small></b><span>Hooks reviewed</span><em>7 pass, 2 card reworded, 2 moved</em></div>
+</div>
+<p class="sub" style="margin-top:12px">2 books in one episode: X-Men Epic Collection vol. 21 (9 issues); X-Force Epic Collection vol. 2 (2 issues).</p>
+<h2 id="issues"><span class="n">02</span>Issue by issue</h2>
+<p class="sub">Starts = where the issue begins in the recording. Lengths are minutes:seconds; the vertical clip includes its cold open and intro.</p>
+<table class="run"><tr><th></th><th>Issue</th><th class="t hide">Starts</th><th class="t">Vertical</th><th class="t">Hook</th><th class="t">One Shot</th></tr>
+<tr class="sep"><td colspan="6">X-Men Epic Collection vol. 21</td></tr>
+<tr><td class="c">01</td><td>Uncanny X-Men #289<small>Knots</small></td><td class="t hide">11:27</td><td class="t">4:20</td><td class="t">1:08</td><td class="t">5:03</td></tr>
+<tr><td class="c">02</td><td>Uncanny X-Men #290<small>Frayed</small></td><td class="t hide">16:22</td><td class="t">11:47</td><td class="t">1:09</td><td class="t">14:00</td></tr>
+<tr><td class="c">03</td><td>X-Men #10<small>Where Happy Little Bluebirds Fly</small></td><td class="t hide">30:14</td><td class="t">9:12</td><td class="t">1:06</td><td class="t">10:55</td></tr>
+<tr><td class="c">04</td><td>X-Men #11<small>The X-Men vs. the X-Men (Again)</small></td><td class="t hide">41:01</td><td class="t">9:31</td><td class="t">1:07</td><td class="t">11:14</td></tr>
+<tr><td class="c">05</td><td>Uncanny X-Men #291<small>Underbelly</small></td><td class="t hide">52:06</td><td class="t">6:07</td><td class="t">1:11</td><td class="t">7:09</td></tr>
+<tr><td class="c">06</td><td>Uncanny X-Men #292<small>The Morlocks Take Manhattan</small></td><td class="t hide">59:08</td><td class="t">6:45</td><td class="t">1:10</td><td class="t">7:57</td></tr>
+<tr><td class="c">07</td><td>Uncanny X-Men #293<small>The Last Morlock Story</small></td><td class="t hide">1:06:57</td><td class="t">5:52</td><td class="t">1:05</td><td class="t">6:53</td></tr>
+<tr><td class="c">08</td><td>X-Men #12<small>Broken Mirrors</small></td><td class="t hide">1:13:42</td><td class="t">8:12</td><td class="t">1:10</td><td class="t">9:44</td></tr>
+<tr><td class="c">09</td><td>X-Men #13<small>Hazardous Territory</small></td><td class="t hide">1:23:18</td><td class="t">7:19</td><td class="t">1:06</td><td class="t">8:39</td></tr>
+<tr class="sep"><td colspan="6">X-Force Epic Collection vol. 2</td></tr>
+<tr><td class="c">10</td><td>Cable: Blood and Metal #1<small>Cable vs. Stryfe Begins</small></td><td class="t hide">1:31:48</td><td class="t">9:31</td><td class="t">1:07</td><td class="t">11:17</td></tr>
+<tr><td class="c">11</td><td>Cable: Blood and Metal #2<small>Stryfe Unmasked</small></td><td class="t hide">1:42:57</td><td class="t">7:18</td><td class="t">1:10</td><td class="t">8:36</td></tr>
+<tr class="sum"><td></td><td>Total</td><td class="t hide"></td><td class="t">1:25:54</td><td class="t">12:28</td><td class="t">1:41:26</td></tr>
+</table>
+<h2 id="hooks"><span class="n">03</span>Hooks, and the second pass</h2>
+<p class="sub">One short cut per issue for Shorts, Reels and TikTok. Each was read again the way a scroller meets it - sound off, never heard of the book. The dashed box is the card burned on screen for the first three seconds.</p>
+<div class="slip" id="hook-01"><div class="hd"><span class="num">01</span><span class="lab">Uncanny X-Men #289</span><span class="chip pass">pass</span><span class="meta">12:10 to 13:32 in the recording &middot; 68 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>Iceman&#x27;s date night is ruined by his own father</div>
+<div class="lines"><div><span>Opens</span>Well, Bobby Drake, he&#x27;s getting ready for a date with Opal,</div><div><span>Ends</span>I so I like this issue.</div></div>
+<p class="said">Opens on Nick&#x27;s scene-setting (&#x27;Well, Bobby Drake, he&#x27;s getting ready for a date with Opal&#x27;) and has one hand-off, both flagged amber. Kept: the line is a clean set-up for the card, the father is on screen in the pane by 30 s, and the hand-off leads straight to stojr wanting to know how Bobby&#x27;s dad feels about Iceman now. Re-cut once only for the caption spelling of X-Factor.</p>
+<ul class="flags"><li class="amber">opens mid-conversation: &quot;Well, Bobby Drake, he&#x27;s getting ready for a date with Opal,&quot;</li><li class="amber">hand-off inside the cut at 00:12:47: &quot;stojr, your thoughts here?&quot;</li></ul>
+<p class="why"><b>Picked because:</b> 12:10-13:32. Bobby takes Opal home to meet his parents and his father has a problem with her being Asian - &#x27;never mind that his son is a mutant, you&#x27;d think that would solve some inherent bigotry&#x27; - and stojr ends on wanting to know how Bobby&#x27;s dad feels about Iceman NOW. A story anyone can follow cold, and the one thread from this issue that keeps paying off. It opens on Nick&#x27;s recap, so the cold open sits on the date line itself.</p>
+</div>
+<div class="slip" id="hook-02"><div class="hd"><span class="num">02</span><span class="lab">Uncanny X-Men #290</span><span class="chip reword">card reworded</span><span class="meta">21:09 to 22:32 in the recording &middot; 69 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>Did Jean break up Storm and Forge?</div>
+<div class="lines"><div><span>Opens</span>I think that you also this isn&#x27;t that like Forge gets testy</div><div><span>Ends</span>That&#x27;s when she gets quiet and says it&#x27;s not my place to say.</div></div>
+<p class="said">Window is right - a disagreement about the page, settled by reading it. The first card (&#x27;Did Jean Grey end Storm&#x27;s engagement?&#x27;) promised &#x27;Grey&#x27; and &#x27;engagement&#x27;, neither of which is said in the cut.</p>
+<p class="why"><b>Picked because:</b> 21:09-22:31. stojr&#x27;s reading of why Forge walks out: it is not that he gets testy, it is that Jean - a telepath - cannot say Storm loves him and falls back on &#x27;it&#x27;s not my place to say&#x27;. Nick pushes back and stojr walks him through the page. An actual disagreement settled by the text, which beats either host&#x27;s verdict on the issue. CARD REWORDED on the second pass: &#x27;Did Jean Grey end Storm&#x27;s engagement?&#x27; promised words (Grey, engagement) the window never says.</p>
+</div>
+<div class="slip" id="hook-03"><div class="hd"><span class="num">03</span><span class="lab">X-Men #10</span><span class="chip swap">moved</span><span class="meta">36:01 to 37:20 in the recording &middot; 66 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>X-Men&#x27;s Maverick does everything like a badass</div>
+<div class="lines"><div><span>Opens</span>Maverick shows off his badassery by using a bomb to blow up a bunch of people</div><div><span>Ends</span>you know, the Wolverine epic that I just got has some of his art in it.</div></div>
+<p class="said">Same moment, better edges. It opened on the credits of the back-up (&#x27;All right. So the B story...&#x27;) and the card had no name a scroller knows. Now it opens on the first &#x27;like a badass&#x27;, the card says X-Men, and it runs 4 s longer to finish stojr&#x27;s sentence about the Wolverine Epic instead of stopping on &#x27;I&#x27; at 60.7 s. Two ambers left (the hand-off, &#x27;I had the next one&#x27;) - both are the conversation, not housekeeping.</p>
+<ul class="flags"><li class="amber">hand-off inside the cut at 00:36:27: &quot;All right, stojr, your thoughts?&quot;</li><li class="amber">running order inside the cut at 00:36:49: &quot;I had the next one.&quot;</li></ul>
+<p class="why"><b>Picked because:</b> 36:00-37:19. Nick&#x27;s summary of the Maverick back-up is one joke told five ways - he blows up a room like a badass, poses like a badass - and stojr answers with the Punisher crotch skull and the single earring, and ends on Mark Texeira&#x27;s Wolverine. The funniest minute of the episode and it needs no context. SECOND PASS: the window used to open 10 s earlier on the credits (&#x27;All right. So the B story...&#x27;), which is housekeeping, and the card had no name a scroller knows - it opens on the first badass now and the card says X-Men. Then 4 s longer, to end on a whole sentence about the Wolverine Epic instead of on &#x27;...during this era. I&#x27; at 60.7 s.</p>
+</div>
+<div class="slip" id="hook-04"><div class="hd"><span class="num">04</span><span class="lab">X-Men #11</span><span class="chip pass">pass</span><span class="meta">41:46 to 43:06 in the recording &middot; 67 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>Jim Lee&#x27;s last X-Men page before he quit Marvel</div>
+<div class="lines"><div><span>Opens</span>All then seems to be well,</div><div><span>Ends</span>Jim Lee is going to be doing six issues of the Fantastic Four,</div></div>
+<p class="said">Clean. Xavier&#x27;s overshare, &#x27;the villain of his own story&#x27;, the last Jim Lee team pose, Image. Topical note only: Fantastic Four is said in it and Avengers: Doomsday opens 2026-12-18 - no action.</p>
+<p class="why"><b>Picked because:</b> 41:45-43:06. Xavier announces Dazzler&#x27;s pregnancy for her (&#x27;he&#x27;s the villain of his own story&#x27;), the team strikes the pose, and Nick marks it: the last Jim Lee double-page spread with Jubilee sat at the front, because after this issue he leaves to found Image - and comes back for six issues of Fantastic Four in 1997. The history is the hook; the Xavier joke gets you there.</p>
+</div>
+<div class="slip" id="hook-05"><div class="hd"><span class="num">05</span><span class="lab">Uncanny X-Men #291</span><span class="chip pass">pass</span><span class="meta">57:33 to 58:58 in the recording &middot; 71 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>Why did the Healer make Callisto ugly again?</div>
+<div class="lines"><div><span>Opens</span>There&#x27;s some interesting</div><div><span>Ends</span>OK, I&#x27;m with you.</div></div>
+<p class="said">Flagged for opening on &#x27;There&#x27;s some interesting&#x27; - it is the start of Nick&#x27;s sentence about the intercut panels, and nothing shorter fits: the clip ends 10 s after the theory does, so the window cannot start later and still clear 60 s.</p>
+<ul class="flags"><li class="amber">opens mid-conversation: &quot;There&#x27;s some interesting&quot;</li></ul>
+<p class="why"><b>Picked because:</b> 57:33-58:57. stojr asks the question the issue never answers - why does a dying man crawl off the table to undo her beauty? - and Nick builds the answer live: Masque is dead, Callisto walked out, the Morlocks have no leader, and she cannot lead them looking like one of the beautiful people. He flags it as his own theory. A discovery made on air.</p>
+</div>
+<div class="slip" id="hook-06"><div class="hd"><span class="num">06</span><span class="lab">Uncanny X-Men #292</span><span class="chip swap">moved</span><span class="meta">1:03:54 to 1:05:17 in the recording &middot; 70 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>Emma Frost used Iceman&#x27;s powers better than he did</div>
+<div class="lines"><div><span>Opens</span>Or even here, isn&#x27;t that what he</div><div><span>Ends</span>you know, a little better than what we get here.</div></div>
+<p class="said">Moved 13 s later. It opened on &#x27;But yeah, I mean, like, I don&#x27;t know, like this panel of Iceman&#x27; - five fillers before a noun. It now opens on Nick&#x27;s question (&#x27;isn&#x27;t that what he reverts to later on?&#x27;) and ends on stojr preferring that Iceman, which is a better last line than &#x27;or some wackiness&#x27;.</p>
+<ul class="flags"><li class="amber">opens mid-conversation: &quot;Or even here, isn&#x27;t that what he&quot;</li></ul>
+<p class="why"><b>Picked because:</b> 63:53-65:18. Mikhail has turned Iceman to water and Nick asks whether this is the design he grows into. stojr: yes - Emma Frost wakes up in his body, takes it for a joyride and uses the power better than Bobby ever had, and by Age of Apocalypse he is travelling as vapour. He says &#x27;spoilers&#x27; himself first. Has the Rogaine-commercial line about the spiky ice hair and ends on &#x27;I like that version of Iceman better&#x27;. SECOND PASS: moved 13 s later so it opens on Nick&#x27;s question rather than on &#x27;But yeah, I mean, like, I don&#x27;t know, like&#x27;. COLD OPEN sits on the water panel itself (61:17 &#x27;That&#x27;s cool. That&#x27;s creepy as hell. I would think that would be the death of Iceman, but it&#x27;s not&#x27;) - the Emma Frost sentence runs 20 s without a full stop, so a teaser cut from it stopped on &#x27;joyride and&#x27;.</p>
+</div>
+<div class="slip" id="hook-07"><div class="hd"><span class="num">07</span><span class="lab">Uncanny X-Men #293</span><span class="chip pass">pass</span><span class="meta">1:08:30 to 1:09:49 in the recording &middot; 65 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>Every Marvel hero has a crazy brother</div>
+<div class="lines"><div><span>Opens</span>I just like I feel like we have a lot of</div><div><span>Ends</span>And I could be wrong.</div></div>
+<p class="said">Clean. Opens on the claim, lists four brothers in 25 s.</p>
+<p class="why"><b>Picked because:</b> 68:30-69:48. Captain Britain has one, Black Bolt has one, Scott Summers has one, so Colossus gets one too - and then the real complaint: they spent a whole story fetching Mikhail back through the portal only to throw him away, unless it is all there to pile hurt on Colossus. Opens on the list, which is the cold open as it stands.</p>
+</div>
+<div class="slip" id="hook-08"><div class="hd"><span class="num">08</span><span class="lab">X-Men #12</span><span class="chip pass">pass</span><span class="meta">1:15:14 to 1:16:38 in the recording &middot; 70 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>Jim Lee left. As a kid I never noticed.</div>
+<div class="lines"><div><span>Opens</span>That cover is seared into my brain for some reason.</div><div><span>Ends</span>So Ryking broke out of this facility to go visit his father&#x27;s funeral,</div></div>
+<p class="said">Flagged for &#x27;That cover is seared into my brain&#x27; - which is a fine first line with the cover filling the pane.</p>
+<ul class="flags"><li class="amber">opens mid-conversation: &quot;That cover is seared into my brain for some reason.&quot;</li></ul>
+<p class="why"><b>Picked because:</b> 75:14-76:38. The first issue after Jim Lee, drawn by one of his inkers, and stojr admits that at ten he thought it was the same artist - &#x27;he does a pretty good Jim Lee clone&#x27;. That is exactly what Marvel was hoping for in the autumn of 1992. Runs on into the Xavier-file set-up.</p>
+</div>
+<div class="slip" id="hook-09"><div class="hd"><span class="num">09</span><span class="lab">X-Men #13</span><span class="chip reword">card reworded</span><span class="meta">1:29:20 to 1:30:38 in the recording &middot; 66 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>The script says down. Wolverine walks up.</div>
+<div class="lines"><div><span>Opens</span>stojr, I do have a no prize for this one.</div><div><span>Ends</span>He doesn&#x27;t really show up again.</div></div>
+<p class="said">Two cards tried before this one: the first repeated &#x27;X-Men #13&#x27;, which the Shorts title adds anyway; the second (&#x27;The stairs go up. The script says down.&#x27;) had no name a scroller knows. Wolverine is the one Nick points at. KNOWN WEAKNESS: the panels are on the horizontal&#x27;s No-Prize slide, not in the vertical pane, so this cut describes the mistake rather than showing it.</p>
+<p class="why"><b>Picked because:</b> 89:19-90:38. Nick&#x27;s No-Prize, the M.C. Escher award: the script says twice that the stairs lead DOWN to the sub-level, and Wolverine, Xavier and Ryking are all drawn walking UP them. Then stojr on what became of Hazard. CAVEAT: the panels are on the horizontal&#x27;s No-Prize slide; the vertical pane is on the issue&#x27;s last page, so in this cut the stairs are described, not shown. It still carries on the words. CARD REWORDED on the second pass: the first one repeated &#x27;X-Men #13&#x27;, which the Shorts title adds anyway. Reworded again: the card needs a name a scroller knows, and Wolverine is the one Nick points at.</p>
+</div>
+<div class="slip" id="hook-10"><div class="hd"><span class="num">10</span><span class="lab">Cable: Blood and Metal #1</span><span class="chip pass">pass</span><span class="meta">1:32:19 to 1:33:39 in the recording &middot; 67 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>You can&#x27;t steal a hieroglyph. It&#x27;s a word.</div>
+<div class="lines"><div><span>Opens</span>OK, so I am going to fully admit that I was confused on this one.</div><div><span>Ends</span>Sorry, history nerd coming out here.</div></div>
+<p class="said">Flagged as housekeeping for &#x27;OK, so I am going to fully admit that I was confused on this one&#x27; - it is not; it is an honest first line and the confusion is the subject.</p>
+<ul class="flags"><li class="amber">opens on show housekeeping: &quot;OK, so I am going to fully admit that I was confused on this one.&quot;</li></ul>
+<p class="why"><b>Picked because:</b> 92:18-93:38. Two finds in one summary: the Wild Pack become the Six Pack because Silver Sable already had a Wild Pack (&#x27;they&#x27;re very litigious&#x27; - at a company that owns both), and the MLF&#x27;s plan to steal &#x27;an Egyptian hieroglyph&#x27;, which Nick points out is like stealing a word; they mean a stele. &#x27;Sorry, history nerd coming out here.&#x27;</p>
+</div>
+<div class="slip" id="hook-11"><div class="hd"><span class="num">11</span><span class="lab">Cable: Blood and Metal #2</span><span class="chip pass">pass</span><span class="meta">1:45:32 to 1:46:56 in the recording &middot; 70 s &middot; Instagram: not queued</span></div>
+<div class="cardline"><small>ON SCREEN</small>Stryfe takes off the helmet. It&#x27;s Cable&#x27;s face.</div>
+<div class="lines"><div><span>Opens</span>And really the big reveal comes on the sort of last page or close to the last page, uh,</div><div><span>Ends</span>And maybe that&#x27;s meant to be that the influence of Xavier&#x27;s dream and his protege&#x27;s</div></div>
+<p class="said">Opens on &#x27;And really the big reveal comes on the last page&#x27; - an &#x27;And&#x27;, but it names the reveal the card promises inside 8 s and the page is in the pane by 30 s. stojr&#x27;s camera has its blurred background for this stretch (it had dropped out a few minutes earlier); nothing was picked from the placeholder.</p>
+<ul class="flags"><li class="amber">opens mid-conversation: &quot;And really the big reveal comes on the sort of last page or close to the last pa&quot;</li></ul>
+<p class="why"><b>Picked because:</b> 105:32-106:56. The last-page reveal, and the question of whether readers had already seen it (they had - New Mutants #100; this is the first time CABLE sees it), then Nick on what the mini is actually for: a hard soldier who goes back for his man this time. stojr&#x27;s camera is back by here (it is a grey placeholder from 1:41:50 to 1:44:40 - nothing was picked from that stretch).</p>
+</div>
+<h2 id="full"><span class="n">04</span>Full episode</h2>
+<p class="sub">Title as generated - the story name at the front is still to be written.</p>
+<p class="titleline">[STORY NAME] | X-Men Epic Collection vol. 21 The X-Cutioner&#x27;s Song | Part 1 | BCE Comics Pod</p>
+<p class="sub" style="margin-top:14px">Chapters, in recording time.</p>
+<ol class="ch"><li><span>0:00</span>Welcome</li><li><span>4:56</span>Two books, one crossover</li><li><span>11:27</span>Uncanny X-Men #289</li><li><span>16:22</span>Uncanny X-Men #290</li><li><span>30:14</span>X-Men #10</li><li><span>41:01</span>X-Men #11</li><li><span>52:06</span>Uncanny X-Men #291</li><li><span>59:08</span>Uncanny X-Men #292</li><li><span>1:06:57</span>Uncanny X-Men #293</li><li><span>1:13:42</span>X-Men #12</li><li><span>1:23:18</span>X-Men #13</li><li><span>1:29:20</span>No-Prize: the staircase in X-Men #13</li><li><span>1:31:48</span>Cable: Blood and Metal #1</li><li><span>1:42:57</span>Cable: Blood and Metal #2</li><li><span>1:49:38</span>Thoughts on the first half</li></ol>
+<h2 id="status"><span class="n">05</span>Where it stands</h2>
+<ul class="talk"><li>Full episode: not out yet. Nothing cut from it goes anywhere before it is.</li><li>Instagram hooks: 11 not queued.</li><li>TikTok: not posted yet.</li><li>One Shots: 11 built with captions and a thumbnail each. They go up after the full episode.</li></ul>
+<p class="src">Read off the episode&rsquo;s own files on 8 Oct 2026. It does not update itself: the page is made again when something changes.</p>
+</div>
+</body></html>

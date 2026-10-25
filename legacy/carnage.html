@@ -203,6 +203,9 @@ body.revealing .rundown{visibility:hidden}
 
 .pod-pill{display:inline-block;margin-left:12px;background:var(--red);color:#fff;font-weight:700;font-size:15px;letter-spacing:.14em;padding:3px 9px 2px;vertical-align:1px}
 .pod-pill.soon{background:transparent;outline:2px solid var(--red);outline-offset:-2px;color:var(--red-ink)}
+.sw.rev{width:4px;height:18px;margin:0 5px;background:#fff}
+.rvt{fill:#fff}
+.pod-pill.rv{background:#fff;color:#141416}
 .sw.pod{width:14px;height:26px;margin-left:6px;background:var(--red);clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)}
 .row .r-pod{font-weight:700;font-size:14px;letter-spacing:.12em;color:var(--red-ink)}
 
@@ -348,7 +351,7 @@ document.body.classList.add("preload");
   var phone = mm("(pointer: coarse)") && !mm("(hover: hover)") && Math.min(screen.width, screen.height) < 820;
   if(phone && window.innerHeight > window.innerWidth){ try { location.replace(a.getAttribute("href")+h); } catch(e){} }
 })();
-var D = {"character":"Carnage","question":"How much of the (unofficial) run is on the shelf?","run_max":62,"as_of":"October 2026","latest":"Carnage (2023) #8 - a fan count: Marvel's own number starts in 2015","accent":"#FF8B3D","photo":{"width":1792,"crop":[0,0,1792,524],"credit":"Stojr's shelf, from CLZ","foot":494},"eras":[{"from":1,"to":23,"label":"#1 \u00b7 LIMITED SERIES \u00b7 1996\u20132014","short":"#1"},{"from":24,"to":39,"label":"#24 \u00b7 CARNAGE \u00b7 2015","short":"#24"},{"from":40,"to":62,"label":"#40 \u00b7 2022\u20132024","short":"#40"}],"books":[{"id":"b1017843","clz":"1017843","isbn":"9781302956363","format":"Epic Collection","vol":"Vol. 3","title":"The Monster Inside","series":"Carnage Epic Collection TP","collects":"Amazing Spider-Man (1963) 430-431, Peter Parker: Spider-Man (1999) 13, Webspinners: Tales of Spider-Man (1999) 13-14, Venom vs. Carnage (2004) 1-4, Toxin (2005)","ranges":[],"outside_why":"Venom vs. Carnage, Toxin and Spider-Man issues - none of his own series","spine":{"t":[362,609],"b":[362,609],"yb":494},"cover_box":[362,114,247,380]},{"id":"b815452","clz":"815452","isbn":"9781302946623","format":"Epic Collection","vol":"Vol. 1","title":"Born in Blood","series":"Carnage Epic Collection TP","collects":"Amazing Spider-Man (1963) #361-363 and #378-380, Web of Spider-Man (1985) #101-103, Spider-Man (1990) #35-37, Spectacular Spider-Man (1976) #201-203 and Materia","ranges":[],"outside_why":"Before his own comics - all Spider-Man titles","pod":{"eps":"001","status":"live","nick":null,"stojr":null},"spine":{"t":[637,879],"b":[637,879],"yb":494},"cover_box":[637,114,242,380]},{"id":"b976976","clz":"976976","isbn":"9781302951092","format":"Epic Collection","vol":"Vol. 2","title":"Web of Carnage","series":"Carnage Epic Collection TP","collects":"Amazing Spider-Man (1963) #361-363 and #378-380, Web of Spider-Man (1985) #101-103, Spider-Man (1990) #35-37, Spectacular Spider-Man (1976) #201-203 and Materia","ranges":[[1,2]],"note":"Carnage: Mind Bomb and Carnage: It's a Wonderful Life - CLZ carries Epic 1's contents for this book.","spine":{"t":[907,1154],"b":[907,1154],"yb":494},"cover_box":[907,114,247,380]},{"id":"b1148974","clz":"1148974","isbn":"9781302965846","format":"Epic Collection: Modern","vol":"Vol. 1","title":"Carnage Modern Era Epic Collection: Carnage U.S.A.","series":"Carnage Epic Collection: Modern Era TP","collects":"","ranges":[[3,19]],"note":"Carnage (2010), Carnage U.S.A., Minimum Carnage: Alpha and Omega, Superior Carnage - from the publisher's listing.","spine":{"t":[1182,1429],"b":[1182,1429],"yb":494},"cover_box":[1182,114,247,380]}],"cards":{"c1":{"text":"Superior Carnage Annual #1.","tag":"Not on the shelf"},"c2":{"text":"AXIS: Carnage #1\u20133.","tag":"Not on the shelf"},"c3":{"text":"Carnage (2015) #1\u201316.","tag":"Not on the shelf"},"c4":{"text":"Carnage Forever #1.","tag":"Not on the shelf"},"c5":{"text":"Carnage (2022) #1\u201314.","tag":"Not on the shelf"},"c6":{"text":"Carnage (2023) #1\u20138.","tag":"Not on the shelf"}},"gaps":[{"from":20,"to":20,"title":"Superior Carnage Annual #1","what":"Superior Carnage Annual #1.","why":"Not on the shelf","card":"c1"},{"from":21,"to":23,"title":"AXIS: Carnage #1\u20133","what":"AXIS: Carnage #1\u20133.","why":"Not on the shelf","card":"c2"},{"from":24,"to":39,"title":"Carnage (2015) #1\u201316","what":"Carnage (2015) #1\u201316.","why":"Not on the shelf","card":"c3"},{"from":40,"to":40,"title":"Carnage Forever #1","what":"Carnage Forever #1.","why":"Not on the shelf","card":"c4"},{"from":41,"to":54,"title":"Carnage (2022) #1\u201314","what":"Carnage (2022) #1\u201314.","why":"Not on the shelf","card":"c5"},{"from":55,"to":62,"title":"Carnage (2023) #1\u20138","what":"Carnage (2023) #1\u20138.","why":"Not on the shelf","card":"c6"}],"rule":"#ED1D24","skin":{"ground":"#0e0505","band":"#2c0a0c","panel":"#1c0b0c","accent_dk":"#7a3a12","wall":[[18,4,5],[46,10,12]],"ledge":[72,22,22],"glow":[225,30,30,0.22],"motif":"web","motif_rgb":[255,90,90]},"singles":[]};
+var D = {"character":"Carnage","question":"How much of the (unofficial) run is on the shelf?","run_max":62,"as_of":"October 2026","latest":"Carnage (2023) #8 - a fan count: Marvel's own number starts in 2015","accent":"#FF8B3D","photo":{"width":1792,"crop":[0,0,1792,524],"credit":"Stojr's shelf, from CLZ","foot":494},"eras":[{"from":1,"to":23,"label":"#1 \u00b7 LIMITED SERIES \u00b7 1996\u20132014","short":"#1"},{"from":24,"to":39,"label":"#24 \u00b7 CARNAGE \u00b7 2015","short":"#24"},{"from":40,"to":62,"label":"#40 \u00b7 2022\u20132024","short":"#40"}],"books":[{"id":"b1017843","clz":"1017843","isbn":"9781302956363","format":"Epic Collection","vol":"Vol. 3","title":"The Monster Inside","series":"Carnage Epic Collection TP","collects":"Amazing Spider-Man (1963) 430-431, Peter Parker: Spider-Man (1999) 13, Webspinners: Tales of Spider-Man (1999) 13-14, Venom vs. Carnage (2004) 1-4, Toxin (2005)","ranges":[],"outside_why":"Venom vs. Carnage, Toxin and Spider-Man issues - none of his own series","spine":{"t":[362,609],"b":[362,609],"yb":494},"cover_box":[362,114,247,380]},{"id":"b815452","clz":"815452","isbn":"9781302946623","format":"Epic Collection","vol":"Vol. 1","title":"Born in Blood","series":"Carnage Epic Collection TP","collects":"Amazing Spider-Man (1963) #361-363 and #378-380, Web of Spider-Man (1985) #101-103, Spider-Man (1990) #35-37, Spectacular Spider-Man (1976) #201-203 and Materia","ranges":[],"outside_why":"Before his own comics - all Spider-Man titles","pod":{"eps":"001","status":"live","nick":null,"stojr":null},"spine":{"t":[637,879],"b":[637,879],"yb":494},"cover_box":[637,114,242,380]},{"id":"b976976","clz":"976976","isbn":"9781302951092","format":"Epic Collection","vol":"Vol. 2","title":"Web of Carnage","series":"Carnage Epic Collection TP","collects":"Amazing Spider-Man (1963) #361-363 and #378-380, Web of Spider-Man (1985) #101-103, Spider-Man (1990) #35-37, Spectacular Spider-Man (1976) #201-203 and Materia","ranges":[[1,2]],"note":"Carnage: Mind Bomb and Carnage: It's a Wonderful Life - CLZ carries Epic 1's contents for this book.","spine":{"t":[907,1154],"b":[907,1154],"yb":494},"cover_box":[907,114,247,380]},{"id":"b1148974","clz":"1148974","isbn":"9781302965846","format":"Epic Collection: Modern","vol":"Vol. 1","title":"Carnage Modern Era Epic Collection: Carnage U.S.A.","series":"Carnage Epic Collection: Modern Era TP","collects":"","ranges":[[3,19]],"note":"Carnage (2010), Carnage U.S.A., Minimum Carnage: Alpha and Omega, Superior Carnage - from the publisher's listing.","spine":{"t":[1182,1429],"b":[1182,1429],"yb":494},"cover_box":[1182,114,247,380]}],"cards":{"c1":{"text":"Superior Carnage Annual #1.","tag":"Not on the shelf"},"c2":{"text":"AXIS: Carnage #1\u20133.","tag":"Not on the shelf"},"c3":{"text":"Carnage (2015) #1\u201316.","tag":"Not on the shelf"},"c4":{"text":"Carnage Forever #1.","tag":"Not on the shelf"},"c5":{"text":"Carnage (2022) #1\u201314.","tag":"Not on the shelf"},"c6":{"text":"Carnage (2023) #1\u20138.","tag":"Not on the shelf"}},"gaps":[{"from":20,"to":20,"title":"Superior Carnage Annual #1","what":"Superior Carnage Annual #1.","why":"Not on the shelf","card":"c1"},{"from":21,"to":23,"title":"AXIS: Carnage #1\u20133","what":"AXIS: Carnage #1\u20133.","why":"Not on the shelf","card":"c2"},{"from":24,"to":39,"title":"Carnage (2015) #1\u201316","what":"Carnage (2015) #1\u201316.","why":"Not on the shelf","card":"c3"},{"from":40,"to":40,"title":"Carnage Forever #1","what":"Carnage Forever #1.","why":"Not on the shelf","card":"c4"},{"from":41,"to":54,"title":"Carnage (2022) #1\u201314","what":"Carnage (2022) #1\u201314.","why":"Not on the shelf","card":"c5"},{"from":55,"to":62,"title":"Carnage (2023) #1\u20138","what":"Carnage (2023) #1\u20138.","why":"Not on the shelf","card":"c6"}],"rule":"#ED1D24","skin":{"ground":"#0e0505","band":"#2c0a0c","panel":"#1c0b0c","accent_dk":"#7a3a12","wall":[[18,4,5],[46,10,12]],"ledge":[72,22,22],"glow":[225,30,30,0.22],"motif":"web","motif_rgb":[255,90,90]},"reviewed":{},"singles":[]};
 var T=(function(){ var t={kicker:"STOJR\u2019S SHELF \u00b7 LEGACY CHECK", unit:"LEGACY ISSUES", pos:"LEGACY",
   ask:"How much of the "+D.character+" run is on Stojr\u2019s shelf?", counted:"Counted to #"};
   for(var k in (D.terms||{})) t[k]=D.terms[k]; return t; })();   /* a reading-order slide says READING ORDER */
@@ -552,6 +555,14 @@ if(SINGLES) SINGLES.forEach(function(r){
   var a=xl(r[0]), b=xr(r[1]);
   el("rect",{x:f1(a),y:SING_Y+1,width:f1(Math.max(1.2,b-a-0.6)),height:6,"class":"sng"},gSing);
 });
+var REV=D.reviewed||{}, REVSET={}, REVN=0; Object.keys(REV).forEach(function(k){ var n=+k; if(n>=1 && n<=MAX){ REVSET[n]=REV[k]; REVN++; } });
+function revOf(s){ var out=[], seen={}; if(s.type!=="book") return out; each(s.legacy,function(n){ (REVSET[n]||[]).forEach(function(e){ if(!seen[e.issue]){ seen[e.issue]=1; out.push(e); } }); }); return out; }
+function revText(s){ var r=revOf(s); if(!r.length) return ""; var shows={}; r.forEach(function(e){ shows[e.show]=e; });
+  var e0=shows[Object.keys(shows)[0]]; return "BCE REVIEWED "+r.length+" OF "+s.n+DOT+e0.show.toUpperCase()+(Object.keys(shows).length>1?" +"+(Object.keys(shows).length-1):""); }
+/* reviewed on the pod, issue by issue: a white tick lane under the singles lane */
+var gRev=el("g",{"class":"rvlane"},svg);
+Object.keys(REVSET).forEach(function(k){ var n=+k, a=xl(n), b=xr(n);
+  el("rect",{x:f1(a),y:SING_Y+(SINGLES?10:2),width:f1(Math.max(2,b-a-0.4)),height:13,"class":"rvt"},gRev); });
 /* era strip under the bar: which series each stretch of the count is */
 var eraText=[];
 (D.eras||[]).forEach(function(e,i){
@@ -590,6 +601,7 @@ var PODN=segs.filter(function(s){ return s.type==="book" && s.b.pod; }).length;
 /* six rows plus the note do not fit above the slide's foot (Hulk) - the walk's plate
    says "before the count" on the book itself, so the note is what gives way */
 if(PRE){ keyRow("pre","BEFORE THE COUNT",PREOWN); if(!(ELSONLY && SINGLES && PODN)) h("div","key-note",D.pre.note,key); }
+if(REVN){ keyRow("rev","ISSUES REVIEWED ON BCE",REVN); }
 if(PODN){ keyRow("pod","REVIEWED ON THE POD",PODN); key.lastChild.classList.add("sub"); key.lastChild.lastChild.textContent=PODN+(PODN===1?" BOOK":" BOOKS"); }
 h("div","key-foot",T.counted+MAX+DOT+(D.latest||"")+DOT+(D.as_of||""),key);
 /* a full key (six rows: Hulk) starts higher, into the free space under the era axis */
@@ -766,13 +778,13 @@ function setFilter(kind){
 }
 function inFilter(s,k){
   if(s.type!=="book") return false;
-  return k==="own" ? (!s.els && s.n>0) : k==="els" ? s.els : k==="pre" ? s.pn>0 : k==="pod" ? !!s.b.pod : false;
+  return k==="own" ? (!s.els && s.n>0) : k==="els" ? s.els : k==="pre" ? s.pn>0 : k==="pod" ? !!s.b.pod : k==="rev" ? revOf(s).length>0 : false;
 }
 var FCOUNT={}; (function(){ var pod={};
   segs.forEach(function(s){ if(s.type==="book" && s.b.pod) each(s.legacy,function(n){ pod[n]=1; }); });
-  FCOUNT={own:Object.keys(OWNSET).length, els:ELSONLY, sng:SINGONLY, pre:PREOWN, pod:Object.keys(pod).length}; })();
+  FCOUNT={own:Object.keys(OWNSET).length, els:ELSONLY, sng:SINGONLY, pre:PREOWN, pod:Object.keys(pod).length, rev:REVN}; })();
 var FLABEL={own:"IN "+D.character.toUpperCase()+" BOOKS", els:"IN THIN TRADES & OTHER BOOKS", sng:"ONLY AS SINGLE ISSUES",
-            pre:"BEFORE THE COUNT", pod:"IN BOOKS REVIEWED ON BCE"};
+            pre:"BEFORE THE COUNT", pod:"IN BOOKS REVIEWED ON BCE", rev:"ISSUES REVIEWED ON BCE"};
 var gLift=el("g",{"pointer-events":"none"},svg);    /* the pod filter lifts every reviewed cover out of the stack */
 svg.insertBefore(gLift, spot);
 function setScore(n,label,noPct,den){
@@ -898,6 +910,7 @@ function render(){
   if(cur && cur.type==="book"){
     plate.className="plate"+(cur.sn?" side":"")+(cur.els?" els":"");
     $("pKick").textContent=(cur.els?(cur.b.thin?"Thin trade on the shelf":"Inside another book on the shelf")+DOT:cur.outside?"Outside the count"+DOT:"")+cur.b.format+(cur.b.vol?DOT+cur.b.vol:"");
+    if(revText(cur)){ var rv=revOf(cur)[0], ra=h("a","pod-pill rv",revText(cur),$("pKick")); ra.href="https://www.youtube.com/watch?v="+rv.yt+(rv.t?"&t="+rv.t:""); ra.target="_blank"; ra.rel="noopener"; ra.style.textDecoration="none"; ra.addEventListener("click",function(ev){ ev.stopPropagation(); }); }
     if(cur.b.pod) h("span","pod-pill"+(cur.b.pod.status==="soon"?" soon":""),podText(cur.b),$("pKick"));
     $("pTitle").textContent=cur.b.title;
     $("pColl").textContent=cur.b.collects;
@@ -996,7 +1009,7 @@ if(/holes/.test(hash)) mode="gaps";
 /* THE REVEAL IS THE DEFAULT: the slide opens with the answer hidden, so it can go on screen
    before the guess. #open (or #holes, #s12, #auto) goes straight to the shelf. */
 if(/reveal/.test(hash) || !(m || /open|holes|auto|filter/.test(hash))){ mode="reveal"; revealN=0; }
-var fm=/filter-(own|els|sng|pre|pod)/.exec(hash); if(fm){ mode="filter"; filter=fm[1]; }   /* #filter-pod opens on the BCE books */
+var fm=/filter-(own|els|sng|pre|pod|rev)/.exec(hash); if(fm){ mode="filter"; filter=fm[1]; }   /* #filter-pod opens on the BCE books */
 /* BACK TO THE INDEX: the lockup on the slide and the Index button under it. The click must not
    reach the slide (it would run the reveal); a slide that is its own artifact has the index at
    another address, which the viewer can only open in a new tab */

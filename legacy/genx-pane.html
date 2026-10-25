@@ -96,6 +96,9 @@ a.chip:focus-visible{outline:3px solid #fff;outline-offset:2px}
 .lg.picked{background:rgba(246,243,234,.12);box-shadow:inset 0 -3px 0 var(--accent)}
 .lg.unpicked{opacity:.38}
 .lg:focus-visible{outline:2px solid var(--accent)}
+.sw.rev{width:12px;height:12px;border-radius:50%;background:#141416;border:3px solid #fff;box-sizing:border-box}
+.rvd{fill:#141416;stroke:#fff;stroke-width:1.6;pointer-events:none}
+.rvd[data-st="pending"]{opacity:0} .rvd[data-st="mute"]{opacity:.25}
 .sw.pod{width:12px;height:22px;background:var(--red);clip-path:polygon(0 0,100% 0,100% 100%,50% 76%,0 100%)}
 .hole[data-st="focus"]{outline:3px solid var(--ink)}
 
@@ -242,7 +245,7 @@ body.preload *,body.preload *::before,body.preload *::after{transition:none!impo
 (function(){
 "use strict";
 document.body.classList.add("preload");
-var D = {"character":"Generation X","question":"How much of the run is on the shelf?","run_max":87,"as_of":"October 2026","latest":"the count closed at #87 in 2018","accent":"#FF8AD8","photo":{"credit":"Stojr's shelf, from CLZ"},"eras":[{"from":1,"to":75,"label":"#1 \u00b7 GENERATION X \u00b7 1994\u20132001","short":"#1"},{"from":76,"to":87,"label":"#76 \u00b7 2017","short":"#76"}],"books":[{"id":"b749841","clz":"749841","isbn":"9781302930769","format":"Epic Collection","vol":"Vol. 1","title":"Back to School","series":"Generation X Epic Collection","collects":"Uncanny X-Men (1981) #316-318, X-Men (1991) #36-37, Generation X (1994) #1-9, Wolverine (1988) #94, Generation X Collectors' Preview and Generation X Ashcan Edi","ranges":[[1,9]],"pane_box":[9,22,185,285]},{"id":"b829242","clz":"829242","isbn":"9781302946494","format":"Epic Collection","vol":"Vol. 2","title":"Generation X Epic Collection","series":"Generation X Epic Collection","collects":"Generation X (1994) #10-23 and Annual '95-'96, Generation X San Diego Preview and Material From Incredible Hulk Annual '97","ranges":[[10,23]],"pane_box":[204,22,184,285]},{"id":"b947591","clz":"947591","isbn":"9781302951733","format":"Epic Collection","vol":"Vol. 3","title":"Generation X Epic Collection","series":"Generation X Epic Collection","collects":"Generation X (1994) #24-32, #-1 and Annual ?97; X-Men Unlimited (1993) #16; Marvel Team-Up (1997) #1; Daydreamers #1-3; and Generation X Underground #1","ranges":[[24,32]],"pane_box":[399,22,185,285]},{"id":"b1060745","clz":"1060745","isbn":"9781302956523","format":"Epic Collection","vol":"Vol. 4","title":"Pride and Penance","series":"Generation X Epic Collection","collects":"Generation X (1994) #33-47 and #1/2, Generation X/dracula Annual '98, X-Men Unlimited (1993) #20, and Generation X Holiday Special #1","ranges":[[33,47]],"pane_box":[594,22,185,285]},{"id":"b1143847","clz":"1143847","isbn":"9781302965280","format":"Epic Collection","vol":"Vol. 5","title":"Family Business","series":"Generation X Epic Collection","collects":"Generation X (1994) 48-62, Generation X Annual '99, X-Man (1995) 50, New Warriors (1999) 5'","ranges":[[48,62]],"pane_box":[789,22,185,285]}],"cards":{"c1":{"text":"Generation X (1994) #63\u201375.","tag":"Not on the shelf"},"c2":{"text":"Generation X (2017) #1\u20139.","tag":"Not on the shelf"},"c3":{"text":"Generation X #85\u201387.","tag":"Not on the shelf"}},"gaps":[{"from":63,"to":75,"title":"Generation X (1994) #63\u201375","what":"Generation X (1994) #63\u201375.","why":"Not on the shelf","card":"c1"},{"from":76,"to":84,"title":"Generation X (2017) #1\u20139","what":"Generation X (2017) #1\u20139.","why":"Not on the shelf","card":"c2"},{"from":85,"to":87,"title":"Generation X #85\u201387","what":"Generation X #85\u201387.","why":"Not on the shelf","card":"c3"}],"rule":"#FFD200","skin":{"ground":"#150a14","band":"#26132a","panel":"#1f1020","accent_dk":"#7a3a68","wall":[[18,8,18],[38,18,38]],"ledge":[60,34,58],"motif":"x"},"pane_cov_h":329,"singles":[[1,3],[5,38],[40,41],[43,43],[45,51],[53,54],[57,57],[60,60],[63,67],[69,75],[77,78]]};
+var D = {"character":"Generation X","question":"How much of the run is on the shelf?","run_max":87,"as_of":"October 2026","latest":"the count closed at #87 in 2018","accent":"#FF8AD8","photo":{"credit":"Stojr's shelf, from CLZ"},"eras":[{"from":1,"to":75,"label":"#1 \u00b7 GENERATION X \u00b7 1994\u20132001","short":"#1"},{"from":76,"to":87,"label":"#76 \u00b7 2017","short":"#76"}],"books":[{"id":"b749841","clz":"749841","isbn":"9781302930769","format":"Epic Collection","vol":"Vol. 1","title":"Back to School","series":"Generation X Epic Collection","collects":"Uncanny X-Men (1981) #316-318, X-Men (1991) #36-37, Generation X (1994) #1-9, Wolverine (1988) #94, Generation X Collectors' Preview and Generation X Ashcan Edi","ranges":[[1,9]],"pane_box":[9,22,185,285]},{"id":"b829242","clz":"829242","isbn":"9781302946494","format":"Epic Collection","vol":"Vol. 2","title":"Generation X Epic Collection","series":"Generation X Epic Collection","collects":"Generation X (1994) #10-23 and Annual '95-'96, Generation X San Diego Preview and Material From Incredible Hulk Annual '97","ranges":[[10,23]],"pane_box":[204,22,184,285]},{"id":"b947591","clz":"947591","isbn":"9781302951733","format":"Epic Collection","vol":"Vol. 3","title":"Generation X Epic Collection","series":"Generation X Epic Collection","collects":"Generation X (1994) #24-32, #-1 and Annual ?97; X-Men Unlimited (1993) #16; Marvel Team-Up (1997) #1; Daydreamers #1-3; and Generation X Underground #1","ranges":[[24,32]],"pane_box":[399,22,185,285]},{"id":"b1060745","clz":"1060745","isbn":"9781302956523","format":"Epic Collection","vol":"Vol. 4","title":"Pride and Penance","series":"Generation X Epic Collection","collects":"Generation X (1994) #33-47 and #1/2, Generation X/dracula Annual '98, X-Men Unlimited (1993) #20, and Generation X Holiday Special #1","ranges":[[33,47]],"pane_box":[594,22,185,285]},{"id":"b1143847","clz":"1143847","isbn":"9781302965280","format":"Epic Collection","vol":"Vol. 5","title":"Family Business","series":"Generation X Epic Collection","collects":"Generation X (1994) 48-62, Generation X Annual '99, X-Man (1995) 50, New Warriors (1999) 5'","ranges":[[48,62]],"pane_box":[789,22,185,285]}],"cards":{"c1":{"text":"Generation X (1994) #63\u201375.","tag":"Not on the shelf"},"c2":{"text":"Generation X (2017) #1\u20139.","tag":"Not on the shelf"},"c3":{"text":"Generation X #85\u201387.","tag":"Not on the shelf"}},"gaps":[{"from":63,"to":75,"title":"Generation X (1994) #63\u201375","what":"Generation X (1994) #63\u201375.","why":"Not on the shelf","card":"c1"},{"from":76,"to":84,"title":"Generation X (2017) #1\u20139","what":"Generation X (2017) #1\u20139.","why":"Not on the shelf","card":"c2"},{"from":85,"to":87,"title":"Generation X #85\u201387","what":"Generation X #85\u201387.","why":"Not on the shelf","card":"c3"}],"rule":"#FFD200","skin":{"ground":"#150a14","band":"#26132a","panel":"#1f1020","accent_dk":"#7a3a68","wall":[[18,8,18],[38,18,38]],"ledge":[60,34,58],"motif":"x"},"reviewed":{},"pane_cov_h":329,"singles":[[1,3],[5,38],[40,41],[43,43],[45,51],[53,54],[57,57],[60,60],[63,67],[69,75],[77,78]]};
 var T=(function(){ var t={kicker:"STOJR\u2019S SHELF \u00b7 LEGACY CHECK", unit:"LEGACY ISSUES", pos:"LEGACY",
   ask:"How much of the "+D.character+" run is on Stojr\u2019s shelf?", counted:"Counted to #"};
   for(var k in (D.terms||{})) t[k]=D.terms[k]; return t; })();   /* a reading-order slide says READING ORDER */
@@ -401,6 +404,13 @@ function lgItem(sw,t,n){ if(!n) return; var made=Object.keys(lgItems).length;
   lgItems[sw]=i; i.setAttribute("role","button"); i.tabIndex=0;
   var act=function(ev){ if(ev) ev.stopPropagation(); setFilter(sw); };
   i.addEventListener("click",act); i.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); act(e); } }); }
+var REV=D.reviewed||{}, REVSET={}, REVN=0; Object.keys(REV).forEach(function(k){ var n=+k; if(n>=1 && n<=MAX){ REVSET[n]=REV[k]; REVN++; } });
+function revOf(s){ var out=[], seen={}; if(s.type!=="book") return out; each(s.legacy,function(n){ (REVSET[n]||[]).forEach(function(e){ if(!seen[e.issue]){ seen[e.issue]=1; out.push(e); } }); }); return out; }
+function revText(s){ var r=revOf(s); if(!r.length) return ""; var shows={}; r.forEach(function(e){ shows[e.show]=e; });
+  var e0=shows[Object.keys(shows)[0]]; return "BCE REVIEWED "+r.length+" OF "+s.n+DOT+e0.show.toUpperCase()+(Object.keys(shows).length>1?" +"+(Object.keys(shows).length-1):""); }
+var rvDot=new Map();
+Object.keys(REVSET).forEach(function(k){ var n=+k, r=cellOf[n]; if(!r) return; var cs=parseFloat(r.getAttribute("width"));
+  var d=el("circle",{cx:f1(parseFloat(r.getAttribute("x"))+cs/2),cy:f1(parseFloat(r.getAttribute("y"))+cs/2),r:f1(Math.max(1.6,cs*0.2)),"class":"rvd"},gCells); rvDot.set(r,d); });
 var PODSET={}; segs.forEach(function(s){ if(s.type==="book" && s.b.pod) each(s.legacy,function(n){ PODSET[n]=1; }); });
 var PODN=segs.filter(function(s){ return s.type==="book" && s.b.pod; }).length;
 lgItem("own","ON THE SHELF",OWNED-ELSONLY);
@@ -408,6 +418,7 @@ lgItem("els","OTHER BOOKS",ELSONLY);
 lgItem("sng","SINGLES",SINGONLY);
 lgItem("gap",SINGLES?"NOT OWNED":"MISSING",MAX-OWNED-SINGONLY);
 if(PRE) lgItem("pre","BEFORE #1",PREOWN);
+if(REVN) lgItem("rev","ISSUES ON BCE",REVN);
 if(PODN) lgItem("pod","ON BCE",PODN);
 (function(){ if(PHONE) return; var fs=18; while(lg.scrollHeight>36 && fs>13){ fs-=1; lg.style.fontSize=fs+"px";
   lg.querySelectorAll(".lg-t").forEach(function(t){ t.style.fontSize=fs+"px"; }); lg.style.columnGap=(26-(18-fs)*3)+"px"; } })();
@@ -439,10 +450,10 @@ function setFilter(kind){
 }
 function inFilter(s,k){
   if(s.type!=="book") return false;
-  return k==="own" ? (!s.els && s.n>0) : k==="els" ? s.els : k==="pre" ? s.pn>0 : k==="pod" ? !!s.b.pod : false;
+  return k==="own" ? (!s.els && s.n>0) : k==="els" ? s.els : k==="pre" ? s.pn>0 : k==="pod" ? !!s.b.pod : k==="rev" ? revOf(s).length>0 : false;
 }
-var FCOUNT={own:OWNED-ELSONLY, els:ELSONLY, sng:SINGONLY, pre:PREOWN, pod:Object.keys(PODSET).length};
-var FLABEL={own:"IN "+D.character.toUpperCase()+" BOOKS", els:"IN OTHER BOOKS", sng:"ONLY AS SINGLES", pre:"BEFORE #1", pod:"IN BOOKS REVIEWED ON BCE"};
+var FCOUNT={own:OWNED-ELSONLY, els:ELSONLY, sng:SINGONLY, pre:PREOWN, pod:Object.keys(PODSET).length, rev:REVN};
+var FLABEL={own:"IN "+D.character.toUpperCase()+" BOOKS", els:"IN OTHER BOOKS", sng:"ONLY AS SINGLES", pre:"BEFORE #1", pod:"IN BOOKS REVIEWED ON BCE", rev:"ISSUES REVIEWED ON BCE"};
 var reduce=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 function setScore(n,label,noPct){
   $("scoreLabel").textContent=label;
@@ -479,8 +490,9 @@ function render(){
   var rank={pending:0,mute:1,on:2,focus:3}, cst=new Map();
   segs.forEach(function(s){ s.cells.forEach(function(r){ var o=cst.get(r); if(o==null || rank[s.st]>rank[o]) cst.set(r,s.st); }); });
   if(mode==="filter" && filter==="sng") for(var sn=1;sn<=MAX;sn++) cst.set(cellOf[sn], SING[sn] && !HELD[sn] ? "on" : "mute");
+  if(mode==="filter" && filter==="rev") for(var rn=1;rn<=MAX;rn++) cst.set(cellOf[rn], REVSET[rn] ? "on" : "mute");
   if(mode==="filter" && filter==="pod") for(var pn2=1;pn2<=MAX;pn2++) cst.set(cellOf[pn2], PODSET[pn2] ? "on" : "mute");
-  cst.forEach(function(st,r){ r.setAttribute("data-st",st); });
+  cst.forEach(function(st,r){ r.setAttribute("data-st",st); var d=rvDot.get(r); if(d) d.setAttribute("data-st",st); });
   preCells.forEach(function(pc){ if(!cst.has(pc.r) || mode==="filter") pc.r.setAttribute("data-st", mode==="reveal" && revealN===0 ? "pending" : mode==="overview" ? "on"
     : mode==="filter" && filter==="pre" && PREHELD[pc.n] ? "on" : "mute"); });
   cards.forEach(function(c){ if(!c.el) return; var any=function(v){ return c.parts.some(function(s){return s.st===v;}); };
@@ -531,6 +543,7 @@ function render(){
   if(cur && cur.type==="book"){
     cap.className="cap";
     $("capK").textContent=(cur.els?(cur.b.thin?"Thin trade"+DOT:"Inside another book"+DOT):cur.outside?"Outside the count"+DOT:"")+cur.b.format+(cur.b.vol?DOT+cur.b.vol:"");
+    if(revText(cur)) $("capK").textContent+=DOT+revText(cur);
     $("capT").textContent=cur.b.title;
     if(cur.n){ $("capL").textContent=READING ? eraName(cur.legacy) : T.pos+" "+cur.legacy.map(function(r){return rng(r[0],r[1]);}).join(" + "); $("capC").textContent=plural(cur.n,"ISSUE")+(cur.pn?" + "+cur.pn+" BEFORE #1":""); }
     else if(cur.pn){ $("capL").textContent="NOT COUNTED"; $("capC").textContent=plural(cur.pn,"ISSUE")+" BEFORE #1"; }
@@ -603,7 +616,7 @@ if(/holes/.test(hash)) mode="gaps";
 /* THE REVEAL IS THE DEFAULT: the pane opens with the answer hidden. #open (or #holes, #s12,
    #auto) goes straight to the run. */
 if(/reveal/.test(hash) || !(m || /open|holes|auto|filter/.test(hash))){ mode="reveal"; revealN=0; }
-var fm=/filter-(own|els|sng|pre|pod)/.exec(hash); if(fm){ mode="filter"; filter=fm[1]; }   /* #filter-pod opens on the BCE books */
+var fm=/filter-(own|els|sng|pre|pod|rev)/.exec(hash); if(fm){ mode="filter"; filter=fm[1]; }   /* #filter-pod opens on the BCE books */
 /* BACK TO THE INDEX: the chip on the pane and the Index button under it (see the slide) */
 [].forEach.call(document.querySelectorAll("a.chip, a.home-link"), function(a){
   if(/^https?:/i.test(a.getAttribute("href")||"")){ a.target="_blank"; a.rel="noopener"; }

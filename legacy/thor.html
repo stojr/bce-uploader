@@ -285,8 +285,76 @@ body.revealing .rundown{visibility:hidden}
 /* nothing fades on load - a fade-out would flash the answer under the reveal for 0.4 s */
 body.preload *,body.preload *::before,body.preload *::after{transition:none!important}
 </style>
+<!-- bce-menu v1 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap"><style>
+:root{--bce-lead:#ED1D24;--bce-lead-ink:#9E1318;--bce-second:#0B72E7;--bn-bg:#ffffff;--bn-ink:#16141a;--bn-ink-2:#3b3740;--bn-line:#ded8d3;--bn-focus:#9E1318}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bce-lead:#0B72E7;--bce-lead-ink:#62AEFF;--bce-second:#ED1D24;--bn-bg:#0c0c0e;--bn-ink:#F6F3EA;--bn-ink-2:#C9C5BA;--bn-line:rgba(246,243,234,.16);--bn-focus:#F0F051}}
+:root[data-theme="dark"]{--bce-lead:#0B72E7;--bce-lead-ink:#62AEFF;--bce-second:#ED1D24;--bn-bg:#0c0c0e;--bn-ink:#F6F3EA;--bn-ink-2:#C9C5BA;--bn-line:rgba(246,243,234,.16);--bn-focus:#F0F051}
+.bce-nav{display:none;background:var(--bn-bg);border-bottom:1px solid var(--bn-line);box-shadow:inset 0 -3px 0 var(--bce-lead);
+ font:600 15px/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif;position:relative;z-index:30;-webkit-font-smoothing:antialiased}
+html.bce-nav-on .bce-nav{display:block}
+.bce-nav *{box-sizing:border-box}
+.bn-in{max-width:1240px;margin:0 auto;padding:0 16px;min-height:50px;display:flex;align-items:center;gap:6px 18px}
+.bn-mark{font:400 19px/1 Impact,"Anton","Arial Narrow Bold",sans-serif;color:#fff;background:#ED1D24;padding:5px 9px 3px;text-decoration:none;letter-spacing:.02em;flex:0 0 auto}
+.bn-links{list-style:none;margin:0;padding:0;display:flex;align-items:stretch;gap:2px;flex:1 1 auto;min-width:0}
+.bn-links li{display:flex}
+.bn-links a,.bn-links .bn-here{display:flex;align-items:center;min-height:50px;padding:3px 10px 0;color:var(--bn-ink-2);text-decoration:none;
+ text-transform:uppercase;letter-spacing:.14em;border-bottom:3px solid transparent;white-space:nowrap}
+.bn-links a:hover{color:var(--bn-ink)}
+.bn-links a[aria-current="page"],.bn-links a.bn-up{color:var(--bn-ink);border-bottom-color:var(--bce-lead)}
+.bn-links .bn-here{color:var(--bce-lead-ink);letter-spacing:.1em;padding-left:2px}
+.bn-links .bn-here::before{content:"/";color:var(--bn-ink-2);margin-right:10px}
+.bn-links .bn-lk{display:none}
+html.bce-unlocked .bn-links .bn-lk{display:flex}
+.bn-menu{display:none}
+.bn-menu{font:700 13px/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--bn-ink-2);background:transparent;border:0;padding:8px 10px 7px;cursor:pointer;min-height:34px}
+/* the toggle: one icon button - a moon in light mode (press for dark), a sun in dark mode (Stephen,
+   2026-10-26: "smaller and just use that sun/moon icon that websites use") */
+.bn-theme{flex:0 0 auto;margin-left:auto;width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+ color:var(--bn-ink-2);background:transparent;border:0;border-radius:50%;padding:0;cursor:pointer}
+.bn-theme:hover{color:var(--bn-ink);background:var(--bn-line)}
+.bn-theme svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bn-theme .bn-sun,:root[data-theme="dark"] .bn-theme .bn-moon{display:none}
+:root[data-theme="dark"] .bn-theme .bn-sun{display:block}
+.bce-nav a:focus-visible,.bce-nav button:focus-visible{outline:2px solid var(--bn-focus);outline-offset:2px}
+@media (max-width:720px){
+ .bn-in{flex-wrap:wrap;gap:0 10px}
+ .bn-menu{display:block;border:2px solid var(--bn-line);margin-left:auto}
+ .bn-theme{margin-left:0}
+ .bn-links{display:none;order:9;flex:0 0 100%;flex-direction:column;gap:0;border-top:1px solid var(--bn-line);margin:0 -16px;padding:4px 0 8px}
+ .bce-nav.open .bn-links{display:flex}
+ .bn-links a,.bn-links .bn-here{min-height:46px;padding:0 16px;border-bottom:0;border-left:4px solid transparent;font-size:18px}
+ .bn-links a[aria-current="page"],.bn-links a.bn-up{border-left-color:var(--bce-lead)}
+ .bn-links .bn-here{padding-left:36px}
+ .bn-links .bn-here::before{display:none}
+}
+@media print{.bce-nav{display:none!important}}
+</style><script>(function(){var d=document.documentElement,s=null,u=null;
+try{s=localStorage.getItem("bceTheme")}catch(e){}
+try{u=localStorage.getItem("bceSiteKey1")}catch(e){}
+if(u)d.classList.add("bce-unlocked");
+var w=window.innerWidth,h=window.innerHeight,obs=/obs/.test(location.hash||"")||(w===1920&&h===1080)||(w===1080&&h===1244),m="screen";
+var on=m==="always"||(m==="unlocked"&&!!u)||(m==="screen"&&!obs)||(m==="phone"&&!obs&&w<=700&&h>w);
+if(on){d.classList.add("bce-nav-on");if(s!=="light"&&s!=="dark")s=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.setAttribute("data-theme",s)}
+})();</script>
+<!-- /bce-menu -->
 </head>
 <body>
+<!-- bce-menu v1 -->
+<nav class="bce-nav" id="bce-nav" aria-label="Site"><div class="bn-in"><a class="bn-mark" href="/" aria-label="BCE Comics Pod home">BCE</a><button type="button" class="bn-menu" aria-expanded="false" aria-controls="bn-links">Menu</button><ul class="bn-links" id="bn-links"><li><a href="/">Home</a></li><li class="bn-lk"><a href="/plan/">Plan</a></li><li class="bn-lk"><a href="/plan/social.html">Social</a></li><li><a href="/legacy/" aria-current="page">Legacy</a></li><li class="bn-lk"><a href="/wiki/">Wiki</a></li></ul><button type="button" class="bn-theme" aria-label="Switch colour mode"><svg class="bn-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="bn-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg></button></div></nav><script>(function(){var d=document.documentElement,n=document.getElementById("bce-nav");if(!n)return;
+if(location.protocol==="file:"){[].forEach.call(n.querySelectorAll("a[href^='/']"),function(a){a.href="https://bce.stojr.com"+a.getAttribute("href")})}
+var mq=window.matchMedia?matchMedia("(prefers-color-scheme: dark)"):null;
+function cur(){var t=d.getAttribute("data-theme");return t||(mq&&mq.matches?"dark":"light")}
+var tb=n.querySelector(".bn-theme");
+function show(){var o=cur()==="dark"?"light":"dark";tb.setAttribute("aria-label","Switch to "+o+" mode");tb.title="Switch to "+o+" mode"}
+tb.addEventListener("click",function(){var t=cur()==="dark"?"light":"dark";
+ d.setAttribute("data-theme",t);try{localStorage.setItem("bceTheme",t)}catch(e){}show();
+ try{window.dispatchEvent(new CustomEvent("bce-theme",{detail:t}))}catch(e){}});
+if(mq&&mq.addEventListener)mq.addEventListener("change",function(){var s=null;try{s=localStorage.getItem("bceTheme")}catch(e){}if(!s)d.setAttribute("data-theme",mq.matches?"dark":"light");show()});
+var mb=n.querySelector(".bn-menu");mb.addEventListener("click",function(){var o=n.classList.toggle("open");mb.setAttribute("aria-expanded",o?"true":"false")});
+show()})();</script>
+<!-- /bce-menu -->
 
 <div class="page">
   <div class="frame" id="frame">

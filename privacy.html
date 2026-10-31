@@ -56,7 +56,7 @@
 <header>
   <p class="kicker">BCE Comics Pod</p>
   <h1>Privacy Policy &mdash; BCE Comics Pod Uploader</h1>
-  <p class="stamp">Last updated 2 October 2026</p>
+  <p class="stamp">Last updated 31 October 2026</p>
 </header>
 
 <h2>What this application is</h2>
@@ -64,6 +64,12 @@
 <a href="https://www.youtube.com/@BCEComicsPod">BCE Comics Pod</a> YouTube channel to publish our own
 episodes and clips to that same channel. It is not distributed, not offered to the public, has no
 sign-up, and has no users other than the channel owner.</p>
+<p>The same workflow includes <strong>BCE Poster</strong>, our Meta app, which publishes our own short
+videos and announcement posts to our own
+<a href="https://www.facebook.com/BCEComicsPod">Facebook Page</a> and our own
+<a href="https://www.instagram.com/bcecomicspod/">Instagram account</a>. It is private and single-user in
+the same way; it is covered <a href="#meta">below</a>. Everything on this page applies to both unless a
+section names one.</p>
 
 <h2>Who we are</h2>
 <p>BCE Comics Pod. Contact: <a href="mailto:bcecomicspod@gmail.com">bcecomicspod@gmail.com</a></p>
@@ -93,8 +99,9 @@ Google account other than the channel owner's own. The application contains no a
 no tracking, no advertising, no database and no server component.</p>
 
 <h2>Sharing and disclosure</h2>
-<p>No data is sold, shared, transferred or disclosed to any third party. The only network destinations
-the application contacts are Google's own API endpoints.</p>
+<p>No data is sold, shared, transferred or disclosed to any third party. The YouTube uploader contacts
+only Google's own API endpoints. BCE Poster contacts only Meta's own API endpoints, plus the private
+storage described <a href="#meta">below</a>, which holds nothing but our own video files.</p>
 
 <div class="box">
   <h2 style="margin-top:0">Limited Use</h2>
@@ -113,10 +120,37 @@ the application contacts are Google's own API endpoints.</p>
 <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Deleting the
 local token file also stops the application immediately.</p>
 
-<h2>Retention and deletion</h2>
-<p>The only piece of personal data the application holds is the local OAuth token described above. It is
-deleted by deleting that file; no copy exists anywhere else. Any other request relating to data can be
-sent to <a href="mailto:bcecomicspod@gmail.com">bcecomicspod@gmail.com</a>.</p>
+<h2 id="meta">Facebook and Instagram: BCE Poster</h2>
+<p>BCE Poster is used only by the owner of the BCE Comics Pod Facebook Page, signed in with Facebook
+Login for Business. It acts only on that Page and on the Instagram professional account linked to it,
+and uses the access it is granted to:</p>
+<ul>
+  <li>publish our own short videos (Reels) and our own photos and posts to that Page and that Instagram
+      account, either at once or scheduled for a later time;</li>
+  <li>read back the processing and publishing status of what we posted, so a failed upload can be noticed
+      and is never posted twice;</li>
+  <li>read our own Page's and account's basic details, and the play counts of our own videos.</li>
+</ul>
+<p>It does not read, store or reply to comments or messages, and it does not access any other Page,
+account or person's data.</p>
+<p>To publish a Reel, Instagram fetches the video file itself. The file is our own finished video, placed
+for a few minutes in private cloud storage that we control, behind a link that expires after one hour,
+and removed as soon as Instagram has taken it.</p>
+<p>BCE Poster stores a Page access token as a file on the owner's own computer, and a local record of
+what it has posted (the ids Meta returned and when). Neither is stored on a server. Its use of Meta's
+APIs follows the <a href="https://developers.facebook.com/terms/">Meta Platform Terms</a>;
+<a href="https://www.facebook.com/privacy/policy/">Meta's Privacy Policy</a> describes how Meta handles
+data.</p>
+
+<h2 id="data-deletion">Retention and deletion</h2>
+<p>The personal data these tools hold is the local Google OAuth token and the local Meta access token
+described above, together with the local records of what we published. Each is deleted by deleting
+its file; no copy exists anywhere else.</p>
+<p>To remove BCE Poster's access and data: in Facebook go to Settings &amp; privacy &rarr; Settings &rarr;
+Business integrations, select BCE Poster and choose Remove; then delete the local token file. Nothing
+BCE Poster held remains after that. Any other request relating to data can be sent to
+<a href="mailto:bcecomicspod@gmail.com">bcecomicspod@gmail.com</a>, and will be answered within 30
+days.</p>
 
 <h2>Children</h2>
 <p>The application is not directed at children and is not usable by anyone other than the channel owner.</p>

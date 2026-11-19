@@ -525,7 +525,7 @@ if(D.logo_uri){ var lgo=document.createElement("img"); lgo.className="who-logo";
 $("ask").textContent=D.question||"";
 $("akQ").textContent=T.ask;
 document.querySelector(".seg-name").textContent=T.kicker; document.querySelector(".ak-kick").textContent=T.kicker;
-$("akGl").textContent=(D.guesser||"Nick").toUpperCase()+"’S GUESS";
+$("akGl").textContent=(D.guesser ? D.guesser.toUpperCase()+"’S GUESS" : "YOUR GUESS");
 /* a touch screen has no keyboard: tap the slide to reveal, no typed guess */
 if(window.matchMedia && window.matchMedia("(pointer: coarse)").matches){
   var hintEl=document.querySelector(".ak-hint"); if(hintEl) hintEl.textContent="TAP TO REVEAL";
@@ -931,7 +931,7 @@ function render(){
   var gb=$("guessBadge"), pct=Math.round(OWNED/MAX*100);
   if(guessShown && guess!=="" && mode==="overview"){
     var off=Math.abs(parseInt(guess,10)-pct);
-    $("gbL").textContent=(D.guesser||"Nick").toUpperCase()+" GUESSED"; $("gbV").textContent=guess+"%";
+    $("gbL").textContent=(D.guesser ? D.guesser.toUpperCase()+" GUESSED" : "YOUR GUESS"); $("gbV").textContent=guess+"%";
     $("gbD").textContent=off===0 ? "BULLSEYE" : "OFF BY "+off;
     gb.className="guess-badge show";
   } else gb.className="guess-badge";

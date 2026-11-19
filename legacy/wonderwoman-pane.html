@@ -400,7 +400,7 @@ $("scoreOf").textContent="OF "+MAX;
 $("src").textContent=(/clz/i.test(D.photo.credit||"")?"FROM CLZ":"SHELF PHOTO")+DOT+(D.as_of||"").toUpperCase();
 $("akQ").textContent=T.ask;
 document.querySelector(".kick").textContent=T.kicker; document.querySelector(".ak-kick").textContent=T.kicker;
-$("akGl").textContent=(D.guesser||"Nick").toUpperCase()+"’S GUESS";
+$("akGl").textContent=(D.guesser ? D.guesser.toUpperCase()+"’S GUESS" : "YOUR GUESS");
 /* a touch screen has no keyboard: tap the slide to reveal, no typed guess */
 if(window.matchMedia && window.matchMedia("(pointer: coarse)").matches){
   var hintEl=document.querySelector(".ak-hint"); if(hintEl) hintEl.textContent="TAP TO REVEAL";
@@ -629,7 +629,7 @@ function render(){
   $("akGv").textContent=guess==="" ? "__%" : guess+"%"; $("akGv").className="ak-gv"+(guess===""?" empty":"");
   var pct=Math.round(OWNED/MAX*100), gb=$("guessBadge");
   if(guessShown && guess!=="" && mode==="overview"){ var off=Math.abs(parseInt(guess,10)-pct);
-    $("gbL").textContent=(D.guesser||"Nick").toUpperCase()+" GUESSED"; $("gbV").textContent=guess+"%"; $("gbD").textContent=off===0?"BULLSEYE":"OFF BY "+off;
+    $("gbL").textContent=(D.guesser ? D.guesser.toUpperCase()+" GUESSED" : "YOUR GUESS"); $("gbV").textContent=guess+"%"; $("gbD").textContent=off===0?"BULLSEYE":"OFF BY "+off;
     gb.className="guess-badge show"; } else gb.className="guess-badge";
   if(mode==="filter"){ gb.className="guess-badge"; setScore(FCOUNT[filter]||0, FLABEL[filter]||"", filter==="pre"); return; }
   if(mode==="gaps") setScore(MISSING,T.unit+" NOT ON THE SHELF");
